@@ -1,1 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liquid Therapy — Premium Cocktail Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D08A;
+    --gold-dark: #8B6914;
+    --ink: #0E0C0A;
+    --cream: #F5F0E8;
+    --surface: #1A1612;
+    --surface2: #241F19;
+    --muted: #8A8070;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Montserrat', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--ink); color: var(--cream); font-family: var(--font-body); font-weight: 300; line-height: 1.6; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,12,10,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid rgba(201,168,76,0.2);
+    padding: 0 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px; cursor: pointer;
+  }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 20px; font-weight: 300; letter-spacing: 0.15em; color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer; text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-ig { color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; }
+  .nav-ig:hover { color: var(--gold); }
+  .nav-ig svg { width: 16px; height: 16px; }
+  .nav-cta {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: transparent; border: 0.5px solid var(--gold); color: var(--gold);
+    padding: 9px 22px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── SECTIONS ── */
+  section { display: none; animation: fadeIn 0.4s ease; }
+  section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: calc(100vh - 68px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    background: radial-gradient(ellipse at 50% 55%, rgba(201,168,76,0.07) 0%, transparent 65%);
+  }
+  .hero-eyebrow { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .hero-title { font-family: var(--font-display); font-size: clamp(50px, 8vw, 96px); font-weight: 300; line-height: 1.05; color: var(--cream); margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 3rem; max-width: 420px; line-height: 2; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 4rem; }
+  .btn-primary { background: var(--gold); color: var(--ink); border: none; padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 0.5px solid rgba(245,240,232,0.3); padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; max-width: 560px; }
+  .stat-num { font-family: var(--font-display); font-size: 40px; font-weight: 300; color: var(--gold); }
+  .stat-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent); margin: 3rem auto; }
+
+  /* ── SHARED PAGE STYLES ── */
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem 7rem; }
+  .page-wrap-sm { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 7rem; }
+  .section-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(30px, 5vw, 52px); font-weight: 300; color: var(--cream); margin-bottom: 0.5rem; }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+
+  /* ── MENU ── */
+  .menu-filters { display: flex; gap: 0.6rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 0.5px solid rgba(201,168,76,0.25); background: transparent; color: var(--muted);
+    padding: 8px 20px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.04); }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5px; }
+  .cocktail-card { background: var(--surface); padding: 2rem; border: 0.5px solid rgba(201,168,76,0.08); transition: border-color 0.25s, transform 0.25s; }
+  .cocktail-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+  .card-cat { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; opacity: 0.75; }
+  .card-name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--cream); margin-bottom: 0.5rem; }
+  .card-desc { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-price { font-family: var(--font-display); font-size: 20px; color: var(--gold); }
+  .add-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: 0.5px solid var(--gold); color: var(--gold); padding: 8px 16px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+  .add-btn:hover { background: var(--gold); color: var(--ink); }
+  .add-btn.added { background: rgba(201,168,76,0.15); }
+
+  /* ── CART TOAST ── */
+  #cart-toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    background: var(--surface2); border: 0.5px solid var(--gold);
+    padding: 1rem 1.5rem; display: none; align-items: center; gap: 1rem;
+    min-width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  #cart-toast.show { display: flex; }
+  .toast-label { font-size: 11px; color: var(--muted); flex: 1; letter-spacing: 0.08em; }
+  .toast-count { font-family: var(--font-display); font-size: 22px; color: var(--gold); }
+  .toast-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold); color: var(--ink); border: none; padding: 8px 14px; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; }
+  .toast-btn:hover { background: var(--gold-light); }
+
+  /* ── FORMS ── */
+  .form-card { background: var(--surface); border: 0.5px solid rgba(201,168,76,0.12); padding: 2.5rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.6rem; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(201,168,76,0.18);
+    color: var(--cream); padding: 13px 15px; font-family: var(--font-body); font-size: 13px;
+    outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(138,128,112,0.5); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { resize: vertical; min-height: 110px; }
+  .form-select option { background: #1A1612; color: var(--cream); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn {
+    width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 16px;
+    font-family: var(--font-body); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s; margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: var(--gold-light); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── ORDER ── */
+  .cart-summary-box { background: rgba(201,168,76,0.05); border: 0.5px solid rgba(201,168,76,0.18); padding: 1.5rem; margin-bottom: 2rem; }
+  .cart-summary-title { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+  .cart-item:last-of-type { border-bottom: none; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 13px; color: var(--cream); }
+  .cart-item-qty { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cart-item-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
+  .cart-item-remove { font-size: 16px; color: var(--muted); cursor: pointer; margin-left: 12px; background: none; border: none; transition: color 0.2s; }
+  .cart-item-remove:hover { color: #E24B4A; }
+  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid rgba(201,168,76,0.25); }
+  .cart-total-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .cart-total-price { font-family: var(--font-display); font-size: 26px; color: var(--gold); }
+  .empty-cart { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+  /* ── EVENTS ── */
+  .event-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; margin-top: 0.6rem; }
+  .ev-type-btn {
+    background: transparent; border: 0.5px solid rgba(201,168,76,0.2); color: var(--muted);
+    padding: 12px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; font-family: var(--font-body); transition: all 0.2s; text-align: center;
+  }
+  .ev-type-btn.selected, .ev-type-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 2rem; }
+  .contact-card { background: var(--surface); border: 0.5px solid rgba(201,168,76,0.08); padding: 1.75rem; text-align: center; }
+  .contact-icon-wrap { width: 38px; height: 38px; border: 0.5px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
+  .contact-icon-wrap svg { width: 16px; height: 16px; color: var(--gold); }
+  .contact-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .contact-value { font-family: var(--font-display); font-size: 15px; color: var(--cream); }
+  .contact-value a { color: var(--gold); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+
+  /* ── SUCCESS ── */
+  .success-panel { display: none; text-align: center; padding: 3rem 1rem; }
+  .success-panel.show { display: block; }
+  .success-title { font-family: var(--font-display); font-size: 36px; font-weight: 300; color: var(--gold); margin-bottom: 0.75rem; }
+  .success-sub { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 400px; margin: 0 auto 2rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid rgba(201,168,76,0.12); padding: 2.5rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 16px; color: var(--gold); letter-spacing: 0.15em; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 10px; color: rgba(138,128,112,0.5); letter-spacing: 0.08em; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showSection('hero')">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 6 L28 6 L22 20 L20 20 L20 28 L21 28 L21 30 L15 30 L15 28 L16 28 L16 20 L14 20 Z" fill="rgba(201,168,76,0.12)" stroke="#C9A84C" stroke-width="1"/>
+      <line x1="8" y1="6" x2="28" y2="6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="18" y1="20" x2="18" y2="28" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M15 30 Q18 28.5 21 30 L20.5 31.5 Q18 30 15.5 31.5 Z" fill="rgba(201,168,76,0.3)" stroke="#C9A84C" stroke-width="0.5"/>
+      <path d="M12 13 L24 13 L22.5 17 L13.5 17 Z" fill="rgba(201,168,76,0.2)"/>
+      <line x1="9" y1="5" x2="16" y2="14" stroke="#C9A84C" stroke-width="0.8" stroke-linecap="round"/>
+      <circle cx="8.5" cy="4.5" r="2" fill="#4A7A2A" stroke="#3A6020" stroke-width="0.5"/>
+      <circle cx="8.5" cy="4.5" r="0.8" fill="#C9A84C"/>
+    </svg>
+    <span class="nav-logo-text">Liquid Therapy</span>
+  </div>
+  <div class="nav-links">
+    <a onclick="showSection('hero')" id="nav-hero">Home</a>
+    <a onclick="showSection('menu')" id="nav-menu">Menu</a>
+    <a onclick="showSection('events')" id="nav-events">Events</a>
+    <a onclick="showSection('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://instagram.com/liquidtherapyhq" target="_blank" rel="noopener" class="nav-ig" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    </a>
+    <button class="nav-cta" onclick="showSection('order')">Order Now</button>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" class="active">
+  <div class="hero-eyebrow">Lagos · Premium Cocktail Experience</div>
+  <h1 class="hero-title">Where Every Sip<br>is <em>Therapy</em></h1>
+  <p class="hero-sub">Handcrafted cocktails made with the finest spirits<br>and fresh botanicals — delivered to your door<br>or served at your next event.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="showSection('menu')">Explore the Menu</button>
+    <button class="btn-ghost" onclick="showSection('events')">Book an Event</button>
+  </div>
+  <div class="hero-stats">
+    <div style="text-align:center">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">Signature Cocktails</div>
+    </div>
+    <div style="text-align:center">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Events Served</div>
+    </div>
+    <div style="text-align:center">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Fresh Ingredients</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MENU ══════════ -->
+<section id="menu">
+  <div class="page-wrap">
+    <div class="section-header">
+      <div class="section-eyebrow">The Collection</div>
+      <h2 class="section-title">Our <em>Cocktail</em> Menu</h2>
+    </div>
+    <div class="menu-filters">
+      <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
+      <button class="filter-btn" onclick="filterMenu('signature',this)">Signature</button>
+      <button class="filter-btn" onclick="filterMenu('classic',this)">Classics</button>
+      <button class="filter-btn" onclick="filterMenu('mocktail',this)">Mocktails</button>
+      <button class="filter-btn" onclick="filterMenu('shots',this)">Shots</button>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ ORDER ══════════ -->
+<section id="order">
+  <div class="page-wrap-sm">
+    <div class="section-header" id="order-header">
+      <div class="section-eyebrow">Place Your Order</div>
+      <h2 class="section-title"><em>Delivery</em> &amp; Pickup</h2>
+    </div>
+
+    <div id="order-main">
+      <div class="cart-summary-box">
+        <div class="cart-summary-title">Your Selection</div>
+        <div id="cart-items-list"></div>
+      </div>
+
+      <div class="form-card">
+        <form id="order-form" action="https://formspree.io/f/mgondgqa" method="POST">
+          <input type="hidden" name="_subject" value="New Liquid Therapy Order">
+          <input type="hidden" name="order_items" id="hidden-cart">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" name="first_name" placeholder="Adaeze" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" name="last_name" placeholder="Okafor" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" type="tel" name="phone" placeholder="+234 800 000 0000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" name="email" placeholder="you@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Type</label>
+            <select class="form-select" name="delivery_type" id="delivery-type" onchange="toggleAddress()">
+              <option value="delivery">Home Delivery</option>
+              <option value="pickup">Pickup</option>
+            </select>
+          </div>
+          <div class="form-group" id="address-group">
+            <label class="form-label">Delivery Address</label>
+            <input class="form-input" type="text" name="address" placeholder="Street, Area, Lagos">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Special Requests</label>
+            <textarea class="form-textarea" name="notes" placeholder="Allergies, substitutions, special notes..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="order-submit">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="success-panel" id="order-success">
+      <div class="success-title">Order Received</div>
+      <p class="success-sub">Thank you! We've received your order and will confirm via WhatsApp or email shortly. Sit back and let the therapy begin.</p>
+      <button class="btn-primary" onclick="showSection('menu')">Continue Browsing</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EVENTS ══════════ -->
+<section id="events">
+  <div class="page-wrap-sm">
+    <div class="section-header" id="events-header">
+      <div class="section-eyebrow">Private Events</div>
+      <h2 class="section-title">Book <em>Liquid Therapy</em></h2>
+    </div>
+    <p id="events-intro" style="text-align:center;font-size:12px;color:var(--muted);max-width:480px;margin:0 auto 3rem;line-height:1.9;letter-spacing:0.04em;">
+      From intimate birthday celebrations to corporate events and weddings — we bring the full bar experience to you.
+    </p>
+
+    <div id="events-main">
+      <div class="form-card">
+        <form id="event-form" action="https://formspree.io/f/mpqybvnd" method="POST">
+          <input type="hidden" name="_subject" value="New Liquid Therapy Event Booking">
+          <input type="hidden" name="event_type" id="hidden-event-type" value="Birthday">
+
+          <div class="form-group">
+            <label class="form-label">Event Type</label>
+            <div class="event-types" id="event-types">
+              <button type="button" class="ev-type-btn selected" onclick="selectEvent(this,'Birthday')">Birthday</button>
+              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Wedding')">Wedding</button>
+              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Corporate')">Corporate</button>
+              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'House Party')">House Party</button>
+              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Other')">Other</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" name="name" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-input" type="tel" name="phone" placeholder="+234..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Event Date</label>
+              <input class="form-input" type="date" name="event_date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Expected Guests</label>
+              <select class="form-select" name="guest_count">
+                <option>10 – 30</option>
+                <option>30 – 60</option>
+                <option>60 – 100</option>
+                <option>100 – 200</option>
+                <option>200+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Event Location / Venue</label>
+            <input class="form-input" type="text" name="venue" placeholder="Address or venue name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tell Us More</label>
+            <textarea class="form-textarea" name="details" placeholder="Theme, special cocktails, bar setup requirements, budget range..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Booking Request</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="success-panel" id="event-success">
+      <div class="success-title">Request Sent</div>
+      <p class="success-sub">Wonderful! We'll review your event details and reach out within 24 hours to discuss packages and pricing. Check your email for confirmation.</p>
+      <button class="btn-primary" onclick="resetEvents()">Submit Another Request</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="page-wrap-sm">
+    <div class="section-header">
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="section-title"><em>Contact</em> Us</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Lagos, Nigeria</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+        </div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-value"><a href="https://wa.me/2348000000000">+234 800 000 0000</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value" style="font-size:13px;"><a href="mailto:liquidtherapyhq@gmail.com">liquidtherapyhq@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div class="contact-label">Instagram</div>
+        <div class="contact-value" style="font-size:13px;"><a href="https://instagram.com/liquidtherapyhq" target="_blank">@liquidtherapyhq</a></div>
+      </div>
+    </div>
+
+    <div class="form-card" id="contact-form-wrap">
+      <form id="contact-form" action="https://formspree.io/f/mvzwleyq" method="POST">
+        <input type="hidden" name="_subject" value="New Liquid Therapy Enquiry">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" name="message" placeholder="How can we help you?" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+
+    <div class="success-panel" id="contact-success">
+      <div class="success-title">Message Sent</div>
+      <p class="success-sub">Thank you for reaching out! We'll get back to you as soon as possible. For urgent orders, reach us on WhatsApp or Instagram.</p>
+      <button class="btn-primary" onclick="resetContact()">Send Another Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- CART TOAST -->
+<div id="cart-toast">
+  <span class="toast-label">Items in cart</span>
+  <span class="toast-count" id="toast-count">0</span>
+  <button class="toast-btn" onclick="showSection('order')">Checkout →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Liquid Therapy</div>
+  <div class="footer-links">
+    <a onclick="showSection('hero')">Home</a>
+    <a onclick="showSection('menu')">Menu</a>
+    <a onclick="showSection('events')">Events</a>
+    <a onclick="showSection('contact')">Contact</a>
+    <a href="https://instagram.com/liquidtherapyhq" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-copy">&copy; 2025 Liquid Therapy. All rights reserved.</div>
+</footer>
+
+<script>
+  const cocktails = [
+    { name: "Midnight Rose",    category: "signature", desc: "Hendrick's gin, lychee liqueur, rose water, fresh lime, egg white",            price: 6500 },
+    { name: "Lagos Sunset",     category: "signature", desc: "Campari, blood orange, prosecco, honey syrup, fresh thyme",                     price: 7000 },
+    { name: "Black Gold",       category: "signature", desc: "Johnnie Walker Black, activated charcoal, elderflower, lemon bitters",          price: 8500 },
+    { name: "The Therapist",    category: "signature", desc: "Mezcal, passion fruit, jalapeño, agave, smoked salt rim",                       price: 9000 },
+    { name: "Silk Road",        category: "signature", desc: "Bourbon, cardamom syrup, earl grey tea, lemon, gold leaf garnish",              price: 8000 },
+    { name: "Golden Hour",      category: "signature", desc: "Hennessy VSOP, mango, ginger liqueur, honey, fresh lime",                       price: 8500 },
+    { name: "Velvet Negroni",   category: "classic",   desc: "Bombay Sapphire, Campari, sweet vermouth, orange peel",                        price: 6000 },
+    { name: "Old Fashioned",    category: "classic",   desc: "Woodford Reserve, Angostura bitters, demerara sugar, orange zest",             price: 6500 },
+    { name: "Espresso Martini", category: "classic",   desc: "Absolut Vodka, Kahlúa, fresh espresso, vanilla syrup",                         price: 6000 },
+    { name: "Whisky Sour",      category: "classic",   desc: "Jameson, fresh lemon, egg white, Angostura bitters",                           price: 6000 },
+    { name: "Tropical Storm",   category: "mocktail",  desc: "Pineapple, coconut cream, fresh ginger, lime, sparkling water",                price: 3500 },
+    { name: "Garden Mule",      category: "mocktail",  desc: "Cucumber, mint, fresh ginger beer, lime, elderflower",                         price: 3500 },
+    { name: "Hibiscus Fizz",    category: "mocktail",  desc: "Hibiscus tea, lemon, honey, fresh basil, soda water",                          price: 3500 },
+    { name: "Gold Rush Shot",   category: "shots",     desc: "Patrón Silver, fresh lime, Cointreau — served chilled",                        price: 4500 },
+    { name: "Liquid Gold Shot", category: "shots",     desc: "Hennessy VS, ginger liqueur, honey — served warm",                             price: 4500 },
+  ];
+
+  let cart = [];
+
+  function renderMenu(filter) {
+    const grid = document.getElementById('menu-grid');
+    const items = filter === 'all' ? cocktails : cocktails.filter(c => c.category === filter);
+    grid.innerHTML = items.map(c => `
+      <div class="cocktail-card">
+        <div class="card-cat">${c.category}</div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-desc">${c.desc}</div>
+        <div class="card-footer">
+          <div class="card-price">₦${c.price.toLocaleString()}</div>
+          <button class="add-btn" onclick='addToCart(${JSON.stringify(c).replace(/'/g,"&#39;")},this)'>Add to Order</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(cat);
+  }
+
+  function addToCart(item, btn) {
+    const existing = cart.find(c => c.name === item.name);
+    if (existing) existing.qty++;
+    else cart.push({ ...item, qty: 1 });
+    btn.textContent = 'Added ✓';
+    btn.classList.add('added');
+    setTimeout(() => { btn.textContent = 'Add to Order'; btn.classList.remove('added'); }, 1200);
+    updateCartToast();
+    renderCartSummary();
+  }
+
+  function removeFromCart(name) {
+    cart = cart.filter(c => c.name !== name);
+    updateCartToast();
+    renderCartSummary();
+  }
+
+  function updateCartToast() {
+    const count = cart.reduce((s, c) => s + c.qty, 0);
+    document.getElementById('toast-count').textContent = count;
+    document.getElementById('cart-toast').classList.toggle('show', count > 0);
+  }
+
+  function renderCartSummary() {
+    const list = document.getElementById('cart-items-list');
+    if (!list) return;
+    if (cart.length === 0) {
+      list.innerHTML = '<div class="empty-cart">No items yet — browse the menu to add cocktails.</div>';
+      document.getElementById('hidden-cart') && (document.getElementById('hidden-cart').value = '');
+      return;
+    }
+    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    list.innerHTML = cart.map(c => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${c.name}</div>
+          <div class="cart-item-qty">x${c.qty} &nbsp;·&nbsp; ₦${c.price.toLocaleString()} each</div>
+        </div>
+        <div class="cart-item-price">₦${(c.price * c.qty).toLocaleString()}</div>
+        <button class="cart-item-remove" onclick="removeFromCart('${c.name.replace(/'/g,"\\'")}')">×</button>
+      </div>`).join('') +
+      `<div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-price">₦${total.toLocaleString()}</span></div>`;
+
+    if (document.getElementById('hidden-cart')) {
+      const summary = cart.map(c => `${c.name} x${c.qty} = ₦${(c.price*c.qty).toLocaleString()}`).join(' | ') + ` || TOTAL: ₦${total.toLocaleString()}`;
+      document.getElementById('hidden-cart').value = summary;
+    }
+  }
+
+  function toggleAddress() {
+    const type = document.getElementById('delivery-type').value;
+    document.getElementById('address-group').style.display = type === 'delivery' ? 'block' : 'none';
+  }
+
+  function selectEvent(btn, type) {
+    document.querySelectorAll('.ev-type-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('hidden-event-type').value = type;
+  }
+
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    if (id === 'order') renderCartSummary();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetEvents() {
+    document.getElementById('events-main').style.display = 'block';
+    document.getElementById('events-header').style.display = 'block';
+    document.getElementById('events-intro').style.display = 'block';
+    document.getElementById('event-success').classList.remove('show');
+    document.getElementById('event-form').reset();
+  }
+
+  function resetContact() {
+    document.getElementById('contact-form-wrap').style.display = 'block';
+    document.getElementById('contact-success').classList.remove('show');
+    document.getElementById('contact-form').reset();
+  }
+
+  // Formspree AJAX submissions
+  function setupForm(formId, successId, onSuccess) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          if (onSuccess) onSuccess();
+          document.getElementById(successId).classList.add('show');
+        } else {
+          btn.disabled = false;
+          btn.textContent = btn.dataset.label || 'Try Again';
+          alert('Something went wrong. Please try again or contact us directly.');
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.label || 'Try Again';
+        alert('Network error. Please check your connection and try again.');
+      }
+    });
+  }
+
+  setupForm('order-form', 'order-success', () => {
+    document.getElementById('order-main').style.display = 'none';
+    document.getElementById('order-header').style.display = 'none';
+    cart = [];
+    updateCartToast();
+  });
+
+  setupForm('event-form', 'event-success', () => {
+    document.getElementById('events-main').style.display = 'none';
+    document.getElementById('events-header').style.display = 'none';
+    document.getElementById('events-intro').style.display = 'none';
+  });
+
+  setupForm('contact-form', 'contact-success', () => {
+    document.getElementById('contact-form-wrap').style.display = 'none';
+  });
+
+  renderMenu('all');
+  renderCartSummary();
+</script>
+</body>
+</html>
