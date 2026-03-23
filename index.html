@@ -3,694 +3,541 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liquid Therapy — Premium Cocktail Experience</title>
+<title>Liquid Therapy™ — Mobile Bar | Fine Drinking | Polysensory Experiences</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8D08A;
-    --gold-dark: #8B6914;
-    --ink: #0E0C0A;
-    --cream: #F5F0E8;
-    --surface: #1A1612;
-    --surface2: #241F19;
-    --muted: #8A8070;
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'Montserrat', sans-serif;
+    --cream: #F2EDE4; --cream2: #EDE6DA; --brown: #3D1F0E; --brown-light: #6B3A1F;
+    --brown-mid: #8B5230; --brown-accent: #A0522D; --gold: #B8834A; --gold-light: #D4A96A;
+    --surface: #FAF7F2; --surface2: #F0E8DC; --muted: #8A7060;
+    --border: rgba(61,31,14,0.12); --border-strong: rgba(61,31,14,0.25);
+    --font-display: 'Cormorant Garamond', serif; --font-body: 'Montserrat', sans-serif;
   }
-
   html { scroll-behavior: smooth; }
-  body { background: var(--ink); color: var(--cream); font-family: var(--font-body); font-weight: 300; line-height: 1.6; }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(14,12,10,0.96);
-    backdrop-filter: blur(10px);
-    border-bottom: 0.5px solid rgba(201,168,76,0.2);
-    padding: 0 2.5rem;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 68px;
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 12px; cursor: pointer;
-  }
-  .nav-logo svg { width: 36px; height: 36px; }
-  .nav-logo-text { font-family: var(--font-display); font-size: 20px; font-weight: 300; letter-spacing: 0.15em; color: var(--gold); }
-  .nav-links { display: flex; gap: 2.5rem; }
-  .nav-links a {
-    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--muted); cursor: pointer; text-decoration: none; transition: color 0.2s;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  body { background: var(--cream); color: var(--brown); font-family: var(--font-body); font-weight: 300; line-height: 1.6; }
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(242,237,228,0.97); backdrop-filter: blur(10px); border-bottom: 0.5px solid var(--border); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 18px; font-weight: 400; letter-spacing: 0.12em; color: var(--brown); }
+  .nav-logo-tm { font-size: 10px; vertical-align: super; color: var(--brown-mid); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: pointer; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--brown); }
   .nav-right { display: flex; align-items: center; gap: 1rem; }
-  .nav-ig { color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; }
-  .nav-ig:hover { color: var(--gold); }
-  .nav-ig svg { width: 16px; height: 16px; }
-  .nav-cta {
-    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    background: transparent; border: 0.5px solid var(--gold); color: var(--gold);
-    padding: 9px 22px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
-  }
-  .nav-cta:hover { background: var(--gold); color: var(--ink); }
-
-  /* ── SECTIONS ── */
-  section { display: none; animation: fadeIn 0.4s ease; }
+  .nav-social { color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; }
+  .nav-social:hover { color: var(--brown); }
+  .nav-social svg { width: 15px; height: 15px; }
+  .nav-cta { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; background: var(--brown); color: var(--cream); border: none; padding: 10px 22px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+  .nav-cta:hover { background: var(--brown-light); }
+  section { display: none; animation: fadeIn 0.35s ease; }
   section.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* ── HERO ── */
-  #hero {
-    min-height: calc(100vh - 68px);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 4rem 2rem;
-    background: radial-gradient(ellipse at 50% 55%, rgba(201,168,76,0.07) 0%, transparent 65%);
-  }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-  .hero-title { font-family: var(--font-display); font-size: clamp(50px, 8vw, 96px); font-weight: 300; line-height: 1.05; color: var(--cream); margin-bottom: 1.5rem; }
-  .hero-title em { font-style: italic; color: var(--gold); }
-  .hero-sub { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 3rem; max-width: 420px; line-height: 2; }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 4rem; }
-  .btn-primary { background: var(--gold); color: var(--ink); border: none; padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-  .btn-primary:hover { background: var(--gold-light); }
-  .btn-ghost { background: transparent; color: var(--cream); border: 0.5px solid rgba(245,240,232,0.3); padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; max-width: 560px; }
-  .stat-num { font-family: var(--font-display); font-size: 40px; font-weight: 300; color: var(--gold); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  #hero { min-height: calc(100vh - 68px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem; background: var(--cream); }
+  .hero-tagline { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1rem; }
+  .hero-services-bar { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; }
+  .hero-title { font-family: var(--font-display); font-size: clamp(56px, 9vw, 108px); font-weight: 300; line-height: 1; color: var(--brown); margin-bottom: 1rem; }
+  .hero-title em { font-style: italic; color: var(--brown-mid); }
+  .hero-sub { font-family: var(--font-display); font-size: clamp(16px, 2vw, 22px); font-weight: 300; font-style: italic; color: var(--muted); margin-bottom: 3rem; max-width: 520px; line-height: 1.6; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 5rem; }
+  .btn-primary { background: var(--brown); color: var(--cream); border: none; padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--brown-light); }
+  .btn-ghost { background: transparent; color: var(--brown); border: 0.5px solid var(--brown); padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-ghost:hover { background: var(--brown); color: var(--cream); }
+  .hero-rule { width: 0.5px; height: 60px; background: var(--border-strong); margin: 0 auto 3rem; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; max-width: 560px; }
+  .stat-num { font-family: var(--font-display); font-size: 44px; font-weight: 300; color: var(--brown); }
   .stat-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-  .divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent); margin: 3rem auto; }
-
-  /* ── SHARED PAGE STYLES ── */
   .page-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem 7rem; }
-  .page-wrap-sm { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 7rem; }
-  .section-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
-  .section-title { font-family: var(--font-display); font-size: clamp(30px, 5vw, 52px); font-weight: 300; color: var(--cream); margin-bottom: 0.5rem; }
-  .section-title em { font-style: italic; color: var(--gold); }
+  .page-wrap-sm { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 7rem; }
+  .section-eyebrow { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 56px); font-weight: 300; color: var(--brown); line-height: 1.1; }
+  .section-title em { font-style: italic; }
   .section-header { text-align: center; margin-bottom: 3rem; }
-
-  /* ── MENU ── */
-  .menu-filters { display: flex; gap: 0.6rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
-  .filter-btn {
-    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-    border: 0.5px solid rgba(201,168,76,0.25); background: transparent; color: var(--muted);
-    padding: 8px 20px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
-  }
-  .filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.04); }
+  .section-intro { text-align: center; font-family: var(--font-display); font-size: 18px; font-weight: 300; font-style: italic; color: var(--muted); max-width: 560px; margin: 0 auto 3.5rem; line-height: 1.7; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5px; }
+  .service-card { background: var(--surface); padding: 2.5rem; border: 0.5px solid var(--border); transition: border-color 0.25s, background 0.25s; }
+  .service-card:hover { border-color: var(--brown-mid); background: var(--surface2); }
+  .service-num { font-size: 9px; letter-spacing: 0.25em; color: var(--muted); margin-bottom: 1rem; }
+  .service-name { font-family: var(--font-display); font-size: 28px; font-weight: 300; color: var(--brown); margin-bottom: 0.75rem; }
+  .service-desc { font-size: 12px; color: var(--muted); line-height: 1.9; margin-bottom: 1.5rem; }
+  .service-link { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brown-mid); cursor: pointer; text-decoration: none; border-bottom: 0.5px solid var(--border-strong); padding-bottom: 2px; transition: color 0.2s; }
+  .service-link:hover { color: var(--brown); }
+  .menu-filters { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+  .filter-btn { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border: 0.5px solid var(--border-strong); background: transparent; color: var(--muted); padding: 8px 20px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
   .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5px; }
-  .cocktail-card { background: var(--surface); padding: 2rem; border: 0.5px solid rgba(201,168,76,0.08); transition: border-color 0.25s, transform 0.25s; }
-  .cocktail-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
-  .card-cat { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; opacity: 0.75; }
-  .card-name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--cream); margin-bottom: 0.5rem; }
-  .card-desc { font-size: 12px; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
-  .card-footer { display: flex; align-items: center; justify-content: space-between; }
-  .card-price { font-family: var(--font-display); font-size: 20px; color: var(--gold); }
-  .add-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: 0.5px solid var(--gold); color: var(--gold); padding: 8px 16px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
-  .add-btn:hover { background: var(--gold); color: var(--ink); }
-  .add-btn.added { background: rgba(201,168,76,0.15); }
-
-  /* ── CART TOAST ── */
-  #cart-toast {
-    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
-    background: var(--surface2); border: 0.5px solid var(--gold);
-    padding: 1rem 1.5rem; display: none; align-items: center; gap: 1rem;
-    min-width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  }
+  .cocktail-card { background: var(--surface); padding: 2rem; border: 0.5px solid var(--border); transition: border-color 0.25s; }
+  .cocktail-card:hover { border-color: var(--brown-mid); }
+  .card-cat { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.5rem; }
+  .card-name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--brown); margin-bottom: 0.35rem; }
+  .card-ingredients { font-size: 12px; color: var(--brown); line-height: 1.7; margin-bottom: 0.5rem; }
+  .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .card-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: var(--surface2); padding: 3px 8px; border: 0.5px solid var(--border); }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+  .card-glass { font-size: 13px; color: var(--muted); font-style: italic; font-family: var(--font-display); }
+  .add-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: 0.5px solid var(--brown); color: var(--brown); padding: 7px 14px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+  .add-btn:hover, .add-btn.added { background: var(--brown); color: var(--cream); }
+  #cart-toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; background: var(--brown); padding: 1rem 1.5rem; display: none; align-items: center; gap: 1rem; min-width: 260px; }
   #cart-toast.show { display: flex; }
-  .toast-label { font-size: 11px; color: var(--muted); flex: 1; letter-spacing: 0.08em; }
-  .toast-count { font-family: var(--font-display); font-size: 22px; color: var(--gold); }
-  .toast-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold); color: var(--ink); border: none; padding: 8px 14px; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; }
-  .toast-btn:hover { background: var(--gold-light); }
-
-  /* ── FORMS ── */
-  .form-card { background: var(--surface); border: 0.5px solid rgba(201,168,76,0.12); padding: 2.5rem; }
+  .toast-label { font-size: 11px; color: var(--cream); opacity: 0.7; flex: 1; letter-spacing: 0.08em; }
+  .toast-count { font-family: var(--font-display); font-size: 22px; color: var(--gold-light); }
+  .toast-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--cream); color: var(--brown); border: none; padding: 8px 14px; cursor: pointer; font-family: var(--font-body); }
+  .form-card { background: var(--surface); border: 0.5px solid var(--border); padding: 2.5rem; }
   .form-group { margin-bottom: 1.5rem; }
-  .form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.6rem; }
-  .form-input, .form-select, .form-textarea {
-    width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(201,168,76,0.18);
-    color: var(--cream); padding: 13px 15px; font-family: var(--font-body); font-size: 13px;
-    outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none;
-  }
-  .form-input::placeholder, .form-textarea::placeholder { color: rgba(138,128,112,0.5); }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brown-mid); display: block; margin-bottom: 0.6rem; }
+  .form-input, .form-select, .form-textarea { width: 100%; background: var(--cream); border: 0.5px solid var(--border-strong); color: var(--brown); padding: 13px 15px; font-family: var(--font-body); font-size: 13px; outline: none; transition: border-color 0.2s; appearance: none; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); opacity: 0.5; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--brown); }
   .form-textarea { resize: vertical; min-height: 110px; }
-  .form-select option { background: #1A1612; color: var(--cream); }
+  .form-select option { background: var(--cream); color: var(--brown); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .submit-btn {
-    width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 16px;
-    font-family: var(--font-body); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-    cursor: pointer; transition: background 0.2s; margin-top: 0.5rem;
-  }
-  .submit-btn:hover { background: var(--gold-light); }
+  .submit-btn { width: 100%; background: var(--brown); color: var(--cream); border: none; padding: 16px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+  .submit-btn:hover { background: var(--brown-light); }
   .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  /* ── ORDER ── */
-  .cart-summary-box { background: rgba(201,168,76,0.05); border: 0.5px solid rgba(201,168,76,0.18); padding: 1.5rem; margin-bottom: 2rem; }
-  .cart-summary-title { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 0.5px solid rgba(201,168,76,0.08); }
+  .cart-summary-box { background: var(--surface2); border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 2rem; }
+  .cart-summary-title { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1rem; }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); }
   .cart-item:last-of-type { border-bottom: none; }
-  .cart-item-info { flex: 1; }
-  .cart-item-name { font-size: 13px; color: var(--cream); }
+  .cart-item-name { font-size: 13px; color: var(--brown); }
   .cart-item-qty { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .cart-item-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
   .cart-item-remove { font-size: 16px; color: var(--muted); cursor: pointer; margin-left: 12px; background: none; border: none; transition: color 0.2s; }
-  .cart-item-remove:hover { color: #E24B4A; }
-  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid rgba(201,168,76,0.25); }
+  .cart-item-remove:hover { color: #A32D2D; }
+  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border-strong); }
   .cart-total-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .cart-total-price { font-family: var(--font-display); font-size: 26px; color: var(--gold); }
-  .empty-cart { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 12px; line-height: 1.8; }
-
-  /* ── EVENTS ── */
-  .event-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; margin-top: 0.6rem; }
-  .ev-type-btn {
-    background: transparent; border: 0.5px solid rgba(201,168,76,0.2); color: var(--muted);
-    padding: 12px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-    cursor: pointer; font-family: var(--font-body); transition: all 0.2s; text-align: center;
-  }
-  .ev-type-btn.selected, .ev-type-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
-
-  /* ── CONTACT ── */
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 2rem; }
-  .contact-card { background: var(--surface); border: 0.5px solid rgba(201,168,76,0.08); padding: 1.75rem; text-align: center; }
-  .contact-icon-wrap { width: 38px; height: 38px; border: 0.5px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
-  .contact-icon-wrap svg { width: 16px; height: 16px; color: var(--gold); }
-  .contact-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-  .contact-value { font-family: var(--font-display); font-size: 15px; color: var(--cream); }
-  .contact-value a { color: var(--gold); text-decoration: none; }
+  .cart-total-price { font-family: var(--font-display); font-size: 28px; color: var(--brown); }
+  .empty-cart { text-align: center; padding: 1.5rem; color: var(--muted); font-family: var(--font-display); font-style: italic; font-size: 16px; }
+  .ev-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.5rem; margin-top: 0.6rem; }
+  .ev-type-btn { background: transparent; border: 0.5px solid var(--border-strong); color: var(--muted); padding: 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; text-align: center; }
+  .ev-type-btn.selected, .ev-type-btn:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+  .extensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .ext-group-title { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid var(--border-strong); }
+  .ext-item { font-size: 13px; color: var(--brown); padding: 0.5rem 0; border-bottom: 0.5px solid var(--border); line-height: 1.5; }
+  .ext-item:last-child { border-bottom: none; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem; }
+  .faq-item { padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .faq-q { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--brown); margin-bottom: 0.6rem; line-height: 1.4; }
+  .faq-a { font-size: 12px; color: var(--muted); line-height: 1.9; }
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; margin-bottom: 2rem; }
+  .contact-card { background: var(--surface); border: 0.5px solid var(--border); padding: 1.75rem; text-align: center; }
+  .contact-icon-wrap { width: 36px; height: 36px; border: 0.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
+  .contact-icon-wrap svg { width: 14px; height: 14px; color: var(--brown-mid); }
+  .contact-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.4rem; }
+  .contact-value { font-family: var(--font-display); font-size: 15px; color: var(--brown); }
+  .contact-value a { color: var(--brown-accent); text-decoration: none; }
   .contact-value a:hover { text-decoration: underline; }
-
-  /* ── SUCCESS ── */
-  .success-panel { display: none; text-align: center; padding: 3rem 1rem; }
+  .success-panel { display: none; text-align: center; padding: 4rem 1rem; }
   .success-panel.show { display: block; }
-  .success-title { font-family: var(--font-display); font-size: 36px; font-weight: 300; color: var(--gold); margin-bottom: 0.75rem; }
-  .success-sub { font-size: 12px; color: var(--muted); line-height: 1.9; max-width: 400px; margin: 0 auto 2rem; }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 0.5px solid rgba(201,168,76,0.12); padding: 2.5rem;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-logo { font-family: var(--font-display); font-size: 16px; color: var(--gold); letter-spacing: 0.15em; }
-  .footer-links { display: flex; gap: 2rem; }
-  .footer-links a { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; cursor: pointer; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--gold); }
-  .footer-copy { font-size: 10px; color: rgba(138,128,112,0.5); letter-spacing: 0.08em; }
-
-  /* ── MOBILE ── */
+  .success-title { font-family: var(--font-display); font-size: 40px; font-weight: 300; font-style: italic; color: var(--brown); margin-bottom: 0.75rem; }
+  .success-sub { font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 400px; margin: 0 auto 2rem; }
+  footer { background: var(--brown); padding: 3rem 2.5rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-size: 18px; color: var(--cream); letter-spacing: 0.15em; opacity: 0.9; }
+  .footer-tagline { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(242,237,228,0.4); margin-top: 4px; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242,237,228,0.5); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-copy { font-size: 10px; color: rgba(242,237,228,0.3); letter-spacing: 0.06em; }
   @media (max-width: 640px) {
     .nav-links { display: none; }
-    .form-row { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .hero-stats { gap: 1.5rem; }
-    footer { flex-direction: column; text-align: center; }
+    .form-row, .faq-grid, .extensions-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showSection('hero')">
-    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 6 L28 6 L22 20 L20 20 L20 28 L21 28 L21 30 L15 30 L15 28 L16 28 L16 20 L14 20 Z" fill="rgba(201,168,76,0.12)" stroke="#C9A84C" stroke-width="1"/>
-      <line x1="8" y1="6" x2="28" y2="6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="18" y1="20" x2="18" y2="28" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M15 30 Q18 28.5 21 30 L20.5 31.5 Q18 30 15.5 31.5 Z" fill="rgba(201,168,76,0.3)" stroke="#C9A84C" stroke-width="0.5"/>
-      <path d="M12 13 L24 13 L22.5 17 L13.5 17 Z" fill="rgba(201,168,76,0.2)"/>
-      <line x1="9" y1="5" x2="16" y2="14" stroke="#C9A84C" stroke-width="0.8" stroke-linecap="round"/>
-      <circle cx="8.5" cy="4.5" r="2" fill="#4A7A2A" stroke="#3A6020" stroke-width="0.5"/>
-      <circle cx="8.5" cy="4.5" r="0.8" fill="#C9A84C"/>
-    </svg>
-    <span class="nav-logo-text">Liquid Therapy</span>
+    <span class="nav-logo-text">Liquid Therapy<span class="nav-logo-tm">™</span></span>
   </div>
   <div class="nav-links">
     <a onclick="showSection('hero')" id="nav-hero">Home</a>
+    <a onclick="showSection('services')" id="nav-services">Services</a>
     <a onclick="showSection('menu')" id="nav-menu">Menu</a>
-    <a onclick="showSection('events')" id="nav-events">Events</a>
+    <a onclick="showSection('events')" id="nav-events">Book</a>
+    <a onclick="showSection('faq')" id="nav-faq">FAQ</a>
     <a onclick="showSection('contact')" id="nav-contact">Contact</a>
   </div>
   <div class="nav-right">
-    <a href="https://instagram.com/liquidtherapyhq" target="_blank" rel="noopener" class="nav-ig" title="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-      </svg>
+    <a href="https://instagram.com/liquidtherapyhq" target="_blank" class="nav-social" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
     </a>
-    <button class="nav-cta" onclick="showSection('order')">Order Now</button>
+    <a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank" class="nav-social" title="TikTok">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+    </a>
+    <button class="nav-cta" onclick="showSection('menu')">Order Now</button>
   </div>
 </nav>
 
-<!-- ══════════ HERO ══════════ -->
+<!-- HERO -->
 <section id="hero" class="active">
-  <div class="hero-eyebrow">Lagos · Premium Cocktail Experience</div>
-  <h1 class="hero-title">Where Every Sip<br>is <em>Therapy</em></h1>
-  <p class="hero-sub">Handcrafted cocktails made with the finest spirits<br>and fresh botanicals — delivered to your door<br>or served at your next event.</p>
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="showSection('menu')">Explore the Menu</button>
-    <button class="btn-ghost" onclick="showSection('events')">Book an Event</button>
-  </div>
-  <div class="hero-stats">
-    <div style="text-align:center">
-      <div class="stat-num">40+</div>
-      <div class="stat-label">Signature Cocktails</div>
+  <div style="max-width:800px;margin:0 auto;text-align:center;padding:4rem 2rem;">
+    <div class="hero-tagline">Lagos, Nigeria</div>
+    <div class="hero-services-bar">Mobile Bar &nbsp;|&nbsp; Fine Drinking &nbsp;|&nbsp; Polysensory Experiences</div>
+    <h1 class="hero-title">Liquid<br><em>Therapy</em><span class="nav-logo-tm" style="font-size:20px;">™</span></h1>
+    <p class="hero-sub">Taste is only the beginning. We blend premium mixology with sensory cues and intentional hosting to create experiences of connection and reset.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showSection('services')">Our Services</button>
+      <button class="btn-ghost" onclick="showSection('menu')">View the Menu</button>
     </div>
-    <div style="text-align:center">
-      <div class="stat-num">500+</div>
-      <div class="stat-label">Events Served</div>
-    </div>
-    <div style="text-align:center">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Fresh Ingredients</div>
+    <div class="hero-rule"></div>
+    <div class="hero-stats">
+      <div><div class="stat-num">6</div><div class="stat-label">Service Offerings</div></div>
+      <div><div class="stat-num">500+</div><div class="stat-label">Events Served</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">West African Inspired</div></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ MENU ══════════ -->
+<!-- SERVICES -->
+<section id="services">
+  <div class="page-wrap">
+    <div class="section-header">
+      <div class="section-eyebrow">Levels of Engagement</div>
+      <h2 class="section-title">Find the <em>service</em> that matches<br>your guest list and energy</h2>
+    </div>
+    <p class="section-intro">Hosting is a blend of timing, taste and transition. You could have the spirits but need the hands, or the vision but need the craft. No matter the level of engagement you choose, we bring the escape to you.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-num">01</div><div class="service-name">Welcome Drinks</div><div class="service-desc">A refined arrival service for private and corporate events, delivered during a 30 to 45-minute window and planned for 100 guests. Set the tone from the very first sip.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
+      <div class="service-card"><div class="service-num">02</div><div class="service-name">Immersive Sessions</div><div class="service-desc">A selection of facilitated, highly sensory sessions designed to be gently stirred and occasionally shaken, to dissolve social silos and create genuine moments of connection.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
+      <div class="service-card"><div class="service-num">03</div><div class="service-name">Drink Care</div><div class="service-desc">A discreet oversight service that ensures every drink — whether water, juice, alcoholic or non-alcoholic — is properly planned, chilled, presented, and paced throughout your event.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
+      <div class="service-card"><div class="service-num">04</div><div class="service-name">Bar Setup</div><div class="service-desc">A detailed installation service that provides a fully styled and event-ready bar structure for events of up to 100 guests, integrating seamlessly with the aesthetic of your event.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
+      <div class="service-card"><div class="service-num">05</div><div class="service-name">Crafted Drinks</div><div class="service-desc">A collection of cocktails and placebo cocktails — all of the craft, none of the proof — for high-impact flavour. Mixed and prescribed by an EBS-certified mixologist.</div><a class="service-link" onclick="showSection('menu')">View the menu →</a></div>
+      <div class="service-card"><div class="service-num">06</div><div class="service-name">Ready-to-Drink</div><div class="service-desc">A batch production of pre-mixed drinks packaged for convenient service, corporate gifting or brand activations. Your signature drink, ready when you are.</div><a class="service-link" onclick="showSection('events')">Enquire now →</a></div>
+    </div>
+    <div style="margin-top:5rem;">
+      <div class="section-header">
+        <div class="section-eyebrow">Thoughtful Additions</div>
+        <h2 class="section-title">Service <em>Extensions</em></h2>
+      </div>
+      <p class="section-intro">Assorted, thoughtful additions to extend your experience beyond the usual.</p>
+      <div class="extensions-grid">
+        <div><div class="ext-group-title">Experience Enhancers</div><div class="ext-item">Branding on bar or glassware</div><div class="ext-item">Custom bar menu (per event)</div><div class="ext-item">Custom stirrers (per guest)</div><div class="ext-item">Dry ice effect</div><div class="ext-item">Edible toppers (per twelve)</div><div class="ext-item">Themed garnishes or edible flowers</div></div>
+        <div><div class="ext-group-title">Keepsakes</div><div class="ext-item">Host-branded reflection candles (per guest)</div><div class="ext-item">Prescription cards (per guest)</div><div class="ext-item">Message or reflection cards (per guest)</div></div>
+        <div><div class="ext-group-title">Functional Add-ons</div><div class="ext-item">Edible ice (per guest)</div><div class="ext-item">Champagne or ice bucket (per guest)</div><div class="ext-item">Branded disposable cups (per guest)</div><div class="ext-item">Champagne Tower Experience (on request)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
 <section id="menu">
   <div class="page-wrap">
     <div class="section-header">
-      <div class="section-eyebrow">The Collection</div>
-      <h2 class="section-title">Our <em>Cocktail</em> Menu</h2>
+      <div class="section-eyebrow">Crafted Drinks Menu</div>
+      <h2 class="section-title">Find the <em>flavour</em><br>to your finest moments</h2>
     </div>
+    <p class="section-intro">Our menu is mixed and prescribed by an EBS-certified mixologist dedicated to treating every palate. Signature cocktails, familiar classics, zero-proof placebos, sparkling sips.</p>
     <div class="menu-filters">
       <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
       <button class="filter-btn" onclick="filterMenu('signature',this)">Signature</button>
       <button class="filter-btn" onclick="filterMenu('classic',this)">Classics</button>
-      <button class="filter-btn" onclick="filterMenu('mocktail',this)">Mocktails</button>
-      <button class="filter-btn" onclick="filterMenu('shots',this)">Shots</button>
+      <button class="filter-btn" onclick="filterMenu('zero-proof',this)">Zero-Proof</button>
+      <button class="filter-btn" onclick="filterMenu('sparkling',this)">Sparkling</button>
     </div>
     <div class="menu-grid" id="menu-grid"></div>
   </div>
 </section>
 
-<!-- ══════════ ORDER ══════════ -->
+<!-- ORDER -->
 <section id="order">
   <div class="page-wrap-sm">
     <div class="section-header" id="order-header">
       <div class="section-eyebrow">Place Your Order</div>
       <h2 class="section-title"><em>Delivery</em> &amp; Pickup</h2>
     </div>
-
     <div id="order-main">
-      <div class="cart-summary-box">
-        <div class="cart-summary-title">Your Selection</div>
-        <div id="cart-items-list"></div>
-      </div>
-
+      <div class="cart-summary-box"><div class="cart-summary-title">Your Selection</div><div id="cart-items-list"></div></div>
       <div class="form-card">
         <form id="order-form" action="https://formspree.io/f/mgondgqa" method="POST">
           <input type="hidden" name="_subject" value="New Liquid Therapy Order">
           <input type="hidden" name="order_items" id="hidden-cart">
-
           <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">First Name</label>
-              <input class="form-input" type="text" name="first_name" placeholder="Adaeze" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name</label>
-              <input class="form-input" type="text" name="last_name" placeholder="Okafor" required>
-            </div>
+            <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" name="first_name" placeholder="Adaeze" required></div>
+            <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" name="last_name" placeholder="Okafor" required></div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Phone Number</label>
-            <input class="form-input" type="tel" name="phone" placeholder="+234 800 000 0000" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input class="form-input" type="email" name="email" placeholder="you@email.com">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Delivery Type</label>
-            <select class="form-select" name="delivery_type" id="delivery-type" onchange="toggleAddress()">
-              <option value="delivery">Home Delivery</option>
-              <option value="pickup">Pickup</option>
-            </select>
-          </div>
-          <div class="form-group" id="address-group">
-            <label class="form-label">Delivery Address</label>
-            <input class="form-input" type="text" name="address" placeholder="Street, Area, Lagos">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Special Requests</label>
-            <textarea class="form-textarea" name="notes" placeholder="Allergies, substitutions, special notes..."></textarea>
-          </div>
-          <button type="submit" class="submit-btn" id="order-submit">Confirm Order</button>
+          <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" name="phone" placeholder="+234 800 000 0000" required></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label class="form-label">Delivery Type</label><select class="form-select" name="delivery_type" id="delivery-type" onchange="toggleAddress()"><option value="delivery">Home Delivery</option><option value="pickup">Pickup</option></select></div>
+          <div class="form-group" id="address-group"><label class="form-label">Delivery Address</label><input class="form-input" type="text" name="address" placeholder="Street, Area, Lagos"></div>
+          <div class="form-group"><label class="form-label">Special Requests</label><textarea class="form-textarea" name="notes" placeholder="Allergies, substitutions, special notes..."></textarea></div>
+          <button type="submit" class="submit-btn">Confirm Order</button>
         </form>
       </div>
     </div>
-
     <div class="success-panel" id="order-success">
       <div class="success-title">Order Received</div>
-      <p class="success-sub">Thank you! We've received your order and will confirm via WhatsApp or email shortly. Sit back and let the therapy begin.</p>
+      <p class="success-sub">Thank you. We've received your order and will confirm via WhatsApp shortly. Sit back and let the therapy begin.</p>
       <button class="btn-primary" onclick="showSection('menu')">Continue Browsing</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════ EVENTS ══════════ -->
+<!-- EVENTS -->
 <section id="events">
   <div class="page-wrap-sm">
     <div class="section-header" id="events-header">
       <div class="section-eyebrow">Private Events</div>
       <h2 class="section-title">Book <em>Liquid Therapy</em></h2>
     </div>
-    <p id="events-intro" style="text-align:center;font-size:12px;color:var(--muted);max-width:480px;margin:0 auto 3rem;line-height:1.9;letter-spacing:0.04em;">
-      From intimate birthday celebrations to corporate events and weddings — we bring the full bar experience to you.
-    </p>
-
+    <p id="events-intro" class="section-intro">From intimate birthday celebrations to corporate events and weddings — we bring the full bar experience to you. For intimate gatherings, we recommend at least two weeks' notice. For larger events, four to six weeks.</p>
     <div id="events-main">
       <div class="form-card">
         <form id="event-form" action="https://formspree.io/f/mpqybvnd" method="POST">
           <input type="hidden" name="_subject" value="New Liquid Therapy Event Booking">
           <input type="hidden" name="event_type" id="hidden-event-type" value="Birthday">
-
-          <div class="form-group">
-            <label class="form-label">Event Type</label>
-            <div class="event-types" id="event-types">
-              <button type="button" class="ev-type-btn selected" onclick="selectEvent(this,'Birthday')">Birthday</button>
-              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Wedding')">Wedding</button>
-              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Corporate')">Corporate</button>
-              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'House Party')">House Party</button>
-              <button type="button" class="ev-type-btn" onclick="selectEvent(this,'Other')">Other</button>
-            </div>
+          <div class="form-group"><label class="form-label">Service Required</label><select class="form-select" name="service_type"><option>Welcome Drinks</option><option>Immersive Sessions</option><option>Drink Care</option><option>Bar Setup</option><option>Crafted Drinks</option><option>Ready-to-Drink</option><option>Multiple Services</option></select></div>
+          <div class="form-group"><label class="form-label">Event Type</label><div class="ev-types"><button type="button" class="ev-type-btn selected" onclick="selectEvent(this,'Birthday')">Birthday</button><button type="button" class="ev-type-btn" onclick="selectEvent(this,'Wedding')">Wedding</button><button type="button" class="ev-type-btn" onclick="selectEvent(this,'Corporate')">Corporate</button><button type="button" class="ev-type-btn" onclick="selectEvent(this,'House Party')">House Party</button><button type="button" class="ev-type-btn" onclick="selectEvent(this,'Other')">Other</button></div></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Your Name</label><input class="form-input" type="text" name="name" placeholder="Full name" required></div>
+            <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" name="phone" placeholder="+234..." required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" name="email" placeholder="you@email.com" required></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Event Date</label><input class="form-input" type="date" name="event_date" required></div>
+            <div class="form-group"><label class="form-label">Expected Guests</label><select class="form-select" name="guest_count"><option>Up to 30</option><option>30 – 60</option><option>60 – 100</option><option>100 – 200</option><option>200+</option></select></div>
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Your Name</label>
-              <input class="form-input" type="text" name="name" placeholder="Full name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone</label>
-              <input class="form-input" type="tel" name="phone" placeholder="+234..." required>
-            </div>
+            <div class="form-group"><label class="form-label">Coverage Area</label><select class="form-select" name="coverage"><option>Within Lagos</option><option>Outside Lagos</option><option>Outside Nigeria</option></select></div>
+            <div class="form-group"><label class="form-label">Event Location / Venue</label><input class="form-input" type="text" name="venue" placeholder="Address or venue name" required></div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Event Date</label>
-              <input class="form-input" type="date" name="event_date" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Expected Guests</label>
-              <select class="form-select" name="guest_count">
-                <option>10 – 30</option>
-                <option>30 – 60</option>
-                <option>60 – 100</option>
-                <option>100 – 200</option>
-                <option>200+</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Event Location / Venue</label>
-            <input class="form-input" type="text" name="venue" placeholder="Address or venue name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Tell Us More</label>
-            <textarea class="form-textarea" name="details" placeholder="Theme, special cocktails, bar setup requirements, budget range..."></textarea>
-          </div>
+          <div class="form-group"><label class="form-label">Tell Us More</label><textarea class="form-textarea" name="details" placeholder="Theme, special cocktails, bar setup, budget range, add-ons..."></textarea></div>
           <button type="submit" class="submit-btn">Send Booking Request</button>
         </form>
       </div>
     </div>
-
     <div class="success-panel" id="event-success">
       <div class="success-title">Request Sent</div>
-      <p class="success-sub">Wonderful! We'll review your event details and reach out within 24 hours to discuss packages and pricing. Check your email for confirmation.</p>
+      <p class="success-sub">Wonderful. We'll review your event details and reach out within 24 hours to discuss packages and pricing.</p>
       <button class="btn-primary" onclick="resetEvents()">Submit Another Request</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════ CONTACT ══════════ -->
+<!-- FAQ -->
+<section id="faq">
+  <div class="page-wrap">
+    <div class="section-header">
+      <div class="section-eyebrow">Frequent Questions</div>
+      <h2 class="section-title">Everything you<br>need to <em>know</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item"><div class="faq-q">Do you supply the drinks?</div><div class="faq-a">We supply select drinks depending on the service chosen. For Welcome Service, house wine is supplied in certain tiers. For Drink Care and Bar Setup, drinks are supplied by the host. Final selections are confirmed during the planning phase.</div></div>
+      <div class="faq-item"><div class="faq-q">How many drinks should I expect per guest?</div><div class="faq-a">Drink quantities are estimated using rounds, based on a standard service window. Welcome Service typically assumes 2 to 3 rounds depending on the tier. Extended service requires additional staffing or scope.</div></div>
+      <div class="faq-item"><div class="faq-q">What does 'rounds assumed' mean?</div><div class="faq-a">A round refers to one full-service pass across guests during the designated window. Rounds are used for planning and staffing estimates, not strict counting.</div></div>
+      <div class="faq-item"><div class="faq-q">Do Immersive Sessions include drinks?</div><div class="faq-a">No. Immersive Sessions focus on facilitated experiences and guided interactions. Drinks and bar services are added separately.</div></div>
+      <div class="faq-item"><div class="faq-q">What is the difference between Welcome Service, Drink Care and Bar Setup?</div><div class="faq-a">Welcome Service focuses on arrival moments and setting the tone. Drink Care oversees drinks supplied by the host. Bar Setup provides the physical bar structure. Services may be booked independently or combined.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you offer tasting sessions or cocktail workshops?</div><div class="faq-a">Yes. We host tasting sessions and guided sensory workshops that explore therapy-inspired mixology, scent pairings, and playful cocktail experiences based on availability.</div></div>
+      <div class="faq-item"><div class="faq-q">Is there a minimum service commitment?</div><div class="faq-a">Yes. Each service has a minimum commitment based on scope, staffing and preparation. Details are outlined in our separate rate card.</div></div>
+      <div class="faq-item"><div class="faq-q">Which areas do you serve?</div><div class="faq-a">We are proudly Lagos-based and serve across the state. For out-of-state service, we accommodate requests based on availability. International events are quoted on request to cover flights, accommodation, freight and visas.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you offer customisation or add-ons?</div><div class="faq-a">Yes. Styling enhancements, keepsakes, extended service and additional elements are available. See our Service Extensions section for the full list.</div></div>
+      <div class="faq-item"><div class="faq-q">How far in advance should I book?</div><div class="faq-a">For intimate gatherings, we recommend at least two weeks' notice. For larger events and corporate experiences, four to six weeks ensures optimal customisation.</div></div>
+    </div>
+    <div style="text-align:center;margin-top:4rem;">
+      <p style="font-family:var(--font-display);font-size:20px;font-style:italic;color:var(--muted);margin-bottom:1.5rem;">Still have questions? We'd love to hear from you.</p>
+      <button class="btn-primary" onclick="showSection('contact')">Get in Touch</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
   <div class="page-wrap-sm">
     <div class="section-header">
-      <div class="section-eyebrow">Get in Touch</div>
-      <h2 class="section-title"><em>Contact</em> Us</h2>
+      <div class="section-eyebrow">Last Call</div>
+      <h2 class="section-title">Request your<br><em>prescription</em></h2>
     </div>
-
+    <p class="section-intro">If you want a remedy mixed to your taste, now is the time. Side effects may include lifted spirits.</p>
     <div class="contact-grid">
-      <div class="contact-card">
-        <div class="contact-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="contact-label">Location</div>
-        <div class="contact-value">Lagos, Nigeria</div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
-        </div>
-        <div class="contact-label">WhatsApp</div>
-        <div class="contact-value"><a href="https://wa.me/2348000000000">+234 800 000 0000</a></div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div class="contact-label">Email</div>
-        <div class="contact-value" style="font-size:13px;"><a href="mailto:liquidtherapyhq@gmail.com">liquidtherapyhq@gmail.com</a></div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </div>
-        <div class="contact-label">Instagram</div>
-        <div class="contact-value" style="font-size:13px;"><a href="https://instagram.com/liquidtherapyhq" target="_blank">@liquidtherapyhq</a></div>
-      </div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="contact-label">Location</div><div class="contact-value">Lagos, Nigeria</div></div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div><div class="contact-label">WhatsApp</div><div class="contact-value"><a href="https://wa.me/2348123484321">+234 812 348 4321</a></div></div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="contact-label">Email</div><div class="contact-value" style="font-size:12px;"><a href="mailto:liquidtherapyhq@gmail.com">liquidtherapyhq@gmail.com</a></div></div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div><div class="contact-label">Instagram</div><div class="contact-value" style="font-size:13px;"><a href="https://instagram.com/liquidtherapyhq" target="_blank">@liquidtherapyhq</a></div></div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></div><div class="contact-label">TikTok</div><div class="contact-value" style="font-size:13px;"><a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank">@liquid.therapyhq</a></div></div>
+      <div class="contact-card"><div class="contact-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8.53 14.65c2.09 1.41 4.85 1.41 6.94 0 1.72-1.16 2.53-2.88 2.53-4.65s-.81-3.49-2.53-4.65c-2.09-1.41-4.85-1.41-6.94 0C6.81 6.51 6 8.23 6 10s.81 3.49 2.53 4.65z"/><path d="M6.18 17.82A9.97 9.97 0 0 0 12 20c2.16 0 4.16-.69 5.82-1.85"/></svg></div><div class="contact-label">Snapchat</div><div class="contact-value" style="font-size:13px;"><a href="https://www.snapchat.com/add/liquidtherapyhq" target="_blank">@liquidtherapyhq</a></div></div>
     </div>
-
     <div class="form-card" id="contact-form-wrap">
       <form id="contact-form" action="https://formspree.io/f/mvzwleyq" method="POST">
         <input type="hidden" name="_subject" value="New Liquid Therapy Enquiry">
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Name</label>
-            <input class="form-input" type="text" name="name" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
-          </div>
+          <div class="form-group"><label class="form-label">Name</label><input class="form-input" type="text" name="name" placeholder="Your name" required></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" name="email" placeholder="you@email.com" required></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" name="message" placeholder="How can we help you?" required></textarea>
-        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" name="message" placeholder="How can we help you?" required></textarea></div>
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
     </div>
-
     <div class="success-panel" id="contact-success">
       <div class="success-title">Message Sent</div>
-      <p class="success-sub">Thank you for reaching out! We'll get back to you as soon as possible. For urgent orders, reach us on WhatsApp or Instagram.</p>
+      <p class="success-sub">Thank you for reaching out. We'll get back to you as soon as possible. For urgent requests, reach us on WhatsApp.</p>
       <button class="btn-primary" onclick="resetContact()">Send Another Message</button>
     </div>
   </div>
 </section>
 
-<!-- CART TOAST -->
-<div id="cart-toast">
-  <span class="toast-label">Items in cart</span>
-  <span class="toast-count" id="toast-count">0</span>
-  <button class="toast-btn" onclick="showSection('order')">Checkout →</button>
-</div>
+<div id="cart-toast"><span class="toast-label">Items in cart</span><span class="toast-count" id="toast-count">0</span><button class="toast-btn" onclick="showSection('order')">Checkout →</button></div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Liquid Therapy</div>
-  <div class="footer-links">
-    <a onclick="showSection('hero')">Home</a>
-    <a onclick="showSection('menu')">Menu</a>
-    <a onclick="showSection('events')">Events</a>
-    <a onclick="showSection('contact')">Contact</a>
-    <a href="https://instagram.com/liquidtherapyhq" target="_blank">Instagram</a>
+  <div class="footer-inner">
+    <div><div class="footer-logo">Liquid Therapy™</div><div class="footer-tagline">Mobile Bar · Fine Drinking · Polysensory Experiences</div></div>
+    <div class="footer-links">
+      <a onclick="showSection('hero')">Home</a><a onclick="showSection('services')">Services</a><a onclick="showSection('menu')">Menu</a><a onclick="showSection('events')">Book</a><a onclick="showSection('faq')">FAQ</a><a onclick="showSection('contact')">Contact</a>
+      <a href="https://instagram.com/liquidtherapyhq" target="_blank">Instagram</a><a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank">TikTok</a><a href="https://www.snapchat.com/add/liquidtherapyhq" target="_blank">Snapchat</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Liquid Therapy™. Lagos, Nigeria.</div>
   </div>
-  <div class="footer-copy">&copy; 2025 Liquid Therapy. All rights reserved.</div>
 </footer>
 
 <script>
-  const cocktails = [
-    { name: "Midnight Rose",    category: "signature", desc: "Hendrick's gin, lychee liqueur, rose water, fresh lime, egg white",            price: 6500 },
-    { name: "Lagos Sunset",     category: "signature", desc: "Campari, blood orange, prosecco, honey syrup, fresh thyme",                     price: 7000 },
-    { name: "Black Gold",       category: "signature", desc: "Johnnie Walker Black, activated charcoal, elderflower, lemon bitters",          price: 8500 },
-    { name: "The Therapist",    category: "signature", desc: "Mezcal, passion fruit, jalapeño, agave, smoked salt rim",                       price: 9000 },
-    { name: "Silk Road",        category: "signature", desc: "Bourbon, cardamom syrup, earl grey tea, lemon, gold leaf garnish",              price: 8000 },
-    { name: "Golden Hour",      category: "signature", desc: "Hennessy VSOP, mango, ginger liqueur, honey, fresh lime",                       price: 8500 },
-    { name: "Velvet Negroni",   category: "classic",   desc: "Bombay Sapphire, Campari, sweet vermouth, orange peel",                        price: 6000 },
-    { name: "Old Fashioned",    category: "classic",   desc: "Woodford Reserve, Angostura bitters, demerara sugar, orange zest",             price: 6500 },
-    { name: "Espresso Martini", category: "classic",   desc: "Absolut Vodka, Kahlúa, fresh espresso, vanilla syrup",                         price: 6000 },
-    { name: "Whisky Sour",      category: "classic",   desc: "Jameson, fresh lemon, egg white, Angostura bitters",                           price: 6000 },
-    { name: "Tropical Storm",   category: "mocktail",  desc: "Pineapple, coconut cream, fresh ginger, lime, sparkling water",                price: 3500 },
-    { name: "Garden Mule",      category: "mocktail",  desc: "Cucumber, mint, fresh ginger beer, lime, elderflower",                         price: 3500 },
-    { name: "Hibiscus Fizz",    category: "mocktail",  desc: "Hibiscus tea, lemon, honey, fresh basil, soda water",                          price: 3500 },
-    { name: "Gold Rush Shot",   category: "shots",     desc: "Patrón Silver, fresh lime, Cointreau — served chilled",                        price: 4500 },
-    { name: "Liquid Gold Shot", category: "shots",     desc: "Hennessy VS, ginger liqueur, honey — served warm",                             price: 4500 },
-  ];
+const cocktails = [
+  { name:"Afrobeat Sour", category:"signature", ingredients:"Whiskey, Orijin, Lime, Simple syrup", taste:"Citrus · Bold", glass:"Coupe", garnish:"Lime wheel" },
+  { name:"Coconut Groove", category:"signature", ingredients:"White rum, Coconut cream, Orange juice", taste:"Tropical · Creamy", glass:"Jar or Highball", garnish:"Toasted coconut, Pineapple leaf" },
+  { name:"Lagos Ginger Mule", category:"signature", ingredients:"Vodka, Fresh ginger, Lime, Basil, Ginger beer, Alligator pepper infusion", taste:"Spiced · Refreshing", glass:"Highball", garnish:"Basil sprig, Lime wheel" },
+  { name:"Wazobia Mix", category:"signature", ingredients:"Palm wine base, Hibiscus, Citrus, Ginger, Kola-nut infusion", taste:"Spiced · Herbal", glass:"Rocks", garnish:"Basil sprig, Lime wheel" },
+  { name:"Agbalumo Berry", category:"signature", ingredients:"Vodka, Agbalumo syrup, Citrus, Berry reduction", taste:"Sweet-Tart · Fruity", glass:"Highball", garnish:"Agbalumo slice, Mint" },
+  { name:"Negritude", category:"signature", ingredients:"Gin, Campari, Sweet Vermouth, Nigerian cocoa infusion", taste:"Bitter · Bold · Cocoa-Rich", glass:"Rocks", garnish:"Orange peel, Chocolate" },
+  { name:"Tequila Sunrise", category:"classic", ingredients:"Tequila, Orange, Grenadine", taste:"Fruity · Sweet", glass:"Highball", garnish:"Orange slice" },
+  { name:"Piña Colada", category:"classic", ingredients:"White rum, Coconut cream, Pineapple", taste:"Tropical · Creamy", glass:"Hurricane or Tiki", garnish:"Pineapple wedge" },
+  { name:"Batanga (LT Style)", category:"classic", ingredients:"Tequila, Lime, Cola", taste:"Citrus · Bold", glass:"Rocks", garnish:"Lime wedge" },
+  { name:"Mojito", category:"classic", ingredients:"White rum, Lime, Mint, Soda", taste:"Herbal · Refreshing", glass:"Highball", garnish:"Mint crown" },
+  { name:"Caipirinha", category:"classic", ingredients:"Cachaça, Lime, Sugar", taste:"Citrus · Punchy", glass:"Rocks", garnish:"Lime wedges" },
+  { name:"Clover Club", category:"classic", ingredients:"Gin, Raspberry, Lemon", taste:"Fruity", glass:"Coupe", garnish:"Raspberry or lemon zest" },
+  { name:"Pornstar Martini", category:"classic", ingredients:"Vodka, Vanilla, Passionfruit", taste:"Sweet · Indulgent", glass:"Martini", garnish:"Passionfruit half" },
+  { name:"Espresso Martini", category:"classic", ingredients:"Vodka, Espresso", taste:"Bold · Coffee", glass:"Martini", garnish:"Coffee beans" },
+  { name:"Green Garden Martini", category:"classic", ingredients:"Gin or Vodka, Cucumber, Citrus, Herbs", taste:"Herbal · Fresh", glass:"Martini", garnish:"Lemon twist" },
+  { name:"Spicy Margarita", category:"classic", ingredients:"Tequila, Lime, Orange liqueur, Chili syrup", taste:"Bold · Spicy", glass:"Coupe", garnish:"Hajji pepper salt rim, Lime wheel" },
+  { name:"Passion Sour (LT Style)", category:"classic", ingredients:"Passionfruit, Citrus, Spirit base, Simple syrup", taste:"Tropical · Tart", glass:"Coupe", garnish:"Rosemary sprig" },
+  { name:"Chapman", category:"zero-proof", ingredients:"Blackcurrant, Citrus, Soda", taste:"Fruity · Refreshing", glass:"Highball", garnish:"Orange slice, Cucumber" },
+  { name:"Virgin Colada", category:"zero-proof", ingredients:"Coconut cream, Pineapple", taste:"Tropical · Creamy", glass:"Hurricane or Tiki", garnish:"Pineapple wedge" },
+  { name:"Hibiscus Kiss", category:"zero-proof", ingredients:"Hibiscus, Fresh orange, Lime", taste:"Floral · Citrus", glass:"Coupe", garnish:"Orange peel" },
+  { name:"Ginger Lime Cooler", category:"zero-proof", ingredients:"Fresh ginger, Lime, Soda", taste:"Zesty · Refreshing", glass:"Highball", garnish:"Lime wheel" },
+  { name:"Watermelon Mint Cooler", category:"zero-proof", ingredients:"Watermelon, Mint, Lime", taste:"Fresh · Juicy", glass:"Highball", garnish:"Mint sprig" },
+  { name:"Iced Espresso Tonic", category:"zero-proof", ingredients:"Espresso, Tonic water, Citrus", taste:"Bitter · Refreshing", glass:"Highball", garnish:"" },
+  { name:"Aperol Spritz", category:"sparkling", ingredients:"Aperol, Prosecco, Soda", taste:"Bitter-Sweet", glass:"Wine glass", garnish:"Orange slice" },
+  { name:"Mimosa", category:"sparkling", ingredients:"Orange juice, Prosecco", taste:"Fresh · Citrus", glass:"Flute", garnish:"Orange twist" },
+  { name:"Bellini (Peach / Hibiscus)", category:"sparkling", ingredients:"Peach or Hibiscus purée, Prosecco", taste:"Fruity · Mellow", glass:"Flute", garnish:"Fruit sliced" },
+  { name:"Hugo Spritz", category:"sparkling", ingredients:"Elderflower, Prosecco, Soda", taste:"Floral · Light", glass:"Wine glass", garnish:"Mint, Lime" },
+  { name:"French 75", category:"sparkling", ingredients:"Gin, Prosecco, Lemon", taste:"Crisp", glass:"Flute", garnish:"Lemon twist" },
+  { name:"Rossini", category:"sparkling", ingredients:"Strawberry purée, Prosecco", taste:"Fruity · Mellow", glass:"Flute", garnish:"Strawberry slice" },
+  { name:"Palm Wine Aperitif", category:"sparkling", ingredients:"Palm wine, Prosecco", taste:"Earthy · Effervescent", glass:"Flute", garnish:"Citrus twist" },
+];
 
-  let cart = [];
+let cart = [];
 
-  function renderMenu(filter) {
-    const grid = document.getElementById('menu-grid');
-    const items = filter === 'all' ? cocktails : cocktails.filter(c => c.category === filter);
-    grid.innerHTML = items.map(c => `
-      <div class="cocktail-card">
-        <div class="card-cat">${c.category}</div>
-        <div class="card-name">${c.name}</div>
-        <div class="card-desc">${c.desc}</div>
-        <div class="card-footer">
-          <div class="card-price">₦${c.price.toLocaleString()}</div>
-          <button class="add-btn" onclick='addToCart(${JSON.stringify(c).replace(/'/g,"&#39;")},this)'>Add to Order</button>
-        </div>
-      </div>`).join('');
+function renderMenu(filter) {
+  const grid = document.getElementById('menu-grid');
+  const items = filter === 'all' ? cocktails : cocktails.filter(c => c.category === filter);
+  grid.innerHTML = items.map(c => `
+    <div class="cocktail-card">
+      <div class="card-cat">${c.category === 'zero-proof' ? 'Zero-Proof Placebo' : c.category}</div>
+      <div class="card-name">${c.name}</div>
+      <div class="card-ingredients">${c.ingredients}</div>
+      <div class="card-tags"><span class="card-tag">${c.taste}</span>${c.garnish ? `<span class="card-tag">${c.garnish}</span>` : ''}</div>
+      <div class="card-footer">
+        <div class="card-glass">${c.glass}</div>
+        <button class="add-btn" onclick='addToCart(${JSON.stringify(c).replace(/'/g,"&#39;")},this)'>Add to Order</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderMenu(cat);
+}
+
+function addToCart(item, btn) {
+  const existing = cart.find(c => c.name === item.name);
+  if (existing) existing.qty++; else cart.push({ ...item, qty: 1 });
+  btn.textContent = 'Added ✓'; btn.classList.add('added');
+  setTimeout(() => { btn.textContent = 'Add to Order'; btn.classList.remove('added'); }, 1200);
+  updateCartToast(); renderCartSummary();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(c => c.name !== name);
+  updateCartToast(); renderCartSummary();
+}
+
+function updateCartToast() {
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+  document.getElementById('toast-count').textContent = count;
+  document.getElementById('cart-toast').classList.toggle('show', count > 0);
+}
+
+function renderCartSummary() {
+  const list = document.getElementById('cart-items-list');
+  if (!list) return;
+  if (cart.length === 0) {
+    list.innerHTML = '<div class="empty-cart">No items yet — browse the menu to add cocktails.</div>';
+    if (document.getElementById('hidden-cart')) document.getElementById('hidden-cart').value = '';
+    return;
   }
+  const total = cart.reduce((s,c)=>s+c.qty,0);
+  list.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div><div class="cart-item-name">${c.name}</div><div class="cart-item-qty">x${c.qty}</div></div>
+      <button class="cart-item-remove" onclick="removeFromCart('${c.name.replace(/'/g,"\\'")}')">×</button>
+    </div>`).join('') +
+    `<div class="cart-total"><span class="cart-total-label">Selection</span><span class="cart-total-price">${total} drink${total>1?'s':''}</span></div>`;
+  if (document.getElementById('hidden-cart'))
+    document.getElementById('hidden-cart').value = cart.map(c=>`${c.name} x${c.qty}`).join(' | ');
+}
 
-  function filterMenu(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderMenu(cat);
-  }
+function toggleAddress() {
+  document.getElementById('address-group').style.display = document.getElementById('delivery-type').value === 'delivery' ? 'block' : 'none';
+}
 
-  function addToCart(item, btn) {
-    const existing = cart.find(c => c.name === item.name);
-    if (existing) existing.qty++;
-    else cart.push({ ...item, qty: 1 });
-    btn.textContent = 'Added ✓';
-    btn.classList.add('added');
-    setTimeout(() => { btn.textContent = 'Add to Order'; btn.classList.remove('added'); }, 1200);
-    updateCartToast();
-    renderCartSummary();
-  }
+function selectEvent(btn, type) {
+  document.querySelectorAll('.ev-type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('hidden-event-type').value = type;
+}
 
-  function removeFromCart(name) {
-    cart = cart.filter(c => c.name !== name);
-    updateCartToast();
-    renderCartSummary();
-  }
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  if (id === 'order') renderCartSummary();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  function updateCartToast() {
-    const count = cart.reduce((s, c) => s + c.qty, 0);
-    document.getElementById('toast-count').textContent = count;
-    document.getElementById('cart-toast').classList.toggle('show', count > 0);
-  }
+function resetEvents() {
+  ['events-main','events-header','events-intro'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display=''; });
+  document.getElementById('event-success').classList.remove('show');
+  document.getElementById('event-form').reset();
+}
 
-  function renderCartSummary() {
-    const list = document.getElementById('cart-items-list');
-    if (!list) return;
-    if (cart.length === 0) {
-      list.innerHTML = '<div class="empty-cart">No items yet — browse the menu to add cocktails.</div>';
-      document.getElementById('hidden-cart') && (document.getElementById('hidden-cart').value = '');
-      return;
-    }
-    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-    list.innerHTML = cart.map(c => `
-      <div class="cart-item">
-        <div class="cart-item-info">
-          <div class="cart-item-name">${c.name}</div>
-          <div class="cart-item-qty">x${c.qty} &nbsp;·&nbsp; ₦${c.price.toLocaleString()} each</div>
-        </div>
-        <div class="cart-item-price">₦${(c.price * c.qty).toLocaleString()}</div>
-        <button class="cart-item-remove" onclick="removeFromCart('${c.name.replace(/'/g,"\\'")}')">×</button>
-      </div>`).join('') +
-      `<div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-price">₦${total.toLocaleString()}</span></div>`;
+function resetContact() {
+  document.getElementById('contact-form-wrap').style.display = 'block';
+  document.getElementById('contact-success').classList.remove('show');
+  document.getElementById('contact-form').reset();
+}
 
-    if (document.getElementById('hidden-cart')) {
-      const summary = cart.map(c => `${c.name} x${c.qty} = ₦${(c.price*c.qty).toLocaleString()}`).join(' | ') + ` || TOTAL: ₦${total.toLocaleString()}`;
-      document.getElementById('hidden-cart').value = summary;
-    }
-  }
-
-  function toggleAddress() {
-    const type = document.getElementById('delivery-type').value;
-    document.getElementById('address-group').style.display = type === 'delivery' ? 'block' : 'none';
-  }
-
-  function selectEvent(btn, type) {
-    document.querySelectorAll('.ev-type-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById('hidden-event-type').value = type;
-  }
-
-  function showSection(id) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    const navEl = document.getElementById('nav-' + id);
-    if (navEl) navEl.classList.add('active');
-    if (id === 'order') renderCartSummary();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function resetEvents() {
-    document.getElementById('events-main').style.display = 'block';
-    document.getElementById('events-header').style.display = 'block';
-    document.getElementById('events-intro').style.display = 'block';
-    document.getElementById('event-success').classList.remove('show');
-    document.getElementById('event-form').reset();
-  }
-
-  function resetContact() {
-    document.getElementById('contact-form-wrap').style.display = 'block';
-    document.getElementById('contact-success').classList.remove('show');
-    document.getElementById('contact-form').reset();
-  }
-
-  // Formspree AJAX submissions
-  function setupForm(formId, successId, onSuccess) {
-    const form = document.getElementById(formId);
-    if (!form) return;
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = form.querySelector('.submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          if (onSuccess) onSuccess();
-          document.getElementById(successId).classList.add('show');
-        } else {
-          btn.disabled = false;
-          btn.textContent = btn.dataset.label || 'Try Again';
-          alert('Something went wrong. Please try again or contact us directly.');
-        }
-      } catch {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.label || 'Try Again';
-        alert('Network error. Please check your connection and try again.');
-      }
-    });
-  }
-
-  setupForm('order-form', 'order-success', () => {
-    document.getElementById('order-main').style.display = 'none';
-    document.getElementById('order-header').style.display = 'none';
-    cart = [];
-    updateCartToast();
+function setupForm(formId, successId, onSuccess) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { if (onSuccess) onSuccess(); document.getElementById(successId).classList.add('show'); }
+      else { btn.disabled = false; btn.textContent = 'Try Again'; alert('Something went wrong. Please try again.'); }
+    } catch { btn.disabled = false; btn.textContent = 'Try Again'; alert('Network error. Please check your connection.'); }
   });
+}
 
-  setupForm('event-form', 'event-success', () => {
-    document.getElementById('events-main').style.display = 'none';
-    document.getElementById('events-header').style.display = 'none';
-    document.getElementById('events-intro').style.display = 'none';
-  });
+setupForm('order-form','order-success',()=>{ document.getElementById('order-main').style.display='none'; document.getElementById('order-header').style.display='none'; cart=[]; updateCartToast(); });
+setupForm('event-form','event-success',()=>{ ['events-main','events-header','events-intro'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';}); });
+setupForm('contact-form','contact-success',()=>{ document.getElementById('contact-form-wrap').style.display='none'; });
 
-  setupForm('contact-form', 'contact-success', () => {
-    document.getElementById('contact-form-wrap').style.display = 'none';
-  });
-
-  renderMenu('all');
-  renderCartSummary();
+renderMenu('all');
+renderCartSummary();
 </script>
 </body>
 </html>
