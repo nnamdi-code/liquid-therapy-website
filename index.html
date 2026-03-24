@@ -574,4 +574,11 @@ function setupForm(formId, successId, onSuccess) {
 }
 
 setupForm('order-form','order-success',()=>{ document.getElementById('order-main').style.display='none'; document.getElementById('order-header').style.display='none'; cart=[]; updateCartToast(); });
-setupForm('event-form','event-success',()=>{ ['events-main','events-header','events-intro'].forEach(id=>{const e
+setupForm('event-form','event-success',()=>{ ['events-main','events-header','events-intro'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';}); });
+setupForm('contact-form','contact-success',()=>{ document.getElementById('contact-form-wrap').style.display='none'; });
+
+renderMenu('all');
+renderCartSummary();
+</script>
+</body>
+</html>
