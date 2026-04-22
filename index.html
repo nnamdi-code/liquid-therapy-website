@@ -2,795 +2,608 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1e0c04">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>Liquid Therapy™</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,400;1,600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liquid Therapy™ — Concept Note</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-/* ══ TOKENS ══ */
-:root {
-  --dk:#1e0c04; --brown:#180a02; --mid:#5c200a;
-  --warm:#8B3A10; --gold:#c8902a; --gl:#e8b84b;
-  --cream:#f5f0e8; --off:#ede4d4; --white:#fdfaf5;
-  --ease:cubic-bezier(.23,1,.32,1);
+@page { size:A4; margin:18mm; }
+@media print {
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  body{ background:#fff; padding:0; }
+  .no-print{ display:none !important; }
+  .break{ page-break-before:always; }
+  .no-break{ page-break-inside:avoid; }
 }
 
-/* ══ RESET ══ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;width:100%;font-family:'DM Mono',monospace;background:var(--dk);color:var(--cream);overflow:hidden;}
+*,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
-/* grain */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  background-size:160px;mix-blend-mode:overlay;
+body{
+  font-family:'DM Mono', monospace;
+  background:#faf7f2;
+  color:#1e0c04;
+  padding:0;
+  margin:0;
+  font-size:10px;
+  line-height:1.6;
 }
 
-/* ══ SCREENS ══ */
-.screen{
-  position:fixed;inset:0;display:flex;flex-direction:column;
-  will-change:transform,opacity;
-  transform:translateX(100%);transition:transform .44s var(--ease),opacity .44s var(--ease);
-  opacity:0;pointer-events:none;overflow:hidden;
+.page{
+  width:100%;
+  margin:0;
+  background:#faf7f2;
 }
-.screen.active{transform:translateX(0);opacity:1;pointer-events:all;}
-.screen.exit-left{transform:translateX(-28%);opacity:0;pointer-events:none;}
-#s-hero{transform:translateX(0);opacity:1;pointer-events:all;}
 
-/* ══ MARQUEE ══ */
-.marquee-strip{background:var(--gold);padding:.72rem 0;overflow:hidden;flex-shrink:0;}
-.marquee-inner{
-  font-family:'Playfair Display',serif;font-size:.72rem;font-weight:700;
-  color:var(--dk);letter-spacing:.1em;text-transform:uppercase;
-  white-space:nowrap;display:inline-block;
-  animation:marquee 22s linear infinite;
+/* ── COVER ── */
+.cover{
+  min-height:420px;
+  background:#1e0c04;
+  padding:3rem clamp(2rem,6vw,6rem);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  overflow:hidden;
 }
-@keyframes marquee{from{transform:translateX(65vw)}to{transform:translateX(-100%)}}
-
-/* ══ BACK BTN ══ */
-.back-btn{
-  position:absolute;top:max(env(safe-area-inset-top,0px),1.1rem);left:1.25rem;z-index:20;
-  width:38px;height:38px;border-radius:50%;
-  background:rgba(255,255,255,.07);border:1px solid rgba(245,240,232,.12);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.8rem;color:rgba(245,240,232,.55);cursor:pointer;transition:all .18s;
-}
-.back-btn:hover{background:rgba(255,255,255,.13);color:var(--cream);}
-
-/* ══ TYPE ══ */
-.kicker{font-size:.47rem;letter-spacing:.48em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.6rem;}
-.big-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.7rem,6.5vw,2.5rem);line-height:1.0;color:var(--white);}
-.big-title em{font-style:italic;color:var(--gl);}
-.italic-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.88rem,2.8vw,1.05rem);color:rgba(245,240,232,.42);margin-top:.45rem;line-height:1.6;}
-.gold-rule{width:30px;height:2px;background:var(--gold);margin:1.2rem 0;}
-
-/* ══ BUTTONS ══ */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
-  font-family:'DM Mono',monospace;letter-spacing:.18em;text-transform:uppercase;
-  border:none;cursor:pointer;border-radius:100px;
-  transition:all .2s var(--ease);-webkit-appearance:none;text-decoration:none;
-}
-.btn-fill{background:var(--warm);color:var(--cream);font-size:.62rem;padding:.9rem 2rem;}
-.btn-fill:hover,.btn-fill:active{background:var(--gold);color:var(--dk);transform:scale(.98);}
-.btn-ghost{background:transparent;color:var(--cream);font-size:.58rem;padding:.82rem 1.6rem;border:1px solid rgba(245,240,232,.22);}
-.btn-ghost:hover,.btn-ghost:active{border-color:var(--gold);color:var(--gold);}
-.btn-full{width:100%;}
-
-/* ══ INPUTS ══ */
-.field{margin-bottom:.88rem;}
-.field label{display:block;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
-.inp{
-  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);
-  border-radius:12px;padding:.86rem 1.05rem;font-family:'DM Mono',monospace;
-  font-size:.78rem;color:var(--cream);outline:none;
-  transition:border-color .18s,background .18s;-webkit-appearance:none;appearance:none;
-}
-.inp::placeholder{color:rgba(245,240,232,.24);}
-.inp:focus{border-color:var(--gold);background:rgba(200,144,42,.07);}
-.inp option{background:var(--dk);color:var(--cream);}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
-@media(max-width:360px){.row2{grid-template-columns:1fr;}}
-
-/* ══ TILES (menu) ══ */
-.tile{
-  display:flex;align-items:center;gap:1rem;
-  background:rgba(255,255,255,.05);border:1px solid rgba(245,240,232,.08);
-  border-radius:16px;padding:1.05rem 1.2rem;
-  cursor:pointer;transition:all .18s var(--ease);
-  width:100%;text-align:left;margin-bottom:.6rem;-webkit-appearance:none;
-}
-.tile:last-child{margin-bottom:0;}
-.tile:hover,.tile:active{background:rgba(255,255,255,.09);border-color:rgba(200,144,42,.28);transform:translateX(3px);}
-.tile.featured-tile{border-color:rgba(200,144,42,.3);background:rgba(92,32,10,.4);}
-.tile-icon{font-size:1.3rem;flex-shrink:0;width:34px;text-align:center;}
-.tile-text{flex:1;}
-.tile-title{font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:.16rem;}
-.tile-sub{font-size:.46rem;color:rgba(245,240,232,.35);line-height:1.55;letter-spacing:.02em;}
-.tile-arr{color:rgba(245,240,232,.2);font-size:.82rem;flex-shrink:0;transition:transform .18s,color .18s;}
-.tile:hover .tile-arr,.tile:active .tile-arr{transform:translateX(3px);color:var(--gold);}
-
-/* ══ SCREEN 1: HERO ══ */
-#s-hero{background:var(--brown);}
-#s-hero::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
+.cover::before{
+  content:'';
+  position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 65% 55% at 85% 105%,rgba(139,58,16,.48) 0%,transparent 65%),
-    radial-gradient(ellipse 45% 35% at 8% 12%,rgba(200,144,42,.08) 0%,transparent 55%);
+    radial-gradient(ellipse 60% 50% at 85% 110%, rgba(139,58,16,.5) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 5% 10%, rgba(200,144,42,.08) 0%, transparent 55%);
+  pointer-events:none;
 }
-.hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:max(env(safe-area-inset-top,0px),3.5rem) 1.75rem 1.5rem;position:relative;z-index:1;}
-.hero-rx{font-size:.47rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,144,42,.28);padding:.3rem .95rem;border-radius:100px;display:inline-block;margin-bottom:1.75rem;animation:up .65s var(--ease) .1s both;}
-.hero-phrase{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,11vw,5.5rem);line-height:.9;letter-spacing:-.02em;color:var(--white);animation:up .7s var(--ease) .25s both;}
-.hero-phrase em{font-style:italic;color:var(--gl);}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.92rem,3.5vw,1.15rem);color:rgba(245,240,232,.5);margin-top:.9rem;line-height:1.55;max-width:320px;animation:up .65s var(--ease) .4s both;}
-.hero-drink{font-size:.43rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(245,240,232,.25);margin-top:1.3rem;animation:up .65s var(--ease) .52s both;}
-.hero-drink span{color:var(--gold);}
-.hero-footer{padding:1rem 1.75rem max(env(safe-area-inset-bottom,0px),1.4rem);position:relative;z-index:1;display:flex;flex-direction:column;gap:.6rem;animation:up .65s var(--ease) .65s both;}
-.hero-secondary{display:flex;gap:.55rem;}
-.hero-hint{font-size:.36rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,240,232,.16);text-align:center;}
-
-/* ══ SCREEN 2: UNLOCK ══ */
-#s-unlock{background:var(--dk);}
-.unlock-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:5rem 1.75rem max(env(safe-area-inset-bottom,0px),1rem);overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.reward-pill{display:flex;align-items:center;gap:.85rem;background:rgba(200,144,42,.08);border:1px solid rgba(200,144,42,.22);border-radius:14px;padding:.95rem 1.1rem;margin:.8rem 0 1.2rem;}
-.rp-icon{font-size:1.25rem;flex-shrink:0;}
-.rp-label{font-size:.37rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.18rem;}
-.rp-value{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:var(--white);line-height:1.2;}
-.form-note{font-size:.4rem;color:rgba(245,240,232,.2);text-align:center;margin-top:.7rem;line-height:1.7;}
-.ul-success{display:none;text-align:center;padding:.5rem 0;}
-.ul-success.show{display:block;}
-.us-icon{font-size:1.9rem;margin-bottom:.65rem;}
-.us-h{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;color:var(--white);margin-bottom:.3rem;}
-.us-h em{font-style:italic;color:var(--gl);}
-.us-code{background:rgba(200,144,42,.1);border:1px solid rgba(200,144,42,.25);border-radius:12px;padding:.85rem 1rem;margin:.8rem 0;}
-.us-code-l{font-size:.37rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.28rem;}
-.us-code-v{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:900;color:var(--gl);letter-spacing:.12em;}
-.us-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:rgba(245,240,232,.36);line-height:1.6;margin-bottom:1rem;}
-
-/* ══ SCREEN 3: MENU ══ */
-#s-menu{background:var(--brown);}
-#s-menu::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 90% 100%,rgba(92,32,10,.4) 0%,transparent 65%);}
-.menu-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:4.5rem 1.5rem max(env(safe-area-inset-bottom,0px),1rem);position:relative;z-index:1;}
-
-/* divider with label */
-.menu-divider{display:flex;align-items:center;gap:.75rem;margin:.85rem 0 .65rem;}
-.md-line{flex:1;height:1px;background:rgba(245,240,232,.07);}
-.md-label{font-size:.38rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,240,232,.22);white-space:nowrap;}
-
-/* ══ SCREEN 4: SERVICES ══ */
-#s-services{background:var(--dk);}
-#s-services::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 45% at 15% 0%,rgba(92,32,10,.35) 0%,transparent 60%);}
-.sv-body{flex:1;display:flex;flex-direction:column;padding:4.5rem 1.5rem max(env(safe-area-inset-bottom,0px),1rem);overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;z-index:1;}
-.sv-intro{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(245,240,232,.42);line-height:1.65;margin-bottom:1.5rem;}
-.sv-intro em{color:var(--gl);font-style:normal;}
-
-/* service cards */
-.svc-card{
-  background:rgba(255,255,255,.05);border:1px solid rgba(245,240,232,.08);
-  border-radius:16px;padding:1.15rem 1.2rem;margin-bottom:.65rem;
-  cursor:pointer;transition:all .2s var(--ease);
-  display:flex;align-items:flex-start;gap:1rem;
+.cover-top{
+  position:relative;z-index:1;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:8px;
 }
-.svc-card:hover,.svc-card:active{background:rgba(255,255,255,.09);border-color:rgba(200,144,42,.28);transform:translateX(3px);}
-.svc-card.hero-svc{border-color:rgba(200,144,42,.3);background:rgba(92,32,10,.45);}
-.svc-icon{font-size:1.3rem;flex-shrink:0;width:34px;text-align:center;padding-top:.1rem;}
-.svc-content{flex:1;}
-.svc-title{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.2rem;}
-.svc-desc{font-size:.46rem;color:rgba(245,240,232,.38);line-height:1.6;letter-spacing:.02em;margin-bottom:.45rem;}
-.svc-meta{display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
-.svc-price{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:rgba(245,240,232,.38);flex:1;line-height:1.4;}
-.svc-tag{font-size:.36rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:.18rem .55rem;border:1px solid rgba(200,144,42,.25);border-radius:100px;white-space:nowrap;flex-shrink:0;}
-.svc-arr{color:rgba(245,240,232,.2);flex-shrink:0;font-size:.82rem;padding-top:.1rem;transition:all .18s;}
-.svc-card:hover .svc-arr{transform:translateX(3px);color:var(--gold);}
+.cover-tag{
+  font-size:6px;letter-spacing:.45em;text-transform:uppercase;
+  color:#c8902a;border:1px solid rgba(200,144,42,.3);
+  padding:3px 10px;border-radius:100px;
+}
+.cover-date{
+  font-size:6px;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(245,240,232,.3);
+}
+.cover-body{
+  position:relative;z-index:1;
+  padding:2rem 0 1rem;
+}
+.cover-kicker{
+  font-size:7px;letter-spacing:.45em;text-transform:uppercase;
+  color:#c8902a;display:block;margin-bottom:1rem;
+}
+.cover-title{
+  font-family:'Playfair Display',serif;font-weight:900;
+  font-size:clamp(2.5rem,6vw,5rem);line-height:.95;
+  color:#fdfaf5;letter-spacing:-.01em;
+}
+.cover-title em{font-style:italic;color:#e8b84b;}
+.cover-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;color:rgba(245,240,232,.5);
+  margin-top:.75rem;max-width:600px;line-height:1.55;
+}
+.cover-foot{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(245,240,232,.08);padding-top:1rem;
+  display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px;
+}
+.cover-brand{
+  font-family:'Playfair Display',serif;font-size:11px;font-weight:700;
+  color:#c8902a;
+}
+.cover-lines{
+  text-align:right;
+}
+.cover-line{
+  font-family:'Playfair Display',serif;font-size:6.5px;font-weight:700;
+  color:rgba(245,240,232,.18);letter-spacing:.1em;text-transform:uppercase;
+  display:block;line-height:1.8;
+}
 
-.sv-note{font-size:.44rem;color:rgba(245,240,232,.2);text-align:center;line-height:1.7;margin-top:.5rem;padding-top:.75rem;border-top:1px solid rgba(245,240,232,.06);}
+/* ── BODY ── */
+.body{
+  padding:2.5rem clamp(2rem,6vw,6rem);
+}
 
-/* ══ SCREEN 5: COLLECTION ══ */
-#s-coll{background:var(--dk);}
-.coll-body{flex:1;display:flex;flex-direction:column;padding-top:max(env(safe-area-inset-top,0px),4rem);overflow:hidden;}
-.coll-head{padding:0 1.5rem .8rem;}
-.coll-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.86rem;color:rgba(245,240,232,.36);margin-top:.22rem;}
-.cans-row{display:flex;gap:1rem;overflow-x:auto;scrollbar-width:none;padding:1rem 1.5rem 1rem;scroll-snap-type:x mandatory;flex-shrink:0;}
-.cans-row::-webkit-scrollbar{display:none;}
-.c-can{flex:0 0 118px;display:flex;flex-direction:column;align-items:center;gap:.5rem;scroll-snap-align:center;cursor:pointer;transition:transform .3s var(--ease);}
-.c-can:hover{transform:translateY(-6px);}
-.cv{width:100px;height:168px;border-radius:12px 12px 16px 16px;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1);}
-.cv-top{position:absolute;top:0;left:0;right:0;height:18px;background:linear-gradient(180deg,#ccc,#888);border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;}
-.cv-pull{width:16px;height:5px;background:#aaa;border-radius:2px;margin-top:5px;border:1px solid #999;}
-.cv-bot{position:absolute;bottom:0;left:0;right:0;height:13px;background:linear-gradient(0deg,#888,#bbb);border-radius:0 0 16px 16px;}
-.cv-liq{position:absolute;top:18px;bottom:13px;left:0;right:0;}
-.cv-liq::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.04) 42%,transparent 65%,rgba(0,0,0,.06) 100%);}
-.cv::after{content:'';position:absolute;top:18px;bottom:13px;left:-28%;width:24%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transform:skewX(-8deg);pointer-events:none;}
-.cv-txt{position:absolute;top:18px;bottom:13px;left:0;right:0;display:flex;flex-direction:column;justify-content:center;padding:0 8px;text-align:center;z-index:2;}
-.cvt-b{font-size:.3rem;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:4px;}
-.cvt-p{font-family:'Playfair Display',serif;font-weight:900;font-size:.65rem;line-height:1.15;}
-.cvt-d{font-size:.3rem;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;opacity:.6;}
-.lq1{background:linear-gradient(150deg,#1a0804,#3d160a,#6b200f);} .lq1 .cvt-b,.lq1 .cvt-p,.lq1 .cvt-d{color:#f5f0e8;}
-.lq2{background:linear-gradient(150deg,#0d1a0a,#1c3d10,#2d6010);} .lq2 .cvt-b,.lq2 .cvt-p,.lq2 .cvt-d{color:#eef5e8;}
-.lq3{background:linear-gradient(150deg,#0e0a1a,#1e1040,#2d1860);} .lq3 .cvt-b,.lq3 .cvt-p,.lq3 .cvt-d{color:#eaeaf8;}
-.lq4{background:linear-gradient(150deg,#1a0e08,#3d2010,#7a3a10);} .lq4 .cvt-b,.lq4 .cvt-p,.lq4 .cvt-d{color:#f5eae8;}
-.lq5{background:linear-gradient(180deg,#fde080 0%,#f09020 30%,#d84020 60%,#981828 100%);} .lq5 .cvt-b,.lq5 .cvt-p,.lq5 .cvt-d{color:#fdf4e8;}
-.lq6{background:linear-gradient(150deg,#0a1014,#102030,#0e3040);} .lq6 .cvt-b,.lq6 .cvt-p,.lq6 .cvt-d{color:#e8f0f5;}
-.c-cap{text-align:center;}
-.c-cap-p{font-family:'Playfair Display',serif;font-size:.6rem;font-weight:700;color:var(--cream);display:block;line-height:1.2;margin-bottom:.1rem;}
-.c-cap-d{font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
-.c-can.hi .cv{filter:drop-shadow(0 0 14px rgba(200,144,42,.5));}
-.pair-panel{flex:1;margin:0 1.5rem 0;min-height:0;background:rgba(200,144,42,.07);border:1px solid rgba(200,144,42,.18);border-radius:16px;padding:1.05rem 1.2rem;display:flex;flex-direction:column;justify-content:center;transition:all .3s var(--ease);}
-.pp-hint{font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(200,144,42,.45);}
-.pp-cans{display:none;font-family:'Playfair Display',serif;font-size:.88rem;font-weight:900;color:var(--white);line-height:1.25;margin-bottom:.3rem;}
-.pp-cans em{font-style:italic;color:var(--gl);}
-.pp-story{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:rgba(245,240,232,.42);line-height:1.45;margin-bottom:.5rem;}
-.pp-cta{display:none;font-size:.4rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
-.pp-cta::before{content:'→ ';}
-.coll-hint{font-size:.38rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.14);text-align:center;padding:.55rem 0 max(env(safe-area-inset-bottom,0px),.7rem);flex-shrink:0;}
+/* section */
+.sec{
+  margin-bottom:2.5rem;
+  max-width:900px;
+}
+.sec-label{
+  font-size:6.5px;letter-spacing:.45em;text-transform:uppercase;
+  color:#c8902a;display:block;
+  padding-bottom:6px;border-bottom:1.5px solid #c8902a;
+  margin-bottom:1rem;
+}
+.sec-title{
+  font-family:'Playfair Display',serif;font-weight:900;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);line-height:1.0;color:#1e0c04;
+  margin-bottom:.5rem;
+}
+.sec-title em{font-style:italic;color:#8B3A10;}
 
-/* ══ SCREEN 6: EVENT FORM ══ */
-#s-event{background:var(--brown);}
-#s-event::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 45% at 85% 100%,rgba(139,58,16,.38) 0%,transparent 60%);}
-.ev-body{flex:1;display:flex;flex-direction:column;padding:4.5rem 1.5rem max(env(safe-area-inset-bottom,0px),1rem);overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;z-index:1;}
-.ev-unlock{background:rgba(200,144,42,.07);border:1px solid rgba(200,144,42,.16);border-radius:10px;padding:.78rem 1rem;margin-bottom:1.05rem;font-size:.47rem;color:rgba(245,240,232,.46);line-height:1.6;}
-.ev-unlock strong{color:var(--gl);}
-.ev-success{display:none;text-align:center;padding:2.5rem 0;}
-.ev-success.show{display:block;}
+/* prose */
+p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(10.5px,1.2vw,13px);color:#3d1a08;line-height:1.7;
+  margin-bottom:.6rem;
+}
+p strong{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:#1e0c04;font-weight:500;letter-spacing:.02em;
+}
+p em{font-style:italic;color:#8B3A10;}
 
-/* ══ SCREEN 7: REORDER ══ */
-#s-reorder{background:var(--dk);}
-.ro-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:5rem 1.5rem max(env(safe-area-inset-bottom,0px),1rem);}
-.ro-item{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:rgba(255,255,255,.05);border:1px solid rgba(245,240,232,.08);border-radius:14px;padding:1.05rem 1.15rem;text-decoration:none;cursor:pointer;margin-bottom:.62rem;transition:all .18s var(--ease);}
-.ro-item:last-child{margin-bottom:0;}
-.ro-item.feat{border-color:var(--gold);background:rgba(92,32,10,.5);}
-.ro-item:hover,.ro-item:active{transform:translateX(3px);border-color:var(--gl);}
-.roi-tag{font-size:.35rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.18rem;}
-.roi-name{font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:.12rem;}
-.roi-desc{font-size:.44rem;color:rgba(245,240,232,.3);line-height:1.5;}
-.roi-arr{color:rgba(245,240,232,.2);flex-shrink:0;transition:all .18s;}
-.ro-item:hover .roi-arr,.ro-item:active .roi-arr{transform:translateX(3px);color:var(--gold);}
-.brand-arch{display:flex;flex-direction:column;align-items:center;gap:.18rem;padding:1.2rem 1.5rem max(env(safe-area-inset-bottom,0px),.75rem);border-top:1px solid rgba(245,240,232,.06);flex-shrink:0;}
-.ba-line{font-family:'Playfair Display',serif;font-size:.56rem;font-weight:700;color:rgba(245,240,232,.14);letter-spacing:.1em;text-transform:uppercase;}
+/* pull quote */
+.pull{
+  border-left:3px solid #c8902a;
+  padding:.75rem 1.1rem;
+  margin:1.25rem 0;
+  background:rgba(200,144,42,.05);
+  border-radius:0 6px 6px 0;
+}
+.pull p{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(12px,1.5vw,16px);color:#1e0c04;line-height:1.5;margin:0;
+}
+.pull-attr{
+  font-size:6px;letter-spacing:.25em;text-transform:uppercase;
+  color:#c8902a;margin-top:.5rem;display:block;
+}
 
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:calc(max(env(safe-area-inset-bottom,0px),1rem) + .5rem);left:50%;transform:translateX(-50%) translateY(60px);background:var(--brown);color:var(--cream);font-size:.54rem;letter-spacing:.05em;padding:.72rem 1.45rem;border-radius:100px;border:1px solid var(--gold);z-index:10000;transition:transform .35s cubic-bezier(.175,.885,.32,1.275);white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);}
-.toast.show{transform:translateX(-50%) translateY(0);}
+/* rule */
+.rule{
+  height:1px;background:#d4c8b8;margin:2rem 0;
+}
+.rule-gold{
+  height:1px;
+  background:linear-gradient(90deg,#c8902a,transparent);
+  margin:1.5rem 0;
+}
 
-/* ══ ANIMS ══ */
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pop{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
-.pop{animation:pop .38s var(--ease) both;}
+/* highlight box */
+.hl{
+  background:#1e0c04;color:#f5f0e8;
+  padding:1.25rem 1.5rem;border-radius:4px;
+  margin:1.5rem 0;
+}
+.hl-label{
+  font-size:6px;letter-spacing:.4em;text-transform:uppercase;
+  color:#c8902a;display:block;margin-bottom:.6rem;
+}
+.hl p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(12px,1.5vw,16px);color:rgba(245,240,232,.75);line-height:1.55;margin:0;
+}
+.hl p strong{
+  font-family:'Playfair Display',serif;font-style:normal;
+  color:#e8b84b;font-size:12px;font-weight:700;letter-spacing:0;
+}
+
+/* product grid */
+.product-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin:1.25rem 0;
+}
+@media(max-width:700px){.product-grid{grid-template-columns:1fr 1fr;}}
+.prod-card{
+  border:1px solid #d4c8b8;border-radius:8px;
+  padding:1rem 1rem;
+}
+.prod-card.hero{
+  border-color:#c8902a;background:rgba(200,144,42,.04);
+}
+.prod-tag{
+  font-size:5.5px;letter-spacing:.3em;text-transform:uppercase;
+  color:#c8902a;display:block;margin-bottom:.4rem;
+}
+.prod-name{
+  font-family:'Playfair Display',serif;font-size:11px;font-weight:700;
+  color:#1e0c04;margin-bottom:.25rem;
+}
+.prod-desc{
+  font-size:8.5px;color:#8B3A10;line-height:1.55;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+
+/* timeline */
+.timeline{
+  display:flex;flex-direction:column;gap:0;
+  margin:1.25rem 0;
+  border-left:2px solid #d4c8b8;
+  padding-left:1.25rem;
+}
+.tl-item{
+  padding:.85rem 0;
+  border-bottom:1px solid #f0ebe2;
+  position:relative;
+}
+.tl-item:last-child{border-bottom:none;}
+.tl-item::before{
+  content:'';
+  position:absolute;left:-1.45rem;top:1.15rem;
+  width:8px;height:8px;border-radius:50%;
+  background:#faf7f2;border:2px solid #c8902a;
+}
+.tl-item.active::before{background:#c8902a;}
+.tl-date{
+  font-size:6px;letter-spacing:.3em;text-transform:uppercase;
+  color:#c8902a;display:block;margin-bottom:.3rem;
+}
+.tl-title{
+  font-family:'Playfair Display',serif;font-size:10px;font-weight:700;
+  color:#1e0c04;margin-bottom:.25rem;
+}
+.tl-body{
+  font-size:8.5px;color:#5a3020;line-height:1.6;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+
+/* use case pills */
+.pills{
+  display:flex;flex-wrap:wrap;gap:.45rem;margin:.75rem 0;
+}
+.pill{
+  font-size:6.5px;letter-spacing:.18em;text-transform:uppercase;
+  padding:3px 10px;border-radius:100px;
+  border:1px solid #d4c8b8;color:#5a3020;
+}
+.pill.gold{border-color:#c8902a;color:#c8902a;}
+
+/* metrics */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+  margin:1.5rem 0;
+}
+.metric{
+  text-align:center;padding:.75rem .5rem;
+  border:1px solid #d4c8b8;border-radius:6px;
+}
+.metric-n{
+  font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;
+  color:#c8902a;display:block;line-height:1;margin-bottom:.3rem;
+}
+.metric-l{
+  font-size:6px;letter-spacing:.2em;text-transform:uppercase;
+  color:#aaa;line-height:1.4;
+}
+
+/* supporting lines box */
+.lines-box{
+  background:#fdf9f5;border:1px solid #d4c8b8;border-radius:8px;
+  padding:1.1rem 1.25rem;margin:1rem 0;
+}
+.lb-label{
+  font-size:6px;letter-spacing:.35em;text-transform:uppercase;
+  color:#aaa;display:block;margin-bottom:.6rem;
+}
+.lb-line{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:10px;color:#8B3A10;line-height:2;display:block;
+}
+.lb-line::before{content:'· ';}
+
+/* footer */
+.doc-footer{
+  padding:1.5rem clamp(2rem,6vw,6rem);
+  border-top:1px solid #d4c8b8;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+}
+.df-brand{
+  font-family:'Playfair Display',serif;font-size:9px;font-weight:700;color:#8B3A10;
+}
+.df-contact{
+  font-size:6px;letter-spacing:.08em;color:#aaa;text-align:right;line-height:1.8;
+}
+
+/* print btn */
+.no-print{
+  position:fixed;top:1rem;right:1rem;
+  background:#8B3A10;color:#faf7f2;border:none;
+  padding:8px 18px;border-radius:4px;
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
+}
+.no-print:hover{background:#c8902a;}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════
-     S1 · HERO
-════════════════════════════ -->
-<div class="screen active" id="s-hero">
-  <div class="marquee-strip" aria-hidden="true">
-    <span class="marquee-inner">TASTE IS ONLY THE BEGINNING &nbsp;·&nbsp; THE ART OF MAKING YOU FEEL GOOD &nbsp;·&nbsp; CURATES ATMOSPHERE. MOVES ENERGY. &nbsp;·&nbsp; TASTE IS ONLY THE BEGINNING &nbsp;·&nbsp; THE ART OF MAKING YOU FEEL GOOD &nbsp;·&nbsp; CURATES ATMOSPHERE. MOVES ENERGY. &nbsp;·&nbsp;</span>
-  </div>
-  <div class="hero-body">
-    <span class="hero-rx" id="heroRx">Rx · 001 · Liquid Therapy™</span>
-    <h1 class="hero-phrase" id="heroPhrase">NTD,<br><em>Thanks</em></h1>
-    <p class="hero-tagline" id="heroTagline">No explanation required. You have earned this.</p>
-    <p class="hero-drink">Prescribed remedy: <span id="heroDrink">Afrobeat Sour</span></p>
-  </div>
-  <div class="hero-footer">
-    <button class="btn btn-fill btn-full" onclick="go('s-unlock')">Unlock My Prescription ↗</button>
-    <div class="hero-secondary">
-      <button class="btn btn-ghost btn-full" style="flex:1;" onclick="go('s-coll')">See All 6 Cans</button>
-      <button class="btn btn-ghost btn-full" style="flex:1;" onclick="go('s-services')">Our Services</button>
-    </div>
-    <p class="hero-hint">Mobile Bar · Fine Drinking · Polysensory Experiences</p>
-  </div>
-</div>
+<button class="no-print" onclick="window.print()">Print / PDF</button>
 
-<!-- ════════════════════════════
-     S2 · UNLOCK
-════════════════════════════ -->
-<div class="screen" id="s-unlock">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="unlock-body">
-    <span class="kicker">Unlock 1 of 3</span>
-    <h2 class="big-title">Your<br><em>Prescription.</em></h2>
-    <div class="gold-rule"></div>
-    <div class="reward-pill">
-      <div class="rp-icon">🔓</div>
-      <div>
-        <span class="rp-label">What You Unlock</span>
-        <div class="rp-value">10% off your next order or first LT event booking</div>
-      </div>
-    </div>
-    <div id="ulForm">
-      <div class="field">
-        <label>Your WhatsApp Number</label>
-        <input class="inp" type="tel" id="waNum" placeholder="+234 ···" inputmode="tel" autocomplete="tel"/>
-      </div>
-      <button class="btn btn-fill btn-full" onclick="submitUnlock()">Send My Code ↗</button>
-      <p class="form-note">No spam. Your code arrives via WhatsApp in under 60 seconds.</p>
-    </div>
-    <div class="ul-success" id="ulSuccess">
-      <div class="us-icon">🥂</div>
-      <h3 class="us-h">Prescription<br><em>Received.</em></h3>
-      <div class="us-code">
-        <span class="us-code-l">Your Discount Code</span>
-        <div class="us-code-v" id="discountCode">LT-RX10</div>
-      </div>
-      <p class="us-sub">Sent to your WhatsApp. Valid on your next order or first event booking.</p>
-      <button class="btn btn-fill btn-full pop" onclick="go('s-menu')">Explore What's Next →</button>
+<div class="page">
+
+<!-- ── COVER ── -->
+<div class="cover">
+  <div class="cover-top">
+    <span class="cover-tag">Concept Note · Confidential</span>
+    <span class="cover-date">April 2026 · Workers' Day Edition</span>
+  </div>
+  <div class="cover-body">
+    <span class="cover-kicker">Liquid Therapy™ — The NTD Collection</span>
+    <div class="cover-title">Send a<br>Prescription.<br><em>For Services<br>Rendered.</em></div>
+    <p class="cover-sub">A culturally intelligent, giftable drink brand built around work, humour, and the right to clock off properly.</p>
+  </div>
+  <div class="cover-foot">
+    <div class="cover-brand">Liquid Therapy™</div>
+    <div class="cover-lines">
+      <span class="cover-line">The Art of Making You Feel Good</span>
+      <span class="cover-line">Curates Atmosphere. Moves Energy.</span>
+      <span class="cover-line">Taste Is Only the Beginning</span>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S3 · MENU
-     Services introduced here as
-     a natural second section
-════════════════════════════ -->
-<div class="screen" id="s-menu">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="marquee-strip" aria-hidden="true">
-    <span class="marquee-inner">TASTE IS ONLY THE BEGINNING &nbsp;·&nbsp; THE ART OF MAKING YOU FEEL GOOD &nbsp;·&nbsp; CURATES ATMOSPHERE. MOVES ENERGY. &nbsp;·&nbsp; TASTE IS ONLY THE BEGINNING &nbsp;·&nbsp; THE ART OF MAKING YOU FEEL GOOD &nbsp;·&nbsp; CURATES ATMOSPHERE. MOVES ENERGY. &nbsp;·&nbsp;</span>
-  </div>
-  <div class="menu-body">
+<!-- ── BODY ── -->
+<div class="body">
 
-    <!-- quick actions -->
-    <span class="kicker">Your Treatment Plan</span>
-    <h2 class="big-title" style="font-size:clamp(1.5rem,5.5vw,2rem);margin-bottom:.2rem;">What Would You<br>Like to <em>Do?</em></h2>
-
-    <div class="menu-divider"><div class="md-line"></div><span class="md-label">Quick Actions</span><div class="md-line"></div></div>
-
-    <button class="tile" onclick="go('s-coll')">
-      <div class="tile-icon">🍸</div>
-      <div class="tile-text">
-        <div class="tile-title">Find Your Pair</div>
-        <div class="tile-sub">Tap your can. Find the one that pairs with it. Tag them.</div>
-      </div>
-      <div class="tile-arr">→</div>
-    </button>
-
-    <button class="tile featured-tile" onclick="go('s-friday')">
-      <div class="tile-icon">🕔</div>
-      <div class="tile-text">
-        <div class="tile-title">The Friday 5PM Drop</div>
-        <div class="tile-sub">Every Friday at 5PM your prescription drops as you log off. You survived the week. This is your therapy.</div>
-      </div>
-      <div class="tile-arr">→</div>
-    </button>
-
-    <button class="tile" onclick="go('s-reorder')">
-      <div class="tile-icon">📦</div>
-      <div class="tile-text">
-        <div class="tile-title">Reorder a Case</div>
-        <div class="tile-sub">Single case, monthly drop, or Team Survival Pack.</div>
-      </div>
-      <div class="tile-arr">→</div>
-    </button>
-
-    <!-- services intro — the natural pivot -->
-    <div class="menu-divider"><div class="md-line"></div><span class="md-label">The Full Experience</span><div class="md-line"></div></div>
-
-    <button class="tile featured-tile" onclick="go('s-services')">
-      <div class="tile-icon">✨</div>
-      <div class="tile-text">
-        <div class="tile-title">What We Actually Do</div>
-        <div class="tile-sub">This can is just the introduction. Mobile bar, immersive sessions, welcome drinks, and more — we bring the whole experience to your event.</div>
-      </div>
-      <div class="tile-arr">→</div>
-    </button>
-
-    <button class="tile" onclick="go('s-event')">
-      <div class="tile-icon">📅</div>
-      <div class="tile-text">
-        <div class="tile-title">Tell Us About Your Event</div>
-        <div class="tile-sub">Drop your details. We'll reach out within 24 hours. Unlock 15% off your first booking.</div>
-      </div>
-      <div class="tile-arr">→</div>
-    </button>
-
+<!-- 1. THE GAP -->
+<div class="sec no-break">
+  <span class="sec-label">01 · The Gap</span>
+  <div class="sec-title">Work is intense.<br><em>Appreciation isn't.</em></div>
+  <div class="rule-gold"></div>
+  <p>Deadlines blur into evenings. Colleagues become co-survivors. And when the week finally ends, the moment of release — that first exhale on a Friday — goes completely unmarked.</p>
+  <p>Liquid Therapy™ exists in that gap. Not as a drink. As a format for acknowledging what just happened.</p>
+  <div class="pull">
+    <p>You don't buy a drink. <strong>You prescribe relief.</strong> You send it to someone who earned it. You open it when you've survived something worth surviving.</p>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S4 · SERVICES
-     The Trojan horse — fully built
-════════════════════════════ -->
-<div class="screen" id="s-services">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="sv-body">
+<div class="rule"></div>
 
-    <span class="kicker">What We Do</span>
-    <h2 class="big-title">This Can Was<br><em>Just the Start.</em></h2>
-    <div class="gold-rule"></div>
-    <p class="sv-intro">
-      You felt it from a single can. Imagine what we do with <em>a full room</em>. Liquid Therapy builds drinking experiences for private events, corporate moments, and brand activations — from the first welcome drink to the last song.
-    </p>
+<!-- 2. WORKERS DAY -->
+<div class="sec no-break">
+  <span class="sec-label">02 · The Launch Moment</span>
+  <div class="sec-title">Workers' Day.<br><em>Finally, a holiday<br>that gets it.</em></div>
+  <div class="rule-gold"></div>
+  <p>May 1st is Workers' Day — the one day the calendar acknowledges what the rest of the year doesn't. Every phrase in the NTD Collection is a workplace phrase. Every drink is named for a feeling office workers have had this week.</p>
+  <p>The launch is not a coincidence. It is the most fitting possible moment for this product to exist.</p>
 
-    <!-- Welcome Drinks — hero card, no price -->
-    <div class="svc-card hero-svc" onclick="enquire('Welcome Drinks')">
-      <div class="svc-icon">🥂</div>
-      <div class="svc-content">
-        <div class="svc-title">Welcome Drinks</div>
-        <div class="svc-desc">A refined arrival for your guests — premium glassware, styled welcome station, house wine, ice and garnish. Delivered in a 45-minute window. Sets the tone before a word is spoken.</div>
-        <div class="svc-meta">
-          <span class="svc-price">Weddings · Corporate · Executive Dinners</span>
-          <span class="svc-tag">Enquire →</span>
-        </div>
-      </div>
-      <div class="svc-arr">→</div>
-    </div>
+  <div class="hl">
+    <span class="hl-label">Campaign Platform</span>
+    <p><strong>"For Services Rendered."</strong><br>
+    Appreciate colleagues. Celebrate survival. Reward effort. Send a prescription to someone who carried you this week.</p>
+  </div>
 
-    <!-- Immersive Sessions -->
-    <div class="svc-card" onclick="enquire('Immersive Sessions')">
-      <div class="svc-icon">🌀</div>
-      <div class="svc-content">
-        <div class="svc-title">Immersive Sessions</div>
-        <div class="svc-desc">Facilitated sensory experiences that dissolve social silos and reset the room. Guided interaction, sensory cues, atmosphere management. People leave having connected — and remembered it.</div>
-        <div class="svc-meta">
-          <span class="svc-price">Corporate Offsites · Brand Activations · Pre-wedding Dinners</span>
-          <span class="svc-tag">Enquire →</span>
-        </div>
-      </div>
-      <div class="svc-arr">→</div>
-    </div>
-
-    <!-- Bar Setup -->
-    <div class="svc-card" onclick="enquire('Bar Setup')">
-      <div class="svc-icon">🍸</div>
-      <div class="svc-content">
-        <div class="svc-title">Mobile Bar Setup</div>
-        <div class="svc-desc">A fully styled bar structure that integrates with your event aesthetic. We bring the bar, the tools, and the team. We set up, we serve, we pack down. You stay present with your guests.</div>
-        <div class="svc-meta">
-          <span class="svc-price">Parties · Activations · Any Event</span>
-          <span class="svc-tag">Enquire →</span>
-        </div>
-      </div>
-      <div class="svc-arr">→</div>
-    </div>
-
-    <!-- Drink Care — sourcing note added -->
-    <div class="svc-card" onclick="enquire('Drink Care')">
-      <div class="svc-icon">🪄</div>
-      <div class="svc-content">
-        <div class="svc-title">Drink Care</div>
-        <div class="svc-desc">Already have drinks sorted? We manage planning, chilling, presentation, pacing, and back-of-house — so every glass arrives right. Don't have drinks yet? We can handle that too.</div>
-        <div class="svc-meta">
-          <span class="svc-price">House Parties · Dinners · All Sizes</span>
-          <span class="svc-tag">Enquire →</span>
-        </div>
-      </div>
-      <div class="svc-arr">→</div>
-    </div>
-
-    <!-- Crafted Drinks -->
-    <div class="svc-card" onclick="enquire('Crafted Drinks')">
-      <div class="svc-icon">🧪</div>
-      <div class="svc-content">
-        <div class="svc-title">Crafted Drinks</div>
-        <div class="svc-desc">Signature cocktails, zero-proof placebos, sparkling serves, and coffee kicks — all freshly crafted at your event by our EBS-certified mixologist. The experience you just held in your hand, live and in the room.</div>
-        <div class="svc-meta">
-          <span class="svc-price">Events of All Kinds · Per-drink pricing</span>
-          <span class="svc-tag">Enquire →</span>
-        </div>
-      </div>
-      <div class="svc-arr">→</div>
-    </div>
-
-    <div class="sv-note">
-      Tap any service to enquire via WhatsApp · Every event is quoted individually<br>
-      Lagos-based · Serving everywhere · Coverage fees apply outside Lagos Island
-    </div>
-
+  <div class="lines-box">
+    <span class="lb-label">Supporting Lines</span>
+    <span class="lb-line">Take after your last meeting</span>
+    <span class="lb-line">For surviving this week</span>
+    <span class="lb-line">Side effects: relief</span>
+    <span class="lb-line">Scan before it hits</span>
+    <span class="lb-line">You survived another year of it. Prescribed accordingly.</span>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S5 · COLLECTION + PAIRS
-════════════════════════════ -->
-<div class="screen" id="s-coll">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="coll-body">
-    <div class="coll-head">
-      <span class="kicker">The NTD Collection</span>
-      <div class="big-title" style="font-size:clamp(1.4rem,5vw,2rem);">Tap a can.<br>Find your pair.</div>
-      <div class="coll-sub">Every can pairs with one other. Two cans. One story. Tag them.</div>
+<div class="rule"></div>
+
+<!-- 3. THE PRODUCT -->
+<div class="sec no-break">
+  <span class="sec-label">03 · The Product</span>
+  <div class="sec-title">Not cocktails.<br><em>Formats of relief.</em></div>
+  <div class="rule-gold"></div>
+  <p>Six RTD prescriptions in clear pouches. Each phrase is something you've typed or received this week. Each drink is matched to its emotional register. The liquid is the label — drink colour is the background, text floats on top.</p>
+
+  <div class="product-grid">
+    <div class="prod-card">
+      <span class="prod-tag">Entry Point</span>
+      <div class="prod-name">Single Dose</div>
+      <div class="prod-desc">Personal reset. End-of-week reward. The one you send yourself.</div>
     </div>
-    <div class="cans-row" id="collRow">
-      <div class="c-can" data-rx="01" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq1"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">NTD,<br>Thanks</div><div class="cvt-d">Afrobeat Sour</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">NTD, Thanks</span><span class="c-cap-d">Afrobeat Sour</span></div>
-      </div>
-      <div class="c-can" data-rx="02" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq2"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">This Could Have Been an Email</div><div class="cvt-d">Chili Mango Margarita</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">This Could Have Been an Email</span><span class="c-cap-d">Chili Mango Margarita</span></div>
-      </div>
-      <div class="c-can" data-rx="03" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq3"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">Well<br>Noted.</div><div class="cvt-d">Coconut Grove</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">Well Noted.</span><span class="c-cap-d">Coconut Grove · Rum, Coconut, OJ</span></div>
-      </div>
-      <div class="c-can" data-rx="04" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq4"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">Circling<br>Back to Me</div><div class="cvt-d">Virgin Colada</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">Circling Back to Me</span><span class="c-cap-d">Virgin Colada · Zero Proof</span></div>
-      </div>
-      <div class="c-can" data-rx="05" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq5"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">My Camera<br>Isn't On</div><div class="cvt-d">Hibiscus Kiss</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">My Camera Isn't On</span><span class="c-cap-d">Hibiscus Kiss · Zero Proof</span></div>
-      </div>
-      <div class="c-can" data-rx="06" onclick="selectCan(this)">
-        <div class="cv"><div class="cv-top"><div class="cv-pull"></div></div><div class="cv-liq lq6"></div><div class="cv-txt"><div class="cvt-b">LT™</div><div class="cvt-p">Out of<br>Office</div><div class="cvt-d">Lagos Sunset</div></div><div class="cv-bot"></div></div>
-        <div class="c-cap"><span class="c-cap-p">Out of Office</span><span class="c-cap-d">Lagos Sunset · Tequila, Orange, Hibiscus</span></div>
-      </div>
+    <div class="prod-card hero">
+      <span class="prod-tag">★ Hero Format</span>
+      <div class="prod-name">Duo Pack</div>
+      <div class="prod-desc">"We survived this together." Two matched prescriptions. Built for gifting a colleague.</div>
     </div>
-    <div class="pair-panel" id="pairPanel">
-      <span class="pp-hint" id="ppHint">Tap any can to find its pair →</span>
-      <div class="pp-cans"  id="ppCans"></div>
-      <div class="pp-story" id="ppStory"></div>
-      <div class="pp-cta"   id="ppCta"></div>
+    <div class="prod-card">
+      <span class="prod-tag">Team</span>
+      <div class="prod-name">Office Pack</div>
+      <div class="prod-desc">3–6 units. Shared moment. End-of-week team ritual or Q-end thank you.</div>
     </div>
-    <p class="coll-hint">← swipe · tap to reveal pair →</p>
+    <div class="prod-card">
+      <span class="prod-tag">Weekend</span>
+      <div class="prod-name">Survival Kit</div>
+      <div class="prod-desc">Curated mix. "Your weekend plan, handled." Netflix, hosting, solo reset.</div>
+    </div>
+  </div>
+
+  <p>All formats use the same clear pouches. The Duo Pack is the commercial engine — it doubles the average order and generates the tagging behaviour that drives organic reach.</p>
+</div>
+
+<div class="rule"></div>
+
+<!-- 4. THE SIX SKUs -->
+<div class="sec no-break">
+  <span class="sec-label">04 · The Six Prescriptions</span>
+  <div class="sec-title"><em>The NTD Collection</em><br>After Hours.</div>
+  <div class="rule-gold"></div>
+
+  <p>Four alcoholic, two zero-proof. Three natural pairs. One collection story.</p>
+
+  <div style="margin:1rem 0;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr>
+          <td style="font-size:6px;letter-spacing:.3em;text-transform:uppercase;color:#c8902a;padding:5px 8px;border-bottom:1.5px solid #c8902a;">RX</td>
+          <td style="font-size:6px;letter-spacing:.3em;text-transform:uppercase;color:#c8902a;padding:5px 8px;border-bottom:1.5px solid #c8902a;">Phrase</td>
+          <td style="font-size:6px;letter-spacing:.3em;text-transform:uppercase;color:#c8902a;padding:5px 8px;border-bottom:1.5px solid #c8902a;">Drink</td>
+          <td style="font-size:6px;letter-spacing:.3em;text-transform:uppercase;color:#c8902a;padding:5px 8px;border-bottom:1.5px solid #c8902a;">Pairs with</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0ebe2;">
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">001</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">NTD, Thanks.</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Afrobeat Sour</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 002</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ebe2;background:#fdf9f5;">
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">002</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">This Could Have Been an Email</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Chili Mango Margarita</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 001</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ebe2;">
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">003</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">Well Noted.</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Coconut Grove</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 005</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ebe2;background:#fdf9f5;">
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">004</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">Circling Back to Me</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Virgin Colada · Zero Proof</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 006</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0ebe2;">
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">005</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">My Camera Isn't On</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Hibiscus Kiss · Zero Proof</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 003</td>
+        </tr>
+        <tr>
+          <td style="font-size:7px;color:#c8902a;padding:6px 8px;font-weight:500;">006</td>
+          <td style="font-size:8.5px;color:#1e0c04;padding:6px 8px;font-family:'Playfair Display',serif;font-weight:700;">Out of Office Energy</td>
+          <td style="font-size:8px;color:#5a3020;padding:6px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;">Lagos Sunset</td>
+          <td style="font-size:7.5px;color:#aaa;padding:6px 8px;">→ 004</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S6 · EVENT FORM
-════════════════════════════ -->
-<div class="screen" id="s-event">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="ev-body">
-    <span class="kicker">Unlock 3 of 3</span>
-    <h2 class="big-title">Tell Us About<br><em>Your Event.</em></h2>
-    <p class="italic-sub" style="margin-bottom:1rem;">We respond within 24 hours via WhatsApp.</p>
-    <div id="evForm">
-      <div class="ev-unlock">Submit this form → <strong>15% off your first full LT event booking</strong></div>
-      <div class="field">
-        <label>Your Name</label>
-        <input class="inp" type="text" id="evName" placeholder="First name"/>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>WhatsApp</label>
-          <input class="inp" type="tel" id="evPhone" placeholder="+234 ···" inputmode="tel"/>
-        </div>
-        <div class="field">
-          <label>Event Type</label>
-          <select class="inp" id="evType">
-            <option value="" disabled selected>Select</option>
-            <option>Corporate / Team</option>
-            <option>Brand Activation</option>
-            <option>Birthday Party</option>
-            <option>Pre-wedding Dinner</option>
-            <option>Wedding</option>
-            <option>Executive Dinner</option>
-            <option>Private Party</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>Guest Count</label>
-          <input class="inp" type="number" id="evGuests" placeholder="~guests" inputmode="numeric"/>
-        </div>
-        <div class="field">
-          <label>Date / Month</label>
-          <input class="inp" type="text" id="evDate" placeholder="e.g. June 2026"/>
-        </div>
-      </div>
-      <button class="btn btn-fill btn-full" onclick="submitEvent()">Submit — We'll Be in Touch ↗</button>
-      <p class="form-note">Lagos-based · Serving everywhere · All enquiries via WhatsApp</p>
+<div class="rule"></div>
+
+<!-- 5. GO TO MARKET -->
+<div class="sec no-break">
+  <span class="sec-label">05 · Go-to-Market</span>
+  <div class="sec-title">Three stages.<br><em>One week.</em></div>
+  <div class="rule-gold"></div>
+
+  <div class="timeline">
+    <div class="tl-item active">
+      <span class="tl-date">This Week · Office Tasting</span>
+      <div class="tl-title">Proof of Concept</div>
+      <div class="tl-body">Bring samples into the office. Keep it clean and low-key. Let the product speak. Seed the idea: "We're launching for Workers' Day — you'll be able to send this to someone at work." The only goal is curiosity and a WhatsApp number.</div>
     </div>
-    <div class="ev-success" id="evSuccess">
-      <div style="font-size:1.9rem;margin-bottom:.75rem;">🥂</div>
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;color:var(--white);margin-bottom:.4rem;">Treatment Plan <em style="font-style:italic;color:var(--gl);">Incoming.</em></h3>
-      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:rgba(245,240,232,.38);line-height:1.6;margin-bottom:1.2rem;">We'll reach out via WhatsApp within 24 hours. Enjoy the can.</p>
-      <button class="btn btn-ghost btn-full" onclick="back()">← Back</button>
+    <div class="tl-item">
+      <span class="tl-date">Thursday 30 April · Pre-Order Opens</span>
+      <div class="tl-title">"Prescribed After Work."</div>
+      <div class="tl-body">WhatsApp broadcast to the list built from the tasting. Pre-orders open. Controlled volume. Subscribers get first access. The CTA is specific: "Send a prescription to someone who carried you this week."</div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-date">Friday 1 May · Workers' Day</span>
+      <div class="tl-title">"For Services Rendered."</div>
+      <div class="tl-body">The drop goes live. Gifting, deliveries, social sharing. This is the first Friday Drop — the beginning of the weekly ritual. Lagos Island morning. Mainland afternoon.</div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-date">Every Friday After · Ongoing</span>
+      <div class="tl-title">"Every Friday. Prescribed."</div>
+      <div class="tl-body">Weekly limited drops. Build anticipation. The behaviour we want: "What's this week's drop?" and "Let me order before it sells out."</div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S7 · FRIDAY DROP
-════════════════════════════ -->
-<div class="screen" id="s-friday">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="ro-body">
+<div class="rule"></div>
 
-    <span class="kicker">Every Friday · 5PM</span>
-    <h2 class="big-title">You Survived<br>the Week. <em>This Is<br>Your Therapy.</em></h2>
-    <div class="gold-rule"></div>
+<!-- 6. WHAT WE ARE TESTING -->
+<div class="sec no-break">
+  <span class="sec-label">06 · POC Objectives</span>
+  <div class="sec-title">This is not<br><em>a tasting.</em></div>
+  <div class="rule-gold"></div>
+  <p>The office session is a validation exercise. We are not testing whether people enjoy the drinks. We are testing whether the concept works without explanation.</p>
 
-    <p class="italic-sub" style="margin-bottom:1.5rem;">
-      The NTD Collection drops every Friday at 5PM — exactly as you log off after a long week. Limited pouches. First come, first served. Order during the week, receive it as you clock out.
-    </p>
-
-    <!-- how it works — 3 tight steps -->
-    <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem;">
-
-      <div style="display:flex;gap:.9rem;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(245,240,232,.08);border-radius:14px;padding:1rem 1.1rem;">
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:rgba(232,184,75,.25);flex-shrink:0;line-height:1;width:22px;">1</div>
-        <div>
-          <div style="font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.18rem;">Wednesday — The Tease</div>
-          <div style="font-size:.46rem;color:rgba(245,240,232,.35);line-height:1.6;">We announce the week's prescription on Instagram Stories. Limited units. Pre-order opens Thursday.</div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:.9rem;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(245,240,232,.08);border-radius:14px;padding:1rem 1.1rem;">
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:rgba(232,184,75,.25);flex-shrink:0;line-height:1;width:22px;">2</div>
-        <div>
-          <div style="font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.18rem;">Thursday — Pre-Order Opens</div>
-          <div style="font-size:.46rem;color:rgba(245,240,232,.35);line-height:1.6;">WhatsApp your order before Friday. Subscribers get first access — one hour before everyone else.</div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:.9rem;align-items:flex-start;background:rgba(200,144,42,.08);border:1px solid rgba(200,144,42,.22);border-radius:14px;padding:1rem 1.1rem;">
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:rgba(232,184,75,.5);flex-shrink:0;line-height:1;width:22px;">3</div>
-        <div>
-          <div style="font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.18rem;">Friday 5PM — Drop Goes Live</div>
-          <div style="font-size:.46rem;color:rgba(245,240,232,.45);line-height:1.6;">Your prescription arrives as you log off. Lagos Island and Mainland delivery Saturday. Outside Lagos dispatched Monday.</div>
-        </div>
-      </div>
-
+  <div class="metrics">
+    <div class="metric">
+      <span class="metric-n">1</span>
+      <span class="metric-l">Do they get it immediately?</span>
     </div>
+    <div class="metric">
+      <span class="metric-n">2</span>
+      <span class="metric-l">Do they think of someone to send it to?</span>
+    </div>
+    <div class="metric">
+      <span class="metric-n">3</span>
+      <span class="metric-l">Will they pay for it as a gift?</span>
+    </div>
+    <div class="metric">
+      <span class="metric-n">4</span>
+      <span class="metric-l">Which phrases land hardest?</span>
+    </div>
+  </div>
 
-    <!-- join the list CTA -->
-    <a class="ro-item feat" href="https://wa.me/2348123484321?text=Hi%20Liquid%20Therapy!%20I%20scanned%20a%20pouch%20and%20I%27d%20like%20to%20join%20the%20Friday%205PM%20Drop%20list.%20Please%20add%20me%20for%20this%20week%27s%20prescription." target="_blank" rel="noopener" style="margin-bottom:.65rem;">
-      <div><span class="roi-tag">Join the Drop</span><div class="roi-name">Add Me to Friday's List</div><div class="roi-desc">Reply with your pair choice · Delivery details confirmed via WhatsApp</div></div>
-      <div class="roi-arr">→</div>
-    </a>
+  <p>Success on Thursday is not a full room. Success is three people who, without being asked, hold up a pouch and say "this is literally [colleague's name]."</p>
 
-    <a class="ro-item" href="https://wa.me/2348123484321?text=Hi%20Liquid%20Therapy!%20I%20scanned%20a%20pouch%20and%20I%27d%20love%20to%20subscribe%20to%20the%20Monthly%20Drop%20so%20I%20never%20miss%20a%20Friday." target="_blank" rel="noopener">
-      <div><span class="roi-tag">Never Miss a Friday</span><div class="roi-name">Monthly Subscription</div><div class="roi-desc">24 pouches/month · Guaranteed allocation · Vol. 2 early access</div></div>
-      <div class="roi-arr">→</div>
-    </a>
-
-    <p style="font-size:.4rem;color:rgba(245,240,232,.18);text-align:center;margin-top:1rem;line-height:1.7;">Limited units each Friday · Sell-out is the point · @liquidtherapyhq</p>
-
+  <div class="pull">
+    <p>The moment the concept travels — when someone describes it to a third person using their own words — that is when you know it works.</p>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     S8 · REORDER
-════════════════════════════ -->
-<div class="screen" id="s-reorder">
-  <button class="back-btn" onclick="back()">←</button>
-  <div class="ro-body">
-    <span class="kicker">Reorder & Subscribe</span>
-    <h2 class="big-title">More Where<br><em>That Came From.</em></h2>
-    <p class="italic-sub" style="margin-bottom:1.4rem;">₦5,000 per pouch · Tap to order via WhatsApp.</p>
-    <a class="ro-item" href="https://wa.me/2348123484321?text=Hi%20Liquid%20Therapy!%20I%20scanned%20a%20pouch%20and%20would%20like%20to%20order%20a%20Single%20Case%20(12%20pouches%20%C3%97%20%E2%82%A65%2C000%20%3D%20%E2%82%A660%2C000%20%E2%80%94%20mix%20of%20all%206%20phrases)." target="_blank" rel="noopener">
-      <div><span class="roi-tag">One-Off</span><div class="roi-name">Single Case</div><div class="roi-desc">12 pouches · ₦5,000 each · Mix all 6 phrases</div></div>
-      <div class="roi-arr">→</div>
-    </a>
-    <a class="ro-item feat" href="https://wa.me/2348123484321?text=Hi%20Liquid%20Therapy!%20I%20scanned%20a%20pouch%20and%20I%27d%20love%20to%20subscribe%20to%20the%20Monthly%20Drop%20(24%20pouches%2Fmonth%2C%20first%20month%2020%25%20off)." target="_blank" rel="noopener">
-      <div><span class="roi-tag">★ Most Popular</span><div class="roi-name">Monthly Drop</div><div class="roi-desc">24 pouches/month · First month 20% off · Vol. 2 early access</div></div>
-      <div class="roi-arr">→</div>
-    </a>
-    <a class="ro-item" href="https://wa.me/2348123484321?text=Hi%20Liquid%20Therapy!%20I%20scanned%20a%20pouch%20and%20I%27d%20like%20to%20enquire%20about%20a%20Team%20Survival%20Pack%20for%20my%20team%20(10%2B%20boxes)." target="_blank" rel="noopener">
-      <div><span class="roi-tag">Corporate</span><div class="roi-name">Team Survival Pack</div><div class="roi-desc">10+ boxes · Branded option at 50+ boxes · Bulk pricing</div></div>
-      <div class="roi-arr">→</div>
-    </a>
+<div class="rule"></div>
+
+<!-- 7. WHERE WE ARE GOING -->
+<div class="sec no-break">
+  <span class="sec-label">07 · Where This Goes</span>
+  <div class="sec-title">The can is the<br><em>acquisition channel.</em></div>
+  <div class="rule-gold"></div>
+  <p>Every pouch is a Liquid Therapy™ touchpoint. Every QR scan is a lead. Every pair tag is organic reach. But the RTD product is not the business — it is how the business finds its clients.</p>
+  <p>The path is: <strong>pouch → scan → event enquiry → full LT experience.</strong> Corporate team drops lead to corporate bar bookings. Birthday gifting leads to birthday bar setups. The product earns the relationship that the service closes.</p>
+
+  <div class="pills">
+    <span class="pill gold">Welcome Drinks · from ₦550k</span>
+    <span class="pill gold">Immersive Sessions · from ₦1m</span>
+    <span class="pill gold">Mobile Bar Setup · from ₦400k</span>
+    <span class="pill gold">Drink Care · from ₦150k</span>
+    <span class="pill gold">Crafted Drinks · 20% TDV</span>
   </div>
-  <div class="brand-arch">
-    <span class="ba-line">The Art of Making You Feel Good</span>
-    <span class="ba-line">Curates Atmosphere. Moves Energy.</span>
-    <span class="ba-line">Taste Is Only the Beginning</span>
+
+  <p>The Workers' Day launch establishes the corporate gifting use case first — the highest-value path to event bookings. Every Team Survival Pack that lands in an office is a warm introduction to a room full of potential event clients.</p>
+</div>
+
+<div class="rule"></div>
+
+<!-- 8. RISKS -->
+<div class="sec no-break">
+  <span class="sec-label">08 · Risks & How We Handle Them</span>
+  <div class="rule-gold"></div>
+
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #f0ebe2;">
+      <td style="padding:8px;font-size:8px;color:#8B3A10;width:35%;font-family:'DM Mono',monospace;vertical-align:top;">Printing delays</td>
+      <td style="padding:8px;font-size:8.5px;color:#5a3020;font-family:'Cormorant Garamond',serif;font-style:italic;vertical-align:top;">Clean white sticker labels are on-brand anyway. The phrase carries the concept, not the label quality. Ship it.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0ebe2;background:#fdf9f5;">
+      <td style="padding:8px;font-size:8px;color:#8B3A10;font-family:'DM Mono',monospace;vertical-align:top;">Low initial orders</td>
+      <td style="padding:8px;font-size:8.5px;color:#5a3020;font-family:'Cormorant Garamond',serif;font-style:italic;vertical-align:top;">Convert face-to-face at the tasting before anyone leaves. A WhatsApp number at the table is worth ten Instagram followers.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0ebe2;">
+      <td style="padding:8px;font-size:8px;color:#8B3A10;font-family:'DM Mono',monospace;vertical-align:top;">Overcomplication</td>
+      <td style="padding:8px;font-size:8.5px;color:#5a3020;font-family:'Cormorant Garamond',serif;font-style:italic;vertical-align:top;">One phrase does all the work. If you need to explain it, it hasn't landed. Trust the concept.</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;font-size:8px;color:#8B3A10;font-family:'DM Mono',monospace;vertical-align:top;">Logistics uncertainty</td>
+      <td style="padding:8px;font-size:8.5px;color:#5a3020;font-family:'Cormorant Garamond',serif;font-style:italic;vertical-align:top;">Workers' Day is a public holiday — deliveries may need same-day or Sunday dispatch. Confirm delivery window in the pre-order message. Under-promise, over-deliver.</td>
+    </tr>
+  </table>
+</div>
+
+</div><!-- end body -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="df-brand">Liquid Therapy™</div>
+  <div class="df-contact">
+    liquidtherapyhq@gmail.com · +234 812 348 4321 · @liquidtherapyhq<br>
+    Mobile Bar · Fine Drinking · Polysensory Experiences · Lagos
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+</div><!-- end page -->
 
-<script>
-/* ── SKU DATA ── */
-const SKUS={
-  '01':{phrase:'NTD,<br><em>Thanks</em>',tagline:'No explanation required. You have earned this.',drink:'Afrobeat Sour',rx:'Rx · 001',code:'LT-NTD10'},
-  '02':{phrase:'This Could Have<br><em>Been an Email</em>',tagline:'Your body stayed. This is for the part of you that left at 2pm.',drink:'Chili Mango Margarita · Tequila, Mango, Chili',rx:'Rx · 002',code:'LT-EMAIL10'},
-  '03':{phrase:'<em>Well</em><br>Noted.',tagline:'Acknowledged. Understood. Not necessarily acted upon.',drink:'Coconut Grove · White Rum, Coconut Cream, Orange Juice',rx:'Rx · 003',code:'LT-NOTED10'},
-  '04':{phrase:'Circling Back<br><em>to Me</em>',tagline:'For once, the only agenda item is entirely yours.',drink:'Virgin Colada · Zero Proof · Coconut, Pineapple',rx:'Rx · 004',code:'LT-CIRCLE10'},
-  '05':{phrase:'My Camera<br><em>Isn\'t On</em>',tagline:'It could be the lighting. It is not the lighting.',drink:'Hibiscus Kiss · Hibiscus, Fresh Orange, Lime · Zero Proof',rx:'Rx · 005',code:'LT-CAM10'},
-  '06':{phrase:'Out of<br><em>Office</em>',tagline:'Not a calendar status. A state of mind.',drink:'Lagos Sunset · Tequila, Orange, Hibiscus Grenadine',rx:'Rx · 006',code:'LT-OOO10'}
-};
-const PAIRS={
-  '01':{p:'02',cans:'NTD, Thanks + This Could Have Been an Email',story:'For the one who left early and the one who stayed to take the notes. You both earned this.',cta:'Tag @liquidtherapyhq and that person →'},
-  '02':{p:'01',cans:'This Could Have Been an Email + NTD, Thanks',story:'For the one who stayed and the one who disappeared. One of you took the notes. Both of you need this.',cta:'Tag @liquidtherapyhq and that person →'},
-  '03':{p:'05',cans:'Well Noted. + My Camera Isn\'t On',story:'For the two of you who were technically present and spiritually elsewhere. Both responses were valid.',cta:'Tag @liquidtherapyhq and that person →'},
-  '04':{p:'06',cans:'Circling Back to Me + Out of Office',story:'For the two of you who decided, quietly and without announcement, that tonight belongs to no one else.',cta:'Tag @liquidtherapyhq and that person →'},
-  '05':{p:'03',cans:'My Camera Isn\'t On + Well Noted.',story:'For the two of you who were technically present and spiritually elsewhere. Both responses were valid.',cta:'Tag @liquidtherapyhq and that person →'},
-  '06':{p:'04',cans:'Out of Office + Circling Back to Me',story:'For the two of you who decided, quietly and without announcement, that tonight belongs to no one else.',cta:'Tag @liquidtherapyhq and that person →'}
-};
-
-/* ── NAV ── */
-let stack=['s-hero'], cur='s-hero';
-function go(id){
-  if(!id||id===cur)return;
-  const prev=document.getElementById(cur), next=document.getElementById(id);
-  stack.push(id);
-  prev.classList.remove('active'); prev.classList.add('exit-left');
-  next.classList.add('active'); cur=id;
-  setTimeout(()=>prev.classList.remove('exit-left'),460);
-}
-function back(){
-  if(stack.length<=1)return;
-  stack.pop();
-  const pid=stack[stack.length-1];
-  const ce=document.getElementById(cur), pe=document.getElementById(pid);
-  ce.classList.remove('active');
-  pe.classList.remove('exit-left'); pe.classList.add('active');
-  cur=pid;
-}
-
-/* ── INIT ── */
-function init(){
-  const p=new URLSearchParams(window.location.search);
-  const rx=p.get('rx');
-  if(!rx){
-    document.getElementById('heroPhrase').innerHTML='Taste Is Only<br><em>the Beginning.</em>';
-    document.getElementById('heroTagline').textContent='Six prescriptions. Crafted for the week you just survived.';
-    document.getElementById('heroDrink').textContent='The NTD Collection · After Hours';
-    document.getElementById('heroRx').textContent='Liquid Therapy™';
-    document.getElementById('discountCode').textContent='LT-RX10';
-  } else {
-    const s=SKUS[rx]||SKUS['01'];
-    document.getElementById('heroPhrase').innerHTML=s.phrase;
-    document.getElementById('heroTagline').textContent=s.tagline;
-    document.getElementById('heroDrink').textContent=s.drink;
-    document.getElementById('heroRx').textContent=s.rx+' · Liquid Therapy™';
-    document.getElementById('discountCode').textContent=s.code;
-    const active=document.querySelector(`.c-can[data-rx="${rx}"]`);
-    if(active)active.classList.add('hi');
-  }
-}
-
-/* ── UNLOCK ── */
-function submitUnlock(){
-  const num=document.getElementById('waNum').value.trim();
-  if(!num||num.length<7){toast('Please enter your WhatsApp number.');return;}
-  const code=document.getElementById('discountCode').textContent;
-  const msg=`Hi Liquid Therapy!%0A%0AI just scanned a can and I'm claiming my prescription discount.%0A%0AWhatsApp: ${encodeURIComponent(num)}%0ADiscount code: ${code}`;
-  window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank');
-  document.getElementById('ulForm').style.display='none';
-  document.getElementById('ulSuccess').classList.add('show');
-}
-
-/* ── SERVICE ENQUIRY ── */
-function enquire(service){
-  const msg=`Hi Liquid Therapy!%0A%0AI scanned an NTD can and I'd like to enquire about your ${encodeURIComponent(service)} service. Could you please share more details and pricing?`;
-  window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank');
-}
-
-/* ── EVENT FORM ── */
-function submitEvent(){
-  const name=document.getElementById('evName').value.trim();
-  const phone=document.getElementById('evPhone').value.trim();
-  const type=document.getElementById('evType').value;
-  if(!name||!phone||!type){toast('Please fill in name, number and event type.');return;}
-  const guests=document.getElementById('evGuests').value||'TBC';
-  const date=document.getElementById('evDate').value||'TBC';
-  const msg=`Hi Liquid Therapy!%0A%0AI scanned an NTD can and I'm planning an event.%0A%0AName: ${encodeURIComponent(name)}%0AEvent: ${encodeURIComponent(type)}%0AGuests: ${guests}%0ADate: ${encodeURIComponent(date)}%0A%0APlease also send my 15%25 event discount. Thank you!`;
-  document.getElementById('evForm').style.display='none';
-  document.getElementById('evSuccess').classList.add('show');
-  setTimeout(()=>window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank'),500);
-}
-
-/* ── CAN SELECT ── */
-function selectCan(el){
-  const rx=el.dataset.rx, pair=PAIRS[rx];
-  document.querySelectorAll('.c-can').forEach(c=>c.classList.remove('hi'));
-  el.classList.add('hi');
-  const partner=document.querySelector(`.c-can[data-rx="${pair.p}"]`);
-  if(partner){partner.classList.add('hi');partner.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
-  document.getElementById('ppHint').style.display='none';
-  const cans=document.getElementById('ppCans'), story=document.getElementById('ppStory'), cta=document.getElementById('ppCta');
-  cans.innerHTML=pair.cans; story.textContent=pair.story; cta.textContent=pair.cta;
-  cans.style.display=story.style.display=cta.style.display='block';
-}
-
-/* ── TOAST ── */
-function toast(msg,dur=2600){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),dur);
-}
-
-init();
-</script>
 </body>
 </html>
