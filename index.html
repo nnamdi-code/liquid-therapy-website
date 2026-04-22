@@ -191,11 +191,10 @@ body::before{
 .coll-body{flex:1;display:flex;flex-direction:column;padding-top:max(env(safe-area-inset-top,0px),4rem);overflow:hidden;}
 .coll-head{padding:0 1.5rem .8rem;}
 .coll-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.86rem;color:rgba(245,240,232,.36);margin-top:.22rem;}
-.cans-row{display:flex;gap:1rem;overflow-x:auto;scrollbar-width:none;padding:1rem 1.5rem 1rem;scroll-snap-type:x mandatory;flex-shrink:0;}
-.cans-row::-webkit-scrollbar{display:none;}
-.c-can{flex:0 0 118px;display:flex;flex-direction:column;align-items:center;gap:.5rem;scroll-snap-align:center;cursor:pointer;transition:transform .3s var(--ease);}
-.c-can:hover{transform:translateY(-6px);}
-.cv{width:100px;height:168px;border-radius:12px 12px 16px 16px;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1);}
+.cans-row{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;padding:.75rem 1rem;flex-shrink:0;}
+.c-can{display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;transition:transform .3s var(--ease);}
+.c-can:hover{transform:translateY(-4px) scale(1.04);}
+.cv{width:min(14vw,90px);height:min(23vw,150px);border-radius:10px 10px 14px 14px;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1);}
 .cv-top{position:absolute;top:0;left:0;right:0;height:18px;background:linear-gradient(180deg,#ccc,#888);border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;}
 .cv-pull{width:16px;height:5px;background:#aaa;border-radius:2px;margin-top:5px;border:1px solid #999;}
 .cv-bot{position:absolute;bottom:0;left:0;right:0;height:13px;background:linear-gradient(0deg,#888,#bbb);border-radius:0 0 16px 16px;}
@@ -204,7 +203,7 @@ body::before{
 .cv::after{content:'';position:absolute;top:18px;bottom:13px;left:-28%;width:24%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transform:skewX(-8deg);pointer-events:none;}
 .cv-txt{position:absolute;top:18px;bottom:13px;left:0;right:0;display:flex;flex-direction:column;justify-content:center;padding:0 8px;text-align:center;z-index:2;}
 .cvt-b{font-size:.3rem;letter-spacing:.2em;text-transform:uppercase;opacity:.5;margin-bottom:4px;}
-.cvt-p{font-family:'Playfair Display',serif;font-weight:900;font-size:.65rem;line-height:1.15;}
+.cvt-p{font-family:'Playfair Display',serif;font-weight:900;font-size:min(.65rem,2.5vw);line-height:1.15;}
 .cvt-d{font-size:.3rem;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;opacity:.6;}
 .lq1{background:linear-gradient(150deg,#1a0804,#3d160a,#6b200f);} .lq1 .cvt-b,.lq1 .cvt-p,.lq1 .cvt-d{color:#f5f0e8;}
 .lq2{background:linear-gradient(150deg,#0d1a0a,#1c3d10,#2d6010);} .lq2 .cvt-b,.lq2 .cvt-p,.lq2 .cvt-d{color:#eef5e8;}
@@ -212,9 +211,9 @@ body::before{
 .lq4{background:linear-gradient(150deg,#1a0e08,#3d2010,#7a3a10);} .lq4 .cvt-b,.lq4 .cvt-p,.lq4 .cvt-d{color:#f5eae8;}
 .lq5{background:linear-gradient(180deg,#fde080 0%,#f09020 30%,#d84020 60%,#981828 100%);} .lq5 .cvt-b,.lq5 .cvt-p,.lq5 .cvt-d{color:#fdf4e8;}
 .lq6{background:linear-gradient(150deg,#0a1014,#102030,#0e3040);} .lq6 .cvt-b,.lq6 .cvt-p,.lq6 .cvt-d{color:#e8f0f5;}
-.c-cap{text-align:center;}
-.c-cap-p{font-family:'Playfair Display',serif;font-size:.6rem;font-weight:700;color:var(--cream);display:block;line-height:1.2;margin-bottom:.1rem;}
-.c-cap-d{font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.c-cap{text-align:center;min-width:0;width:100%;}
+.c-cap-p{font-family:'Playfair Display',serif;font-size:min(.55rem,2.2vw);font-weight:700;color:var(--cream);display:block;line-height:1.2;margin-bottom:.1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.c-cap-d{font-size:min(.35rem,1.8vw);letter-spacing:.05em;text-transform:uppercase;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .c-can.hi .cv{filter:drop-shadow(0 0 14px rgba(200,144,42,.5));}
 .pair-panel{flex:1;margin:0 1.5rem 0;min-height:0;background:rgba(200,144,42,.07);border:1px solid rgba(200,144,42,.18);border-radius:16px;padding:1.05rem 1.2rem;display:flex;flex-direction:column;justify-content:center;transition:all .3s var(--ease);}
 .pp-hint{font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(200,144,42,.45);}
@@ -526,7 +525,7 @@ body::before{
       <div class="pp-story" id="ppStory"></div>
       <div class="pp-cta"   id="ppCta"></div>
     </div>
-    <p class="coll-hint">← swipe · tap to reveal pair →</p>
+    <p class="coll-hint">Tap any can to reveal its pair →</p>
   </div>
 </div>
 
