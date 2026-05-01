@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Liquid Therapy™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F2EDE4; --cream2: #EDE6DA; --brown: #3D1F0E; --brown-light: #6B3A1F;
+    --brown-mid: #8B5230; --brown-accent: #A0522D; --gold: #B8834A; --gold-light: #D4A96A;
+    --surface: #FAF7F2; --surface2: #F0E8DC; --muted: #8A7060;
+    --border: rgba(61,31,14,0.12); --border-strong: rgba(61,31,14,0.25);
+    --font-display: 'Cormorant Garamond', serif; --font-body: 'Montserrat', sans-serif;
+  }
+  html { scroll-behavior: auto; }
+  body { background: var(--cream); color: var(--brown); font-family: var(--font-body); font-weight: 300; line-height: 1.6; }
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(242,237,228,0.97); backdrop-filter: blur(10px); border-bottom: 0.5px solid var(--border); padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 18px; font-weight: 400; letter-spacing: 0.12em; color: var(--brown); }
+  .nav-logo-tm { font-size: 10px; vertical-align: super; color: var(--brown-mid); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: pointer; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-social { color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; }
+  .nav-social:hover { color: var(--brown); }
+  .nav-social svg { width: 15px; height: 15px; }
+  .nav-cta { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; background: var(--brown); color: var(--cream); border: none; padding: 10px 22px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+  .nav-cta:hover { background: var(--brown-light); }
+  section { display: none; animation: fadeIn 0.35s ease; }
+  section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  #hero { min-height: calc(100vh - 68px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem; background: var(--cream); }
+  .hero-tagline { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1rem; }
+  .hero-services-bar { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; }
+  .hero-title { font-family: var(--font-display); font-size: clamp(56px, 9vw, 108px); font-weight: 300; line-height: 1; color: var(--brown); margin-bottom: 1rem; }
+  .hero-title em { font-style: italic; color: var(--brown-mid); }
+  .hero-sub { font-family: var(--font-display); font-size: clamp(16px, 2vw, 22px); font-weight: 300; font-style: italic; color: var(--muted); margin-bottom: 3rem; max-width: 520px; line-height: 1.6; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 5rem; }
+  .btn-primary { background: var(--brown); color: var(--cream); border: none; padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--brown-light); }
+  .btn-ghost { background: transparent; color: var(--brown); border: 0.5px solid var(--brown); padding: 14px 38px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn-ghost:hover { background: var(--brown); color: var(--cream); }
+  .hero-rule { width: 0.5px; height: 60px; background: var(--border-strong); margin: 0 auto 3rem; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; max-width: 560px; }
+  .stat-num { font-family: var(--font-display); font-size: 44px; font-weight: 300; color: var(--brown); }
+  .stat-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem 7rem; }
+  .page-wrap-sm { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 7rem; }
+  .section-eyebrow { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 56px); font-weight: 300; color: var(--brown); line-height: 1.1; }
+  .section-title em { font-style: italic; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-intro { text-align: center; font-family: var(--font-display); font-size: 18px; font-weight: 300; font-style: italic; color: var(--muted); max-width: 560px; margin: 0 auto 3.5rem; line-height: 1.7; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5px; }
+  .service-card { background: var(--surface); padding: 2.5rem; border: 0.5px solid var(--border); transition: border-color 0.25s, background 0.25s; }
+  .service-card:hover { border-color: var(--brown-mid); background: var(--surface2); }
+  .service-num { font-size: 9px; letter-spacing: 0.25em; color: var(--muted); margin-bottom: 1rem; }
+  .service-name { font-family: var(--font-display); font-size: 28px; font-weight: 300; color: var(--brown); margin-bottom: 0.75rem; }
+  .service-desc { font-size: 12px; color: var(--muted); line-height: 1.9; margin-bottom: 1.5rem; }
+  .service-link { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brown-mid); cursor: pointer; text-decoration: none; border-bottom: 0.5px solid var(--border-strong); padding-bottom: 2px; transition: color 0.2s; }
+  .service-link:hover { color: var(--brown); }
+  .menu-filters { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+  .filter-btn { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border: 0.5px solid var(--border-strong); background: transparent; color: var(--muted); padding: 8px 20px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5px; }
+  .cocktail-card { background: var(--surface); padding: 2rem; border: 0.5px solid var(--border); transition: border-color 0.25s; }
+  .cocktail-card:hover { border-color: var(--brown-mid); }
+  .card-cat { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.5rem; }
+  .card-name { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--brown); margin-bottom: 0.35rem; }
+  .card-ingredients { font-size: 12px; color: var(--brown); line-height: 1.7; margin-bottom: 0.5rem; }
+  .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .card-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: var(--surface2); padding: 3px 8px; border: 0.5px solid var(--border); }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+  .card-glass { font-size: 13px; color: var(--muted); font-style: italic; font-family: var(--font-display); }
+  .add-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: 0.5px solid var(--brown); color: var(--brown); padding: 7px 14px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+  .add-btn:hover, .add-btn.added { background: var(--brown); color: var(--cream); }
+  #cart-toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; background: var(--brown); padding: 1rem 1.5rem; display: none; align-items: center; gap: 1rem; min-width: 260px; }
+  #cart-toast.show { display: flex; }
+  .toast-label { font-size: 11px; color: var(--cream); opacity: 0.7; flex: 1; letter-spacing: 0.08em; }
+  .toast-count { font-family: var(--font-display); font-size: 22px; color: var(--gold-light); }
+  .toast-btn { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--cream); color: var(--brown); border: none; padding: 8px 14px; cursor: pointer; font-family: var(--font-body); }
+  .form-card { background: var(--surface); border: 0.5px solid var(--border); padding: 2.5rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brown-mid); display: block; margin-bottom: 0.6rem; }
+  .form-input, .form-select, .form-textarea { width: 100%; background: var(--cream); border: 0.5px solid var(--border-strong); color: var(--brown); padding: 13px 15px; font-family: var(--font-body); font-size: 13px; outline: none; transition: border-color 0.2s; appearance: none; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); opacity: 0.5; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--brown); }
+  .form-textarea { resize: vertical; min-height: 110px; }
+  .form-select option { background: var(--cream); color: var(--brown); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn { width: 100%; background: var(--brown); color: var(--cream); border: none; padding: 16px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; }
+  .submit-btn:hover { background: var(--brown-light); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .cart-summary-box { background: var(--surface2); border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 2rem; }
+  .cart-summary-title { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1rem; }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); }
+  .cart-item:last-of-type { border-bottom: none; }
+  .cart-item-name { font-size: 13px; color: var(--brown); }
+  .cart-item-qty { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cart-item-remove { font-size: 16px; color: var(--muted); cursor: pointer; margin-left: 12px; background: none; border: none; transition: color 0.2s; }
+  .cart-item-remove:hover { color: #A32D2D; }
+  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border-strong); }
+  .cart-total-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .cart-total-price { font-family: var(--font-display); font-size: 28px; color: var(--brown); }
+  .empty-cart { text-align: center; padding: 1.5rem; color: var(--muted); font-family: var(--font-display); font-style: italic; font-size: 16px; }
+  .ev-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.5rem; margin-top: 0.6rem; }
+  .ev-type-btn { background: transparent; border: 0.5px solid var(--border-strong); color: var(--muted); padding: 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; text-align: center; }
+  .ev-type-btn.selected, .ev-type-btn:hover { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+  .extensions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .ext-group-title { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid var(--border-strong); }
+  .ext-item { font-size: 13px; color: var(--brown); padding: 0.5rem 0; border-bottom: 0.5px solid var(--border); line-height: 1.5; }
+  .ext-item:last-child { border-bottom: none; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem; }
+  .faq-item { padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .faq-q { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--brown); margin-bottom: 0.6rem; line-height: 1.4; }
+  .faq-a { font-size: 12px; color: var(--muted); line-height: 1.9; }
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; margin-bottom: 2rem; }
+  .contact-card { background: var(--surface); border: 0.5px solid var(--border); padding: 1.75rem; text-align: center; }
+  .contact-icon-wrap { width: 36px; height: 36px; border: 0.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
+  .contact-icon-wrap svg { width: 14px; height: 14px; color: var(--brown-mid); }
+  .contact-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--brown-mid); margin-bottom: 0.4rem; }
+  .contact-value { font-family: var(--font-display); font-size: 15px; color: var(--brown); }
+  .contact-value a { color: var(--brown-accent); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+  .success-panel { display: none; text-align: center; padding: 4rem 1rem; }
+  .success-panel.show { display: block; }
+  .success-title { font-family: var(--font-display); font-size: 40px; font-weight: 300; font-style: italic; color: var(--brown); margin-bottom: 0.75rem; }
+  .success-sub { font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 400px; margin: 0 auto 2rem; }
+  footer { background: var(--brown); padding: 3rem 2.5rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-size: 18px; color: var(--cream); letter-spacing: 0.15em; opacity: 0.9; }
+  .footer-tagline { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(242,237,228,0.4); margin-top: 4px; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242,237,228,0.5); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-copy { font-size: 10px; color: rgba(242,237,228,0.3); letter-spacing: 0.06em; }
+  .mob-nav { display: none; }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .form-row, .faq-grid, .extensions-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    body { padding-bottom: 70px; }
+    .mob-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 300; background: var(--brown); border-top: 0.5px solid rgba(255,255,255,0.1); justify-content: space-around; align-items: center; padding: 6px 0 10px; }
+    .mob-nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; background: none; border: none; color: rgba(242,237,228,0.5); font-family: var(--font-body); padding: 4px 6px; transition: color 0.2s; }
+    .mob-nav-btn.active, .mob-nav-btn:hover { color: var(--cream); }
+    .mob-nav-btn svg { width: 18px; height: 18px; }
+    .mob-nav-btn span { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor:pointer;">
+    <span class="nav-logo-text">Liquid Therapy<span class="nav-logo-tm">™</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html" onclick="sessionStorage.setItem('lt-section','services');return true;">Services</a>
+    <a class="active" id="nav-menu">Menu</a>
+    <a href="index.html" onclick="sessionStorage.setItem('lt-section','events');return true;">Book</a>
+    <a href="index.html" onclick="sessionStorage.setItem('lt-section','faq');return true;">FAQ</a>
+    <a href="index.html" onclick="sessionStorage.setItem('lt-section','contact');return true;">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://instagram.com/liquidtherapyhq" target="_blank" class="nav-social" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank" class="nav-social" title="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.26 8.26 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg>
+    </a>
+    <button class="nav-cta" onclick="showSection('order')">Order Now</button>
+  </div>
+</nav>
+
+<!-- Mobile bottom nav -->
+<div class="mob-nav" id="mob-nav">
+  <button class="mob-nav-btn" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="mob-nav-btn" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span>Services</span>
+  </button>
+  <button class="mob-nav-btn active" id="mob-menu" onclick="showSection('menu')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    <span>Menu</span>
+  </button>
+  <button class="mob-nav-btn" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Book</span>
+  </button>
+  <button class="mob-nav-btn" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span>FAQ</span>
+  </button>
+  <button class="mob-nav-btn" onclick="window.location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+    <span>Contact</span>
+  </button>
+</div>
+
+<section id="menu">
+  <div class="page-wrap">
+    <div class="section-header">
+      <div class="section-eyebrow">Crafted Drinks Menu</div>
+      <h2 class="section-title">Find the <em>flavour</em><br>to your finest moments</h2>
+    </div>
+    <p class="section-intro">Our menu is mixed and prescribed by an EBS-certified mixologist dedicated to treating every palate. Signature cocktails, familiar classics, zero-proof placebos, sparkling sips.</p>
+    <div class="menu-filters">
+      <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
+      <button class="filter-btn" onclick="filterMenu('signature',this)">Signature</button>
+      <button class="filter-btn" onclick="filterMenu('classic',this)">Classics</button>
+      <button class="filter-btn" onclick="filterMenu('zero-proof',this)">Zero-Proof</button>
+      <button class="filter-btn" onclick="filterMenu('sparkling',this)">Sparkling</button>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="page-wrap-sm">
+    <div class="section-header" id="order-header">
+      <div class="section-eyebrow">Place Your Order</div>
+      <h2 class="section-title"><em>Delivery</em> &amp; Pickup</h2>
+    </div>
+    <div id="order-main">
+      <div class="cart-summary-box"><div class="cart-summary-title">Your Selection</div><div id="cart-items-list"></div></div>
+      <div class="form-card">
+        <form id="order-form" action="https://formspree.io/f/mgondgqa" method="POST">
+          <input type="hidden" name="_subject" value="New Liquid Therapy Order">
+          <input type="hidden" name="order_items" id="hidden-cart">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" name="first_name" placeholder="Adaeze" required></div>
+            <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" name="last_name" placeholder="Okafor" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" name="phone" placeholder="+234 800 000 0000" required></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label class="form-label">Delivery Type</label><select class="form-select" name="delivery_type" id="delivery-type" onchange="toggleAddress()"><option value="delivery">Home Delivery</option><option value="pickup">Pickup</option></select></div>
+          <div class="form-group" id="address-group"><label class="form-label">Delivery Address</label><input class="form-input" type="text" name="address" placeholder="Street, Area, Lagos"></div>
+          <div class="form-group"><label class="form-label">Special Requests</label><textarea class="form-textarea" name="notes" placeholder="Allergies, substitutions, special notes..."></textarea></div>
+          <button type="submit" class="submit-btn">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+    <div class="success-panel" id="order-success">
+      <div class="success-title">Order Received</div>
+      <p class="success-sub">Thank you. We've received your order and will confirm via WhatsApp shortly. Sit back and let the therapy begin.</p>
+      <button class="btn-primary" onclick="showSection('menu')">Continue Browsing</button>
+    </div>
+  </div>
+</section>
+
+<div id="cart-toast"><span class="toast-label">Items in cart</span><span class="toast-count" id="toast-count">0</span><button class="toast-btn" onclick="showSection('order')">Checkout →</button></div>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-logo">Liquid Therapy™</div><div class="footer-tagline">Mobile Bar · Fine Drinking · Polysensory Experiences</div></div>
+    <div class="footer-links">
+      <a onclick="showSection('hero')">Home</a><a onclick="showSection('services')">Services</a><a onclick="showSection('menu')">Menu</a><a onclick="showSection('events')">Book</a><a onclick="showSection('faq')">FAQ</a><a onclick="showSection('contact')">Contact</a>
+      <a href="https://instagram.com/liquidtherapyhq" target="_blank">Instagram</a><a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank">TikTok</a><a href="https://www.snapchat.com/add/liquidtherapyhq" target="_blank">Snapchat</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Liquid Therapy™. Lagos, Nigeria.</div>
+  </div>
+</footer>
+
+<script>
+</script><script>
+const cocktails = [
+  { name:"Afrobeat Sour", category:"signature", ingredients:"Whiskey, Orijin, Lime, Simple syrup", taste:"Citrus · Bold", glass:"Coupe", garnish:"Lime wheel" },
+  { name:"Coconut Groove", category:"signature", ingredients:"White rum, Coconut cream, Orange juice", taste:"Tropical · Creamy", glass:"Jar or Highball", garnish:"Toasted coconut, Pineapple leaf" },
+  { name:"Lagos Ginger Mule", category:"signature", ingredients:"Vodka, Fresh ginger, Lime, Basil, Ginger beer, Alligator pepper infusion", taste:"Spiced · Refreshing", glass:"Highball", garnish:"Basil sprig, Lime wheel" },
+  { name:"Wazobia Mix", category:"signature", ingredients:"Palm wine base, Hibiscus, Citrus, Ginger, Kola-nut infusion", taste:"Spiced · Herbal", glass:"Rocks", garnish:"Basil sprig, Lime wheel" },
+  { name:"Agbalumo Berry", category:"signature", ingredients:"Vodka, Agbalumo syrup, Citrus, Berry reduction", taste:"Sweet-Tart · Fruity", glass:"Highball", garnish:"Agbalumo slice, Mint" },
+  { name:"Negritude", category:"signature", ingredients:"Gin, Campari, Sweet Vermouth, Nigerian cocoa infusion", taste:"Bitter · Bold · Cocoa-Rich", glass:"Rocks", garnish:"Orange peel, Chocolate" },
+  { name:"Tequila Sunrise", category:"classic", ingredients:"Tequila, Orange, Grenadine", taste:"Fruity · Sweet", glass:"Highball", garnish:"Orange slice" },
+  { name:"Piña Colada", category:"classic", ingredients:"White rum, Coconut cream, Pineapple", taste:"Tropical · Creamy", glass:"Hurricane or Tiki", garnish:"Pineapple wedge" },
+  { name:"Batanga (LT Style)", category:"classic", ingredients:"Tequila, Lime, Cola", taste:"Citrus · Bold", glass:"Rocks", garnish:"Lime wedge" },
+  { name:"Mojito", category:"classic", ingredients:"White rum, Lime, Mint, Soda", taste:"Herbal · Refreshing", glass:"Highball", garnish:"Mint crown" },
+  { name:"Caipirinha", category:"classic", ingredients:"Cachaça, Lime, Sugar", taste:"Citrus · Punchy", glass:"Rocks", garnish:"Lime wedges" },
+  { name:"Clover Club", category:"classic", ingredients:"Gin, Raspberry, Lemon", taste:"Fruity", glass:"Coupe", garnish:"Raspberry or lemon zest" },
+  { name:"Pornstar Martini", category:"classic", ingredients:"Vodka, Vanilla, Passionfruit", taste:"Sweet · Indulgent", glass:"Martini", garnish:"Passionfruit half" },
+  { name:"Espresso Martini", category:"classic", ingredients:"Vodka, Espresso", taste:"Bold · Coffee", glass:"Martini", garnish:"Coffee beans" },
+  { name:"Green Garden Martini", category:"classic", ingredients:"Gin or Vodka, Cucumber, Citrus, Herbs", taste:"Herbal · Fresh", glass:"Martini", garnish:"Lemon twist" },
+  { name:"Spicy Margarita", category:"classic", ingredients:"Tequila, Lime, Orange liqueur, Chili syrup", taste:"Bold · Spicy", glass:"Coupe", garnish:"Hajji pepper salt rim, Lime wheel" },
+  { name:"Passion Sour (LT Style)", category:"classic", ingredients:"Passionfruit, Citrus, Spirit base, Simple syrup", taste:"Tropical · Tart", glass:"Coupe", garnish:"Rosemary sprig" },
+  { name:"Chapman", category:"zero-proof", ingredients:"Blackcurrant, Citrus, Soda", taste:"Fruity · Refreshing", glass:"Highball", garnish:"Orange slice, Cucumber" },
+  { name:"Virgin Colada", category:"zero-proof", ingredients:"Coconut cream, Pineapple", taste:"Tropical · Creamy", glass:"Hurricane or Tiki", garnish:"Pineapple wedge" },
+  { name:"Hibiscus Kiss", category:"zero-proof", ingredients:"Hibiscus, Fresh orange, Lime", taste:"Floral · Citrus", glass:"Coupe", garnish:"Orange peel" },
+  { name:"Ginger Lime Cooler", category:"zero-proof", ingredients:"Fresh ginger, Lime, Soda", taste:"Zesty · Refreshing", glass:"Highball", garnish:"Lime wheel" },
+  { name:"Watermelon Mint Cooler", category:"zero-proof", ingredients:"Watermelon, Mint, Lime", taste:"Fresh · Juicy", glass:"Highball", garnish:"Mint sprig" },
+  { name:"Iced Espresso Tonic", category:"zero-proof", ingredients:"Espresso, Tonic water, Citrus", taste:"Bitter · Refreshing", glass:"Highball", garnish:"" },
+  { name:"Aperol Spritz", category:"sparkling", ingredients:"Aperol, Prosecco, Soda", taste:"Bitter-Sweet", glass:"Wine glass", garnish:"Orange slice" },
+  { name:"Mimosa", category:"sparkling", ingredients:"Orange juice, Prosecco", taste:"Fresh · Citrus", glass:"Flute", garnish:"Orange twist" },
+  { name:"Bellini (Peach / Hibiscus)", category:"sparkling", ingredients:"Peach or Hibiscus purée, Prosecco", taste:"Fruity · Mellow", glass:"Flute", garnish:"Fruit sliced" },
+  { name:"Hugo Spritz", category:"sparkling", ingredients:"Elderflower, Prosecco, Soda", taste:"Floral · Light", glass:"Wine glass", garnish:"Mint, Lime" },
+  { name:"French 75", category:"sparkling", ingredients:"Gin, Prosecco, Lemon", taste:"Crisp", glass:"Flute", garnish:"Lemon twist" },
+  { name:"Rossini", category:"sparkling", ingredients:"Strawberry purée, Prosecco", taste:"Fruity · Mellow", glass:"Flute", garnish:"Strawberry slice" },
+  { name:"Palm Wine Aperitif", category:"sparkling", ingredients:"Palm wine, Prosecco", taste:"Earthy · Effervescent", glass:"Flute", garnish:"Citrus twist" },
+];
+
+let cart = [];
+
+function renderMenu(filter) {
+  const grid = document.getElementById('menu-grid');
+  const items = filter === 'all' ? cocktails : cocktails.filter(c => c.category === filter);
+  grid.innerHTML = items.map(c => `
+    <div class="cocktail-card">
+      <div class="card-cat">${c.category === 'zero-proof' ? 'Zero-Proof Placebo' : c.category}</div>
+      <div class="card-name">${c.name}</div>
+      <div class="card-ingredients">${c.ingredients}</div>
+      <div class="card-tags"><span class="card-tag">${c.taste}</span>${c.garnish ? `<span class="card-tag">${c.garnish}</span>` : ''}</div>
+      <div class="card-footer">
+        <div class="card-glass">${c.glass}</div>
+        <button class="add-btn" onclick='addToCart(${JSON.stringify(c).replace(/'/g,"&#39;")},this)'>Add to Order</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderMenu(cat);
+}
+
+function addToCart(item, btn) {
+  const existing = cart.find(c => c.name === item.name);
+  if (existing) existing.qty++; else cart.push({ ...item, qty: 1 });
+  btn.textContent = 'Added ✓'; btn.classList.add('added');
+  setTimeout(() => { btn.textContent = 'Add to Order'; btn.classList.remove('added'); }, 1200);
+  updateCartToast(); renderCartSummary();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(c => c.name !== name);
+  updateCartToast(); renderCartSummary();
+}
+
+function updateCartToast() {
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+  document.getElementById('toast-count').textContent = count;
+  document.getElementById('cart-toast').classList.toggle('show', count > 0);
+}
+
+function renderCartSummary() {
+  const list = document.getElementById('cart-items-list');
+  if (!list) return;
+  if (cart.length === 0) {
+    list.innerHTML = '<div class="empty-cart">No items yet — browse the menu to add cocktails.</div>';
+    if (document.getElementById('hidden-cart')) document.getElementById('hidden-cart').value = '';
+    return;
+  }
+  const total = cart.reduce((s,c)=>s+c.qty,0);
+  list.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div><div class="cart-item-name">${c.name}</div><div class="cart-item-qty">x${c.qty}</div></div>
+      <button class="cart-item-remove" onclick="removeFromCart('${c.name.replace(/'/g,"\\'")}')">×</button>
+    </div>`).join('') +
+    `<div class="cart-total"><span class="cart-total-label">Selection</span><span class="cart-total-price">${total} drink${total>1?'s':''}</span></div>`;
+  if (document.getElementById('hidden-cart'))
+    document.getElementById('hidden-cart').value = cart.map(c=>`${c.name} x${c.qty}`).join(' | ');
+}
+
+function toggleAddress() {
+  document.getElementById('address-group').style.display = document.getElementById('delivery-type').value === 'delivery' ? 'block' : 'none';
+}
+
+function selectEvent(btn, type) {
+  document.querySelectorAll('.ev-type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('hidden-event-type').value = type;
+}
+
+function showSection(id) {
+  // Hide all sections
+  document.querySelectorAll('section').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+
+  // Show target section
+  const target = document.getElementById(id);
+  if (!target) return;
+  target.style.display = 'block';
+  target.classList.add('active');
+
+  // Update nav active states
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  const mobEl = document.getElementById('mob-' + id);
+  if (mobEl) mobEl.classList.add('active');
+
+  // Load cart if going to order
+  if (id === 'order') renderCartSummary();
+
+  // Scroll to top — all methods for cross-browser support
+  try { window.scroll({ top: 0, left: 0, behavior: 'instant' }); } catch(e) {}
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function resetEvents() {
+  ['events-main','events-header','events-intro'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display=''; });
+  document.getElementById('event-success').classList.remove('show');
+  document.getElementById('event-form').reset();
+}
+
+function resetContact() {
+  document.getElementById('contact-form-wrap').style.display = 'block';
+  document.getElementById('contact-success').classList.remove('show');
+  document.getElementById('contact-form').reset();
+}
+
+function setupForm(formId, successId, onSuccess) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { if (onSuccess) onSuccess(); document.getElementById(successId).classList.add('show'); }
+      else { btn.disabled = false; btn.textContent = 'Try Again'; alert('Something went wrong. Please try again.'); }
+    } catch { btn.disabled = false; btn.textContent = 'Try Again'; alert('Network error. Please check your connection.'); }
+  });
+}
+
+setupForm('order-form','order-success',()=>{ document.getElementById('order-main').style.display='none'; document.getElementById('order-header').style.display='none'; cart=[]; updateCartToast(); });
+setupForm('event-form','event-success',()=>{ ['events-main','events-header','events-intro'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';}); });
+setupForm('contact-form','contact-success',()=>{ document.getElementById('contact-form-wrap').style.display='none'; });
+
+// Initialise on load
+document.addEventListener('DOMContentLoaded', function() {
+  // Explicitly hide all sections then show hero
+  document.querySelectorAll('section').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  const hero = document.getElementById('hero');
+  if (hero) { hero.classList.add('active'); hero.style.display = 'block'; }
+  document.getElementById('mob-hero') && document.getElementById('mob-hero').classList.add('active');
+  renderMenu('all');
+  renderCartSummary();
+});
+
+</script>
+</body>
+</html>
