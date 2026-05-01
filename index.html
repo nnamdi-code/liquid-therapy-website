@@ -163,7 +163,7 @@
   <div class="nav-links">
     <a onclick="showSection('hero')" id="nav-hero">Home</a>
     <a onclick="showSection('services')" id="nav-services">Services</a>
-    <a href="menu.html" id="nav-menu">Menu</a>
+    <a onclick="showSection('menu')" id="nav-menu">Menu</a>
     <a onclick="showSection('events')" id="nav-events">Book</a>
     <a onclick="showSection('faq')" id="nav-faq">FAQ</a>
     <a onclick="showSection('contact')" id="nav-contact">Contact</a>
@@ -175,7 +175,7 @@
     <a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank" class="nav-social" title="TikTok">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
     </a>
-    <button class="nav-cta" onclick="window.location.href='menu.html'">Order Now</button>
+    <button class="nav-cta" onclick="showSection('menu')">Order Now</button>
   </div>
 </nav>
 
@@ -188,7 +188,7 @@
     <p class="hero-sub">Taste is only the beginning. We blend premium mixology with sensory cues and intentional hosting to create experiences of connection and reset.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="showSection('services')">Our Services</button>
-      <button class="btn-ghost" onclick="window.location.href='menu.html'">View the Menu</button>
+      <button class="btn-ghost" onclick="showSection('menu')">View the Menu</button>
     </div>
     <div style="margin-top:1.5rem;">
       <a href="ntd.html" style="display:inline-block;font-family:var(--font-body);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:0.5px solid var(--gold);padding:11px 28px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--cream)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">The NTD Collection ↗</a>
@@ -215,7 +215,7 @@
       <div class="service-card"><div class="service-num">02</div><div class="service-name">Immersive Sessions</div><div class="service-desc">A selection of facilitated, highly sensory sessions designed to be gently stirred and occasionally shaken, to dissolve social silos and create genuine moments of connection.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
       <div class="service-card"><div class="service-num">03</div><div class="service-name">Drink Care</div><div class="service-desc">A discreet oversight service that ensures every drink — whether water, juice, alcoholic or non-alcoholic — is properly planned, chilled, presented, and paced throughout your event.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
       <div class="service-card"><div class="service-num">04</div><div class="service-name">Bar Setup</div><div class="service-desc">A detailed installation service that provides a fully styled and event-ready bar structure for events of up to 100 guests, integrating seamlessly with the aesthetic of your event.</div><a class="service-link" onclick="showSection('events')">Book this service →</a></div>
-      <div class="service-card"><div class="service-num">05</div><div class="service-name">Crafted Drinks</div><div class="service-desc">A collection of cocktails and placebo cocktails — all of the craft, none of the proof — for high-impact flavour. Mixed and prescribed by an EBS-certified mixologist.</div><a class="service-link" href="menu.html">View the menu →</a></div>
+      <div class="service-card"><div class="service-num">05</div><div class="service-name">Crafted Drinks</div><div class="service-desc">A collection of cocktails and placebo cocktails — all of the craft, none of the proof — for high-impact flavour. Mixed and prescribed by an EBS-certified mixologist.</div><a class="service-link" onclick="showSection('menu')">View the menu →</a></div>
       <div class="service-card"><div class="service-num">06</div><div class="service-name">Ready-to-Drink</div><div class="service-desc">A batch production of pre-mixed drinks packaged for convenient service, corporate gifting or brand activations. Your signature drink, ready when you are.</div><a class="service-link" onclick="showSection('events')">Enquire now →</a></div>
     </div>
     <div style="margin-top:5rem;">
@@ -234,7 +234,57 @@
 </section>
 
 <!-- MENU -->
+<section id="menu">
+  <div class="page-wrap">
+    <div class="section-header">
+      <div class="section-eyebrow">Crafted Drinks Menu</div>
+      <h2 class="section-title">Find the <em>flavour</em><br>to your finest moments</h2>
+    </div>
+    <p class="section-intro">Our menu is mixed and prescribed by an EBS-certified mixologist dedicated to treating every palate. Signature cocktails, familiar classics, zero-proof placebos, sparkling sips.</p>
+    <div class="menu-filters">
+      <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
+      <button class="filter-btn" onclick="filterMenu('signature',this)">Signature</button>
+      <button class="filter-btn" onclick="filterMenu('classic',this)">Classics</button>
+      <button class="filter-btn" onclick="filterMenu('zero-proof',this)">Zero-Proof</button>
+      <button class="filter-btn" onclick="filterMenu('sparkling',this)">Sparkling</button>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</section>
 
+<!-- ORDER -->
+<section id="order">
+  <div class="page-wrap-sm">
+    <div class="section-header" id="order-header">
+      <div class="section-eyebrow">Place Your Order</div>
+      <h2 class="section-title"><em>Delivery</em> &amp; Pickup</h2>
+    </div>
+    <div id="order-main">
+      <div class="cart-summary-box"><div class="cart-summary-title">Your Selection</div><div id="cart-items-list"></div></div>
+      <div class="form-card">
+        <form id="order-form" action="https://formspree.io/f/mgondgqa" method="POST">
+          <input type="hidden" name="_subject" value="New Liquid Therapy Order">
+          <input type="hidden" name="order_items" id="hidden-cart">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" name="first_name" placeholder="Adaeze" required></div>
+            <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" name="last_name" placeholder="Okafor" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" name="phone" placeholder="+234 800 000 0000" required></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label class="form-label">Delivery Type</label><select class="form-select" name="delivery_type" id="delivery-type" onchange="toggleAddress()"><option value="delivery">Home Delivery</option><option value="pickup">Pickup</option></select></div>
+          <div class="form-group" id="address-group"><label class="form-label">Delivery Address</label><input class="form-input" type="text" name="address" placeholder="Street, Area, Lagos"></div>
+          <div class="form-group"><label class="form-label">Special Requests</label><textarea class="form-textarea" name="notes" placeholder="Allergies, substitutions, special notes..."></textarea></div>
+          <button type="submit" class="submit-btn">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+    <div class="success-panel" id="order-success">
+      <div class="success-title">Order Received</div>
+      <p class="success-sub">Thank you. We've received your order and will confirm via WhatsApp shortly. Sit back and let the therapy begin.</p>
+      <button class="btn-primary" onclick="showSection('menu')">Continue Browsing</button>
+    </div>
+  </div>
+</section>
 
 <!-- EVENTS -->
 <section id="events">
@@ -348,7 +398,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
     <span>Services</span>
   </button>
-  <button class="mob-nav-btn" id="mob-menu" onclick="window.location.href='menu.html'">
+  <button class="mob-nav-btn" id="mob-menu" onclick="showSection('menu')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
     <span>Menu</span>
   </button>
@@ -366,13 +416,13 @@
   </button>
 </div>
 
-<div id="cart-toast"><span class="toast-label">Items in cart</span><span class="toast-count" id="toast-count">0</span><button class="toast-btn" onclick="window.location.href='menu.html'">Checkout →</button></div>
+<div id="cart-toast"><span class="toast-label">Items in cart</span><span class="toast-count" id="toast-count">0</span><button class="toast-btn" onclick="showSection('order')">Checkout →</button></div>
 
 <footer>
   <div class="footer-inner">
     <div><div class="footer-logo">Liquid Therapy™</div><div class="footer-tagline">Mobile Bar · Fine Drinking · Polysensory Experiences</div></div>
     <div class="footer-links">
-      <a onclick="showSection('hero')">Home</a><a onclick="showSection('services')">Services</a><a href="menu.html">Menu</a><a onclick="showSection('events')">Book</a><a onclick="showSection('faq')">FAQ</a><a onclick="showSection('contact')">Contact</a>
+      <a onclick="showSection('hero')">Home</a><a onclick="showSection('services')">Services</a><a onclick="showSection('menu')">Menu</a><a onclick="showSection('events')">Book</a><a onclick="showSection('faq')">FAQ</a><a onclick="showSection('contact')">Contact</a>
       <a href="https://instagram.com/liquidtherapyhq" target="_blank">Instagram</a><a href="https://www.tiktok.com/@liquid.therapyhq" target="_blank">TikTok</a><a href="https://www.snapchat.com/add/liquidtherapyhq" target="_blank">Snapchat</a>
     </div>
     <div class="footer-copy">&copy; 2026 Liquid Therapy™. Lagos, Nigeria.</div>
