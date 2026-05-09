@@ -470,7 +470,7 @@ body{background:#111;display:flex;justify-content:center;align-items:center;min-
 </div>
 
 <!-- ══ HOME ══ -->
-<div class="screen active" id="sh">
+<div class="screen" id="sh">
 
   <div class="hhero">
     <div class="hglow"></div>
@@ -1498,6 +1498,24 @@ function showRxPin() {
     pin.style.display = 'none';
   }
 }
+
+// ── HASH-BASED DEEP LINK ON LOAD ──
+(function() {
+  const hash = window.location.hash.replace('#','');
+  const startId = (hash && document.getElementById(hash)) ? hash : 'sh';
+  const startEl = document.getElementById(startId);
+  if(startEl) startEl.classList.add('active');
+  // Set correct bottom nav
+  window.addEventListener('DOMContentLoaded', () => {
+    if(hash && hash !== 'sh') {
+      const nm = {sh:'ni-h',sw:'ni-h',sm:'ni-rx','sqr-drinks':'ni-rx','sqr-exp':'ni-h'};
+      const niId = nm[hash] || 'ni-h';
+      document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+      const ni = document.getElementById(niId);
+      if(ni) ni.classList.add('active');
+    }
+  });
+})();
 
 // ── GIFT MESSAGE + CROSS-SELL ──
 let giftMsg = '';
