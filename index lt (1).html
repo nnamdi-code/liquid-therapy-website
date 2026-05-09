@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Liquid Therapy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --dark:#0f0804;--brown:#2C1810;--mid:#1a0f08;
+  --gold:#B8860B;--gold2:#D4A520;--gold3:#E8C97A;
+  --cream:#F5F0E8;--dim:rgba(245,240,232,0.55);--dimmer:rgba(245,240,232,0.28);
+  --red:#8B2020;--green:#1a4a2a;--teal:#1a3a3a;
+  --brand:#B5541A; /* Liquid Therapy logo cognac */
+}
+body{background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'EB Garamond',serif;overflow:hidden}
+.phone{width:390px;height:844px;background:var(--dark);border-radius:50px;border:2px solid #222;position:relative;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.9),inset 0 0 0 1px #2a2a2a}
+.phone::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#000;border-radius:0 0 20px 20px;z-index:999}
+
+/* SCREENS */
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch}
+.screen.active{display:block;animation:sIn 0.35s ease forwards}
+.screen.su{display:block;animation:sSU 0.4s cubic-bezier(0.16,1,0.3,1) forwards}
+.screen.sd{display:block;animation:sSD 0.35s ease forwards}
+.screen.fi{display:block;animation:sFI 0.25s ease forwards}
+@keyframes sIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sSU{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sSD{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sFI{from{opacity:0}to{opacity:1}}
+
+/* BOTTOM NAV */
+.bnav{position:absolute;bottom:0;left:0;right:0;height:76px;background:rgba(10,5,2,0.98);border-top:1px solid rgba(184,134,11,0.15);display:flex;align-items:center;justify-content:space-around;padding:0 0.3rem 1rem;z-index:50;backdrop-filter:blur(12px)}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:0.32;transition:opacity 0.2s;padding:0.4rem 0.5rem;position:relative}
+.ni.active{opacity:1}
+.ni svg{width:19px;height:19px;stroke:var(--cream);fill:none;stroke-width:1.5}
+.ni.active svg{stroke:var(--gold)}
+.ni span{font-size:8px;letter-spacing:0.07em;text-transform:uppercase;color:var(--cream)}
+.ni.active span{color:var(--gold)}
+
+/* FLOATING CART */
+.fcart{position:absolute;bottom:86px;left:1rem;right:1rem;background:var(--gold);padding:0.9rem 1.3rem;display:none;justify-content:space-between;align-items:center;z-index:45;cursor:pointer;flex-direction:column;gap:6px}
+.fcart-top{display:flex;justify-content:space-between;align-items:center;width:100%}
+.fc-l{display:flex;flex-direction:column}
+.fc-cnt{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(15,8,4,0.65)}
+.fc-tot{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);font-weight:600}
+.fc-btn{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dark)}
+.fc-prog-wrap{width:100%;background:rgba(0,0,0,0.15);height:3px;border-radius:2px}
+.fc-prog-bar{height:100%;background:var(--dark);border-radius:2px;transition:width 0.4s ease}
+.fc-prog-label{font-size:0.6rem;color:rgba(15,8,4,0.7);text-align:center;margin-top:3px}
+
+/* POPUP */
+.pop{position:absolute;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:flex;align-items:flex-end}
+.pop-sheet{width:100%;background:var(--brown);border-radius:24px 24px 0 0;padding:1rem 1.8rem 3rem;border-top:1px solid rgba(184,134,11,0.2);animation:psUp 0.4s cubic-bezier(0.16,1,0.3,1);position:relative}
+@keyframes psUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.pop-handle{width:34px;height:3px;background:rgba(184,134,11,0.28);border-radius:2px;margin:0 auto 1.4rem}
+.pop-x{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,0.07);border:none;color:var(--dim);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:0.95rem;display:flex;align-items:center;justify-content:center}
+.pop-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:var(--cream);text-align:center;margin-bottom:0.35rem;line-height:1.15}
+.pop-sub{font-size:0.85rem;color:var(--dim);text-align:center;font-style:italic;margin-bottom:1.4rem;line-height:1.6}
+.pop-in{width:100%;padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(184,134,11,0.22);color:var(--cream);font-family:'EB Garamond',serif;font-size:0.97rem;outline:none;margin-bottom:0.7rem}
+.pop-in::placeholder{color:var(--dimmer)}
+.pop-in:focus{border-color:var(--gold)}
+
+/* BUTTONS */
+.bg{width:100%;padding:0.95rem;background:var(--gold);color:var(--dark);border:none;font-family:'EB Garamond',serif;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.bg:hover{background:var(--gold2)}
+.bg:disabled{opacity:0.35;cursor:not-allowed}
+.bo{width:100%;padding:0.85rem;background:transparent;color:var(--dim);border:1px solid rgba(184,134,11,0.18);font-family:'EB Garamond',serif;font-size:0.76rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;margin-top:0.65rem;transition:all 0.2s}
+.bo:hover{color:var(--cream);border-color:rgba(184,134,11,0.45)}
+.bgh{background:none;border:none;color:var(--dimmer);font-family:'EB Garamond',serif;font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;padding:0.7rem;width:100%;text-align:center;margin-top:0.2rem}
+
+/* TOAST */
+.toast{position:absolute;bottom:86px;left:1rem;right:1rem;padding:0.85rem 1.1rem;font-size:0.83rem;text-align:center;z-index:300;display:none;letter-spacing:0.04em}
+.toast.ok{background:var(--gold);color:var(--dark)}
+.toast.err{background:var(--red);color:var(--cream)}
+.toast.info{background:var(--teal);color:var(--cream)}
+.toast.show{display:block;animation:tIn 0.3s ease}
+@keyframes tIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* FLOW LABEL */
+.flbl{position:absolute;top:0;right:0;background:rgba(0,0,0,0.85);color:rgba(184,134,11,0.8);font-size:7px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 7px;z-index:998;border-bottom-left-radius:4px}
+
+/* SHARED */
+.shdr{display:flex;align-items:center;padding:3.2rem 1.4rem 1rem;gap:0.9rem}
+.back{background:none;border:none;color:var(--gold);cursor:pointer;font-size:1.05rem;padding:0.3rem;flex-shrink:0}
+.shdr-t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--cream)}
+.eye{font-size:0.58rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:0.7rem}
+.sec-t{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:300;color:var(--cream);line-height:1.05;margin-bottom:0.4rem}
+.sec-t em{font-style:italic;color:var(--gold3)}
+.rule{width:28px;height:1px;background:var(--gold);margin-bottom:2rem}
+
+/* ── HOME ── */
+#sh{background:var(--dark)}
+.hhero{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:4.2rem 2.2rem 1.5rem;
+  position:relative;overflow:hidden
+}
+.hglow{
+  position:absolute;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(181,84,26,0.12) 0%,transparent 68%);
+  top:45%;left:50%;transform:translate(-50%,-50%);
+  animation:glow 5s ease infinite;pointer-events:none
+}
+@keyframes glow{0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.18)}}
+.hrule{width:28px;height:1px;background:rgba(181,84,26,0.5);margin:1rem auto}
+.htag{font-size:0.88rem;color:var(--dim);font-style:italic;line-height:1.65;position:relative}
+/* HOME ENTRY BUTTONS */
+.h-btns{width:100%;padding:0 1.4rem 1rem;display:flex;flex-direction:column;gap:2px}
+.h-btn-drinks{
+  width:100%;padding:1.1rem 1.4rem;
+  background:var(--gold);color:var(--dark);
+  border:none;cursor:pointer;
+  font-family:'EB Garamond',serif;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  transition:background 0.2s;text-align:left
+}
+.h-btn-drinks:active{background:var(--gold2)}
+.h-btn-exp{
+  width:100%;padding:1.1rem 1.4rem;
+  background:transparent;
+  border:1px solid rgba(184,134,11,0.28);
+  color:var(--dim);cursor:pointer;
+  font-family:'EB Garamond',serif;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  transition:all 0.2s;text-align:left
+}
+.h-btn-exp:active{background:rgba(184,134,11,0.08);color:var(--cream)}
+.h-btn-label{font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;display:block;margin-bottom:0.25rem}
+.h-btn-sub{font-size:0.78rem;letter-spacing:0.01em;text-transform:none;font-style:italic;opacity:0.7;display:block;line-height:1.5;font-weight:normal}
+.h-btn-arr{flex-shrink:0;margin-left:1rem;margin-top:0.1rem;font-size:1rem}
+
+/* BOTANICALS ICON — floating on home */
+.bot-icon{position:absolute;bottom:92px;right:1.5rem;width:44px;height:44px;border:1px solid rgba(184,134,11,0.35);background:rgba(15,8,4,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;z-index:10}
+.bot-icon:hover{background:rgba(184,134,11,0.12);border-color:var(--gold)}
+.bot-icon svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.bot-label{position:absolute;bottom:92px;right:68px;font-size:0.65rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.bot-icon:hover + .bot-label{opacity:1}
+
+/* ── WORLD ── */
+#sw{background:var(--dark);padding-bottom:80px}
+.wtop{padding:4.5rem 1.7rem 1.8rem;text-align:center}
+.wwlc{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--cream);margin-bottom:0.6rem}
+.wsub{font-size:0.86rem;color:var(--dim);font-style:italic;line-height:1.8;margin-bottom:1.8rem}
+.doors{padding:0.5rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.door{background:var(--mid);padding:2rem 1.7rem;cursor:pointer;border:1px solid rgba(184,134,11,0.09);transition:background 0.25s;position:relative;overflow:hidden}
+.door::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.35s}
+.door:active{background:rgba(184,134,11,0.06)}
+.door:active::after{transform:scaleX(1)}
+.dnum{font-size:0.56rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem}
+.dh{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--cream);margin-bottom:0.65rem;line-height:1.1}
+.dp{font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:1.2rem}
+.darr{font-size:0.66rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase}
+
+/* ── SERVICES ── */
+#ss{background:var(--dark);padding-bottom:80px}
+.svcs{padding:0.3rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.svc{background:var(--mid);padding:1.7rem 1.4rem;border:1px solid rgba(184,134,11,0.08);cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:0.9rem;transition:background 0.2s}
+.svc:active{background:rgba(184,134,11,0.05)}
+.svn{font-size:0.55rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.45rem}
+.svh{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem}
+.svd{font-size:0.82rem;color:var(--dim);font-style:italic;line-height:1.6}
+.svarr{color:var(--gold);font-size:0.85rem;flex-shrink:0;margin-top:0.15rem}
+.cbn{margin:1.6rem 1.4rem;padding:1.6rem;background:var(--brown);border:1px solid rgba(184,134,11,0.18);text-align:center}
+.cbn p{font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:1.2rem}
+
+/* ── RX CHOICE ── */
+#srx{background:var(--dark);padding-bottom:80px}
+.rxtop{padding:3.8rem 1.4rem 1.2rem}
+.rxttl{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem;line-height:1.1}
+.rxsub{font-size:0.85rem;color:var(--dim);font-style:italic;margin-bottom:1.8rem;line-height:1.7}
+.rxbtns{display:flex;flex-direction:column;gap:1px;margin:0 1.4rem 1.5rem}
+.rxbtn{background:var(--mid);border:1px solid rgba(184,134,11,0.1);padding:1.7rem 1.4rem;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s;width:100%}
+.rxbtn:active{background:rgba(184,134,11,0.06)}
+.rxl{flex:1}
+.rxll{font-size:0.55rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.35rem}
+.rxlt{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:300;color:var(--cream);margin-bottom:0.2rem}
+.rxld{font-size:0.8rem;color:var(--dim);font-style:italic}
+.rxarr{color:var(--gold);flex-shrink:0;margin-left:0.9rem;font-size:0.9rem}
+
+/* ── MENU ── */
+#sm{background:var(--brown);padding-bottom:80px}
+.mnote{padding:0.8rem 1.4rem;font-size:0.76rem;color:var(--dimmer);font-style:italic;text-align:center;border-bottom:1px solid rgba(184,134,11,0.08)}
+.mnote span{color:var(--gold);cursor:pointer}
+
+/* PRESCRIPTION PINNED BANNER */
+.rx-pin{margin:0.8rem 1.4rem;background:rgba(184,134,11,0.08);border:1px solid rgba(184,134,11,0.25);padding:1.1rem 1.2rem;display:none}
+.rx-pin-l{font-size:0.55rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.35rem}
+.rx-pin-n{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream);margin-bottom:0.25rem}
+.rx-pin-d{font-size:0.78rem;color:var(--dim);font-style:italic;margin-bottom:0.8rem}
+
+/* FRIDAY DROP BANNER */
+.fri-banner{margin:0.8rem 1.4rem;background:rgba(26,58,58,0.6);border:1px solid rgba(184,134,11,0.2);padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.8rem}
+.fri-banner svg{width:18px;height:18px;stroke:var(--gold);fill:none;flex-shrink:0;margin-top:2px}
+.fri-banner-body{}
+.fri-banner-t{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem}
+.fri-banner-d{font-size:0.78rem;color:var(--dim);font-style:italic;line-height:1.6}
+
+.mtabs{display:flex;overflow-x:auto;border-bottom:1px solid rgba(184,134,11,0.1);scrollbar-width:none;padding:0 0.3rem}
+.mtabs::-webkit-scrollbar{display:none}
+.mtb{padding:0.8rem 1rem;font-size:0.66rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--dimmer);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none;font-family:'EB Garamond',serif;flex-shrink:0}
+.mtb.active{color:var(--gold);border-bottom-color:var(--gold)}
+.dlist{padding:0.7rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.drow{background:var(--dark);padding:1.4rem 1.1rem;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;transition:background 0.2s;border:1px solid rgba(184,134,11,0.06)}
+.drow:active{background:rgba(184,134,11,0.04)}
+.drowl{flex:1}
+.dpx{font-size:0.52rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem}
+.dn{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream);margin-bottom:0.22rem}
+.drx{font-size:0.78rem;color:var(--dim);font-style:italic;line-height:1.5}
+.dseas{font-size:0.5rem;letter-spacing:0.16em;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,134,11,0.28);padding:0.1rem 0.4rem;display:inline-block;margin-top:0.3rem}
+.drowr{text-align:right;flex-shrink:0;margin-left:0.7rem}
+.dpr{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);margin-bottom:0.35rem}
+.dv{font-size:0.56rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase}
+.mmin{padding:0.9rem 1.4rem;text-align:center;font-size:0.71rem;color:var(--dimmer);font-style:italic;border-top:1px solid rgba(184,134,11,0.07)}
+
+/* ── DRINK DETAIL ── */
+#sdd{background:var(--dark);padding-bottom:80px}
+.ddhero{background:var(--brown);padding:3.8rem 1.7rem 2rem;text-align:center;position:relative}
+.ddpx{font-size:0.56rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem}
+.ddn{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem;line-height:1.05}
+.ddrx{font-style:italic;color:var(--dim);font-size:0.9rem;line-height:1.7}
+.ddbody{padding:1.3rem 1.7rem}
+.ddsec{padding:1.1rem 0;border-bottom:1px solid rgba(184,134,11,0.07)}
+.ddl{font-size:0.56rem;letter-spacing:0.32em;color:var(--gold);text-transform:uppercase;margin-bottom:0.45rem}
+.ddt{font-size:0.9rem;color:var(--dim);font-style:italic;line-height:1.7}
+.ddth{font-size:0.8rem;color:var(--gold3);font-style:italic;line-height:1.7}
+.uprow{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 0}
+.upl{font-size:0.83rem;color:var(--dim)}
+.upp{font-size:0.83rem;color:var(--gold)}
+.tog{width:40px;height:22px;background:rgba(184,134,11,0.16);border-radius:11px;position:relative;cursor:pointer;transition:background 0.3s;flex-shrink:0}
+.tog.on{background:var(--gold)}
+.tog::after{content:'';position:absolute;width:16px;height:16px;background:var(--cream);border-radius:50%;top:3px;left:3px;transition:transform 0.3s}
+.tog.on::after{transform:translateX(18px)}
+.ddfoot{padding:1.1rem 1.7rem 1.4rem}
+.qtyrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.qtyl{font-size:0.72rem;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
+.qtyc{display:flex;align-items:center;gap:0.85rem}
+.qtyb{width:28px;height:28px;border:1px solid rgba(184,134,11,0.25);background:none;color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.qtyn{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream);min-width:20px;text-align:center}
+.pkg-note{background:rgba(26,58,58,0.5);border:1px solid rgba(184,134,11,0.15);padding:0.7rem 0.9rem;margin-bottom:0.7rem;font-size:0.75rem;color:var(--gold3);font-style:italic;line-height:1.6}
+
+/* ── QUIZ ── */
+#sq{background:var(--dark);padding-bottom:80px}
+.qwrap{padding:3.8rem 1.7rem 2rem}
+.qprog{display:flex;gap:5px;margin-bottom:2.2rem}
+.qp{height:2px;flex:1;background:rgba(184,134,11,0.16);transition:background 0.3s;border-radius:1px}
+.qp.done{background:var(--gold)}
+.qq{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem;line-height:1.2}
+.qhint{font-size:0.81rem;color:var(--dimmer);font-style:italic;margin-bottom:1.6rem}
+.qopts{display:flex;flex-direction:column;gap:6px}
+.qo{padding:1.1rem 1.2rem;background:var(--mid);border:1px solid rgba(184,134,11,0.09);color:var(--dim);font-family:'EB Garamond',serif;font-size:0.95rem;font-style:italic;cursor:pointer;text-align:left;transition:all 0.2s;display:flex;align-items:center;gap:0.8rem;width:100%}
+.qo:active,.qo.sel{background:rgba(184,134,11,0.08);border-color:var(--gold);color:var(--cream)}
+.qic{font-size:1.05rem;flex-shrink:0}
+
+/* ── RESULT ── */
+#srs{background:var(--dark);padding-bottom:80px}
+.rshero{background:var(--brown);padding:3.8rem 1.8rem 2.2rem;text-align:center;position:relative}
+.rshero::after{content:'';position:absolute;inset:9px;border:1px solid rgba(184,134,11,0.09);pointer-events:none}
+.rslbl{font-size:0.56rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+.rspx{font-size:0.63rem;letter-spacing:0.26em;color:var(--dim);text-transform:uppercase;margin-bottom:0.35rem}
+.rsn{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);margin-bottom:0.8rem;line-height:1.05}
+.rsnote{font-style:italic;color:var(--dim);font-size:0.9rem;line-height:1.7;margin-bottom:1rem}
+.rsrx{font-size:0.78rem;color:var(--gold3);font-style:italic;padding-top:0.9rem;border-top:1px solid rgba(184,134,11,0.16)}
+.rssim{padding:1.3rem 1.7rem;border-bottom:1px solid rgba(184,134,11,0.07)}
+.rssl{font-size:0.56rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.7rem}
+.simchips{display:flex;gap:0.45rem;flex-wrap:wrap}
+.schi{padding:0.35rem 0.8rem;border:1px solid rgba(184,134,11,0.18);font-size:0.73rem;color:var(--dim);font-style:italic;cursor:pointer;transition:all 0.2s}
+.schi:active{border-color:var(--gold);color:var(--cream)}
+.rsacts{padding:1.4rem 1.7rem;display:flex;flex-direction:column;gap:0.65rem}
+
+/* ── CART ── */
+#sc{background:var(--dark);padding-bottom:80px}
+.cempty{padding:5rem 1.8rem;text-align:center}
+.cempty p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--dim);font-style:italic;margin-bottom:1rem}
+.citems{padding:0.4rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.ci{background:var(--mid);padding:1.3rem 1.1rem;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(184,134,11,0.07)}
+.cil{flex:1}
+.cipx{font-size:0.52rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.25rem}
+.cin{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream);margin-bottom:0.15rem}
+.ciup{font-size:0.72rem;color:var(--gold3);font-style:italic}
+.cir{display:flex;align-items:center;gap:0.65rem;flex-shrink:0;margin-left:0.9rem}
+.cipr{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream)}
+.cirm{background:none;border:none;color:rgba(139,32,32,0.55);cursor:pointer;font-size:0.85rem;padding:0.15rem}
+
+/* MIN ORDER PROGRESS */
+.min-prog-wrap{margin:1rem 1.4rem;background:var(--mid);border:1px solid rgba(184,134,11,0.15);padding:1rem 1.1rem}
+.min-prog-top{display:flex;justify-content:space-between;margin-bottom:0.5rem}
+.min-prog-l{font-size:0.62rem;color:var(--dim);font-style:italic}
+.min-prog-r{font-size:0.62rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase}
+.min-prog-bar-wrap{background:rgba(255,255,255,0.06);height:4px;border-radius:2px}
+.min-prog-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s ease}
+
+/* FRIDAY DROP IN CART */
+.fri-cart-note{margin:0.8rem 1.4rem;background:rgba(26,58,58,0.5);border:1px solid rgba(184,134,11,0.18);padding:0.9rem 1.1rem;font-size:0.78rem;color:var(--gold3);font-style:italic;line-height:1.6;display:none}
+.fri-cart-note.show{display:block}
+
+.csummary{margin:1.2rem 1.4rem 0;background:var(--brown);border:1px solid rgba(184,134,11,0.15);padding:1.3rem}
+.csrow{display:flex;justify-content:space-between;padding:0.45rem 0;font-size:0.87rem;color:var(--dim);border-bottom:1px solid rgba(184,134,11,0.07)}
+.csrow:last-child{border-bottom:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream);margin-top:0.25rem}
+.csact{padding:1.3rem 1.4rem 1.8rem;display:flex;flex-direction:column;gap:0}
+
+/* ── DELIVERY ── */
+#sdl{background:var(--dark);padding-bottom:80px}
+.dlform{padding:0.4rem 1.4rem 1.5rem}
+.dlf{margin-bottom:0.9rem}
+.dll{font-size:0.59rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;display:block}
+.dlin{width:100%;padding:0.85rem 0.95rem;background:rgba(255,255,255,0.03);border:1px solid rgba(184,134,11,0.18);color:var(--cream);font-family:'EB Garamond',serif;font-size:0.97rem;outline:none;transition:border-color 0.2s}
+.dlin:focus{border-color:var(--gold)}
+.dlin::placeholder{color:var(--dimmer)}
+.dlsel{width:100%;padding:0.85rem 0.95rem;background:var(--mid);border:1px solid rgba(184,134,11,0.18);color:var(--cream);font-family:'EB Garamond',serif;font-size:0.97rem;outline:none;appearance:none;cursor:pointer}
+.dlsel option{background:var(--brown)}
+.fri-note{background:rgba(26,58,58,0.5);border:1px solid rgba(184,134,11,0.18);padding:0.85rem 1rem;margin-bottom:0.9rem;font-size:0.78rem;color:var(--gold3);font-style:italic;line-height:1.6;display:none}
+.logistics-note{background:rgba(184,134,11,0.06);border:1px solid rgba(184,134,11,0.15);padding:0.85rem 1rem;margin-bottom:0.9rem;font-size:0.78rem;color:var(--dim);font-style:italic;line-height:1.6}
+.dltot{background:var(--brown);border:1px solid rgba(184,134,11,0.18);padding:1.1rem;margin-bottom:1rem}
+.dltot-rows{margin-bottom:0.6rem}
+.dltot-row{display:flex;justify-content:space-between;font-size:0.85rem;color:var(--dim);padding:0.25rem 0}
+.dltot-row.total{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream);padding-top:0.5rem;border-top:1px solid rgba(184,134,11,0.15);margin-top:0.3rem}
+
+/* ── BOTANICALS ── */
+#sbot{background:var(--dark);padding-bottom:80px}
+.bot-intro{padding:3.8rem 1.7rem 1.5rem}
+.bot-intro p{font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.8}
+.botlist{padding:0.4rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.boti{background:var(--mid);padding:1.7rem 1.4rem;border:1px solid rgba(184,134,11,0.08)}
+.botor{font-size:0.56rem;letter-spacing:0.33em;color:var(--gold);text-transform:uppercase;margin-bottom:0.35rem}
+.botn{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem}
+.bots{font-size:0.84rem;color:var(--dim);font-style:italic;line-height:1.7}
+.botr{font-size:0.76rem;color:var(--gold3);margin-top:0.65rem;padding-top:0.65rem;border-top:1px solid rgba(184,134,11,0.07)}
+
+/* ── GIFT ── */
+#sgi{background:var(--brown);padding-bottom:80px}
+.giintro{padding:3.8rem 1.7rem 1.3rem;text-align:center}
+.git{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--cream);margin-bottom:0.35rem}
+.gis{font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.7}
+.gilist{padding:0.4rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.gi{background:var(--dark);padding:2rem 1.7rem;border:1px solid rgba(184,134,11,0.08);cursor:pointer;transition:background 0.2s}
+.gi:active{background:rgba(184,134,11,0.04)}
+.gitier{font-size:0.56rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:0.65rem}
+.gin{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--cream);margin-bottom:0.45rem}
+.gid{font-size:0.83rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:0.9rem}
+.gifr{font-family:'Cormorant Garamond',serif;font-size:0.97rem;color:var(--cream);margin-bottom:0.7rem}
+.giinc{font-size:0.76rem;color:var(--dimmer);line-height:1.85}
+.giinc span{display:block}
+.giinc span::before{content:'◆  ';color:var(--gold);font-size:0.44rem}
+
+/* ── FRIDAY ── */
+#sfr{background:var(--dark);padding-bottom:80px}
+.frhero{background:var(--brown);padding:4.2rem 1.8rem 2.2rem;text-align:center;position:relative}
+.frhero::before{content:'';position:absolute;inset:11px;border:1px solid rgba(184,134,11,0.09);pointer-events:none}
+.frlbl{font-size:0.56rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem}
+.frttl{font-family:'Cormorant Garamond',serif;font-size:2.7rem;font-weight:300;color:var(--cream);line-height:1;margin-bottom:0.2rem}
+.frttl em{font-style:italic;color:var(--gold3)}
+.frsub{font-size:0.86rem;color:var(--dim);font-style:italic;line-height:1.7;margin-top:1.2rem;margin-bottom:0.8rem}
+.frrule{font-size:0.63rem;letter-spacing:0.16em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem}
+.frbody{padding:1.6rem 1.4rem}
+.frmin{background:var(--mid);border:1px solid rgba(184,134,11,0.13);padding:1.2rem;margin-bottom:1.2rem}
+.frmin-row{display:flex;align-items:flex-start;gap:0.8rem;margin-bottom:0.8rem}
+.frmin-row:last-child{margin-bottom:0}
+.frmin-icon{width:16px;height:16px;stroke:var(--gold);fill:none;flex-shrink:0;margin-top:2px}
+.frmin-text{font-size:0.83rem;color:var(--dim);font-style:italic;line-height:1.6}
+.frmin-text strong{font-style:normal;color:var(--cream);font-family:'Cormorant Garamond',serif}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* PACK BUTTONS */
+.pack-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:0.3rem}
+.pack-btn{background:var(--mid);border:1px solid rgba(184,134,11,0.15);padding:0.75rem 0.3rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all 0.2s}
+.pack-btn.active{border-color:var(--gold);background:rgba(184,134,11,0.1)}
+.pack-n{font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);font-family:'EB Garamond',serif}
+.pack-btn.active .pack-n{color:var(--cream)}
+.pack-p{font-family:'Cormorant Garamond',serif;font-size:0.92rem;color:var(--gold3)}
+.pack-tag{font-size:0.48rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,134,11,0.3);padding:1px 4px;margin-top:1px}
+
+/* BOTANICAL BADGE */
+.bot-badge{display:inline-flex;align-items:center;gap:3px;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,134,11,0.28);padding:0.1rem 0.35rem;margin-top:0.3rem}
+
+/* BOTANICALS LINK IN MENU */
+.bot-menu-link{padding:0.6rem 1.4rem;text-align:center;border-top:1px solid rgba(184,134,11,0.07)}
+.bot-menu-link button{font-size:0.68rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;font-family:'EB Garamond',serif;background:none;border:none;cursor:pointer}
+
+/* TESTIMONIALS */
+#stst{background:var(--dark);padding-bottom:80px}
+.tst-intro{padding:3.8rem 1.7rem 1.5rem;text-align:center}
+.tst-list{padding:0.4rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.tst{background:var(--mid);padding:1.8rem 1.5rem;border:1px solid rgba(184,134,11,0.08)}
+.tst-q{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--cream);line-height:1.55;margin-bottom:1rem;font-style:italic}
+.tst-q::before{content:'\201C';color:var(--gold);font-size:1.3rem;line-height:0;vertical-align:-0.25em;margin-right:2px}
+.tst-q::after{content:'\201D';color:var(--gold);font-size:1.3rem;line-height:0;vertical-align:-0.25em;margin-left:2px}
+.tst-attr{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold)}
+.tst-ev{font-size:0.7rem;color:var(--dimmer);font-style:italic;margin-top:2px}
+
+/* BUNDLES */
+#sbun{background:var(--brown);padding-bottom:80px}
+.bun-intro{padding:3.8rem 1.7rem 1.5rem;text-align:center}
+.bunlist{padding:0.4rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.bun{background:var(--dark);padding:2rem 1.7rem;border:1px solid rgba(184,134,11,0.08);cursor:pointer;transition:background 0.2s}
+.bun:active{background:rgba(184,134,11,0.04)}
+.bun-tag{font-size:0.55rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem}
+.bun-n{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--cream);margin-bottom:0.4rem}
+.bun-d{font-size:0.83rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:0.8rem}
+.bun-inc{font-size:0.78rem;color:var(--dim);line-height:1.85;margin-bottom:0.9rem}
+.bun-inc span{display:block}
+.bun-inc span::before{content:'◆  ';color:var(--gold);font-size:0.44rem}
+.bun-pr{display:flex;align-items:center;justify-content:space-between}
+.bun-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream)}
+.bun-save{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold3);border:1px solid rgba(184,134,11,0.25);padding:0.18rem 0.45rem}
+/* MARQUEE */
+.marquee-wrap{position:absolute;bottom:86px;left:0;right:0;overflow:hidden;border-top:1px solid rgba(184,134,11,0.12);border-bottom:1px solid rgba(184,134,11,0.12);padding:0.6rem 0;background:rgba(15,8,4,0.6);backdrop-filter:blur(4px)}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:marquee 28s linear infinite;width:max-content}
+.marquee-track span{font-size:0.6rem;letter-spacing:0.25em;color:var(--dimmer);text-transform:uppercase;padding:0 0.8rem;font-family:'EB Garamond',serif}
+.marquee-track .mdot{color:var(--gold);padding:0;opacity:0.5}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+#sintake{background:var(--dark);padding-bottom:80px}
+.intake-step{padding:0 1.4rem 1rem;display:none}
+.intake-step.active{display:block}
+.intake-prog{display:flex;gap:4px;padding:1rem 1.4rem 0;margin-top:3rem}
+.ip{height:2px;flex:1;background:rgba(184,134,11,0.15);border-radius:1px;transition:background 0.3s}
+.ip.done{background:var(--gold)}
+.intake-q{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--cream);margin-bottom:0.3rem;line-height:1.2;padding:1.2rem 1.4rem 0}
+.intake-hint{font-size:0.8rem;color:var(--dimmer);font-style:italic;padding:0 1.4rem 1.2rem}
+.intake-opts{display:flex;flex-direction:column;gap:6px;padding:0 1.4rem}
+.iopt{background:var(--mid);border:1px solid rgba(184,134,11,0.1);padding:1.1rem 1.3rem;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;width:100%}
+.iopt:active,.iopt.sel{background:rgba(184,134,11,0.09);border-color:var(--gold)}
+.iopt-l{font-family:'EB Garamond',serif;font-size:0.97rem;color:var(--dim);font-style:italic}
+.iopt.sel .iopt-l{color:var(--cream)}
+.iopt-check{width:16px;height:16px;border:1px solid rgba(184,134,11,0.25);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:transparent;transition:all 0.2s}
+.iopt.sel .iopt-check{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.intake-next{margin:1.2rem 1.4rem 0}
+.intake-input{width:100%;padding:0.9rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(184,134,11,0.18);color:var(--cream);font-family:'EB Garamond',serif;font-size:0.97rem;outline:none;margin:0 1.4rem;width:calc(100% - 2.8rem)}
+.intake-input:focus{border-color:var(--gold)}
+.intake-input::placeholder{color:var(--dimmer)}
+
+/* PACKAGES */
+#spkg{background:var(--dark);padding-bottom:80px}
+.pkg-intro{padding:3.8rem 1.7rem 1rem}
+.pkg-intro-sub{font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.7;margin-top:0.3rem}
+.pkglist{padding:0.5rem 1.4rem;display:flex;flex-direction:column;gap:1px}
+.pkg{background:var(--mid);border:1px solid rgba(184,134,11,0.09);padding:2rem 1.7rem;cursor:pointer;transition:background 0.2s;position:relative;overflow:hidden}
+.pkg:active{background:rgba(184,134,11,0.06)}
+.pkg.recommended{border-color:rgba(184,134,11,0.35)}
+.pkg-rec-tag{position:absolute;top:0;right:0;background:var(--gold);color:var(--dark);font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.25rem 0.7rem}
+.pkg-tier{font-size:0.56rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem}
+.pkg-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream);margin-bottom:0.4rem}
+.pkg-desc{font-size:0.83rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:1rem}
+.pkg-specs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.pkg-spec{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dimmer);border:1px solid rgba(184,134,11,0.15);padding:0.2rem 0.6rem}
+.pkg-price{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream)}
+
+/* FRIDAY CUTOFF BANNER */
+.fri-closed{background:rgba(139,32,32,0.15);border:1px solid rgba(139,32,32,0.3);padding:0.85rem 1.1rem;margin:0.8rem 1.4rem;font-size:0.8rem;color:#ff9999;font-style:italic;line-height:1.6;display:none}
+.fri-closed.show{display:block}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="flbl" id="flbl">Home</div>
+<div class="toast" id="toast"></div>
+
+<!-- FLOATING CART -->
+<div class="fcart" id="fcart" onclick="goTo('sc','fi','Review Order')">
+  <div class="fcart-top">
+    <div class="fc-l">
+      <span class="fc-cnt" id="fccnt">0 items</span>
+      <span class="fc-tot" id="fctot">₦0</span>
+    </div>
+    <span class="fc-btn">Review Order →</span>
+  </div>
+  <div class="fc-prog-wrap"><div class="fc-prog-bar" id="fcprog" style="width:0%"></div></div>
+  <div class="fc-prog-label" id="fcprogl"></div>
+</div>
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="sh">
+
+  <div class="hhero">
+    <div class="hglow"></div>
+    <p style="font-size:0.52rem;letter-spacing:0.45em;color:var(--dimmer);text-transform:uppercase;margin-bottom:1.8rem;position:relative">Lagos · Est. MMXXV</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACt0AAAPVCAYAAAAA0LduAAAACXBIWXMAABYlAAAWJQFJUiTwAAAgAElEQVR4nOzaQREAIRDAsOP8e14UMH3CI1FQAV0z8wEAAAAAAAAAAAAAZ//tAAAAAAAAAAAAAAB4nekWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAAAAAAAAAAAACC6RYAAAAAAAAAAAAAgukWAAAAAAAAAAAAAILpFgAA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" alt="LIQUID THERAPY"
+         style="width:230px;max-width:78%;height:auto;filter:brightness(0) saturate(100%) invert(35%) sepia(60%) saturate(800%) hue-rotate(10deg) brightness(90%);display:block;margin:0 auto;position:relative">
+    <p style="font-size:0.8rem;color:var(--dim);font-style:italic;letter-spacing:0.04em;position:relative;margin-top:0.5rem;margin-bottom:0.4rem">Taste is only the beginning.</p>
+    <div class="hrule"></div>
+    <p style="font-size:0.88rem;color:var(--cream);font-style:italic;letter-spacing:0.02em;position:relative;margin-top:0.2rem">Step into our world.</p>
+  </div>
+
+  <div class="h-btns">
+    <button class="h-btn-drinks" onclick="goTo('sm','su','The Menu')">
+      <div>
+        <span class="h-btn-label">Drinks</span>
+        <span class="h-btn-sub">Explore our crafted prescriptions.</span>
+      </div>
+      <span class="h-btn-arr">→</span>
+    </button>
+    <button class="h-btn-exp" onclick="goTo('sw','su','Experiences')">
+      <div>
+        <span class="h-btn-label">Experiences</span>
+        <span class="h-btn-sub">Tell us about an event — we'll bring the bar to you.</span>
+      </div>
+      <span class="h-btn-arr">→</span>
+    </button>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>MOBILE BAR</span><span class="mdot">·</span>
+      <span>FINE DRINKING</span><span class="mdot">·</span>
+      <span>POLYSENSORY EXPERIENCES</span><span class="mdot">·</span>
+      <span>CRAFTED COCKTAILS</span><span class="mdot">·</span>
+      <span>DRINK MANAGEMENT</span><span class="mdot">·</span>
+      <span>ZERO-PROOF PLACEBOS</span><span class="mdot">·</span>
+      <span>IMMERSIVE SESSIONS</span><span class="mdot">·</span>
+      <span>SHIFTS ATMOSPHERE</span><span class="mdot">·</span>
+      <span>MOBILE BAR</span><span class="mdot">·</span>
+      <span>FINE DRINKING</span><span class="mdot">·</span>
+      <span>POLYSENSORY EXPERIENCES</span><span class="mdot">·</span>
+      <span>CRAFTED COCKTAILS</span><span class="mdot">·</span>
+      <span>DRINK MANAGEMENT</span><span class="mdot">·</span>
+      <span>ZERO-PROOF PLACEBOS</span><span class="mdot">·</span>
+      <span>IMMERSIVE SESSIONS</span><span class="mdot">·</span>
+      <span>SHIFTS ATMOSPHERE</span><span class="mdot">·</span>
+    </div>
+  </div>
+
+  <div class="bot-icon" onclick="goTo('sbot','su','Our Botanicals')">
+    <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 019 9c0 4-2.5 7.5-6 8.5L12 22l-3-2.5C5.5 18.5 3 15 3 11a9 9 0 019-9z"/><path d="M12 8v8M9 11l3-3 3 3"/></svg>
+  </div>
+  <span class="bot-label">Our Botanicals</span>
+
+</div>
+
+<!-- ══ DRINKS ENTRY ══ -->
+<div class="screen" id="sdrinks">
+<div class="shdr"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Drinks</span></div>
+<div style="padding:2rem 1.7rem 1.2rem">
+  <p style="font-size:0.58rem;letter-spacing:0.42em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem">Ready to Drink</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);line-height:1.2;margin-bottom:0.8rem">Explore our<br>crafted prescriptions.</h2>
+  <p style="font-size:0.88rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:1.5rem">Cocktails and mocktails in 350ml pouches, delivered to you. Crafted by our EBS-certified mixologist.</p>
+</div>
+<div style="padding:0 1.4rem;display:flex;flex-direction:column;gap:1px">
+  <button class="rxbtn" onclick="goTo('sm','sd','The Menu')">
+    <div class="rxl"><p class="rxlt" style="font-size:1.1rem">Know What You Want</p></div>
+    <span class="rxarr">→</span>
+  </button>
+  <button class="rxbtn" onclick="goTo('sq','su','Prescribe Something')">
+    <div class="rxl"><p class="rxlt" style="font-size:1.1rem">Prescribe Something for Me</p><p class="rxld">We ask three questions. You get a recommendation.</p></div>
+    <span class="rxarr">→</span>
+  </button>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ EXPERIENCES ENTRY (Step Inside) ══ -->
+<div class="screen" id="sw">
+<div class="shdr"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Plan Your Experience</span></div>
+
+<!-- HERO -->
+<div style="padding:2.2rem 1.7rem 1.4rem;position:relative;overflow:hidden;background:var(--dark)">
+  <div class="hglow" style="opacity:0.18;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <p style="font-size:0.56rem;letter-spacing:0.45em;color:var(--gold);text-transform:uppercase;margin-bottom:0.9rem;position:relative">Step Inside</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:0.5rem;position:relative">Tell us about<br>your event.</h2>
+  <p style="font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.65;position:relative">We'll take it from there.</p>
+</div>
+
+<!-- PRIMARY CTA — consultation first -->
+<div style="padding:1rem 1.4rem 0.8rem;border-bottom:1px solid rgba(184,134,11,0.1)">
+  <button class="bg" onclick="openConsultation()">Book a Free Consultation →</button>
+  <p style="font-size:0.72rem;color:var(--dimmer);font-style:italic;text-align:center;margin-top:0.6rem">Free · No commitment · We come to you with a proposal</p>
+</div>
+
+<!-- DIVIDER -->
+<div style="padding:0.8rem 1.4rem 0;display:flex;align-items:center;gap:0.8rem">
+  <div style="flex:1;height:1px;background:rgba(184,134,11,0.1)"></div>
+  <p style="font-size:0.62rem;color:var(--dimmer);letter-spacing:0.15em;text-transform:uppercase">Or tell us about your event first</p>
+  <div style="flex:1;height:1px;background:rgba(184,134,11,0.1)"></div>
+</div>
+
+<!-- INTAKE STEPS -->
+<div style="padding:0 0 1rem">
+
+  <!-- PROGRESS DOTS -->
+  <div style="display:flex;gap:6px;justify-content:center;padding:1rem 0 0.4rem">
+    <div class="ip done" id="ip1"></div>
+    <div class="ip" id="ip2"></div>
+    <div class="ip" id="ip3"></div>
+    <div class="ip" id="ip4"></div>
+  </div>
+
+  <!-- STEP 1: Occasion -->
+  <div class="intake-step active" id="is1">
+    <div class="intake-q"><p>What is the occasion?</p></div>
+    <div class="intake-opts">
+      <button class="iopt" onclick="intakeSelect(this,'occasion','Birthday or milestone',2)"><span class="iopt-l">Birthday or milestone</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'occasion','Wedding or engagement',2)"><span class="iopt-l">Wedding or engagement</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'occasion','Corporate event',2)"><span class="iopt-l">Corporate event or activation</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'occasion','Private gathering',2)"><span class="iopt-l">Private gathering or dinner</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'occasion','Something else',2)"><span class="iopt-l">Something else</span><span class="iopt-check">✓</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Guests -->
+  <div class="intake-step" id="is2">
+    <div class="intake-q"><p>How many guests?</p></div>
+    <div class="intake-opts">
+      <button class="iopt" onclick="intakeSelect(this,'guests','Under 20',3)"><span class="iopt-l">Under 20 — intimate</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'guests','20–50',3)"><span class="iopt-l">20 to 50 guests</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'guests','50–100',3)"><span class="iopt-l">50 to 100 guests</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'guests','100+',3)"><span class="iopt-l">Over 100 guests</span><span class="iopt-check">✓</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Priority -->
+  <div class="intake-step" id="is3">
+    <div class="intake-q"><p>What matters most?</p></div>
+    <div class="intake-opts">
+      <button class="iopt" onclick="intakeSelect(this,'priority','Immersive experience',4)"><span class="iopt-l">An experience guests remember</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'priority','Bespoke cocktails',4)"><span class="iopt-l">Bespoke cocktails for my event</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'priority','Bar aesthetics',4)"><span class="iopt-l">A bar that looks as good as it pours</span><span class="iopt-check">✓</span></button>
+      <button class="iopt" onclick="intakeSelect(this,'priority','Full logistics',4)"><span class="iopt-l">Everything managed — hands off</span><span class="iopt-check">✓</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Location + Date → straight to consultation -->
+  <div class="intake-step" id="is4">
+    <div class="intake-q"><p>Last two things.</p></div>
+    <div style="padding:0 1.4rem">
+      <input id="intake-location" class="dlin" type="text" placeholder="Event location or area" style="margin-bottom:0.8rem">
+      <input id="intake-date" class="dlin" type="text" placeholder="Approximate date or month">
+      <button class="bg" onclick="intakeFinish()" style="margin-top:1.2rem">Send to Liquid Therapy →</button>
+      <p style="font-size:0.72rem;color:var(--dimmer);font-style:italic;text-align:center;margin-top:0.5rem">Opens WhatsApp with your brief — we respond within 24hrs</p>
+    </div>
+  </div>
+
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ SERVICES ══ -->
+<div class="screen" id="ss">
+<div class="shdr"><button class="back" onclick="goTo('sw','fi','Our World')">←</button><span class="shdr-t">Our Services</span></div>
+<div class="svcs">
+  <div class="svc" onclick="openWA('Welcome Drink service')"><div><p class="svn">Service 01</p><h3 class="svh">The Welcome Drink</h3><p class="svd">First impressions, handled. Arrival drinks pre-poured and ready for your guests.</p></div><span class="svarr">→</span></div>
+  <div class="svc" onclick="openWA('Drink Care Package')"><div><p class="svn">Service 02</p><h3 class="svh">Drink Care Package</h3><p class="svd">From first pour to last call. Full event drink management — our team, our bar.</p></div><span class="svarr">→</span></div>
+  <div class="svc" onclick="openWA('Immersive Session')"><div><p class="svn">Service 03</p><h3 class="svh">Immersive Session</h3><p class="svd">An interactive cocktail experience for groups. Educational, intimate, memorable.</p></div><span class="svarr">→</span></div>
+  <div class="svc" onclick="openWA('Drink Management services')"><div><p class="svn">Service 04</p><h3 class="svh">Drink Management</h3><p class="svd">We run the bar. You run the room. Full logistics and staffing for any scale.</p></div><span class="svarr">→</span></div>
+</div>
+<div class="cbn"><p>Not sure which service fits your event? Let us help you work it out.</p><button class="bg" onclick="openWA('a consultation for an upcoming event')">Book a Consultation</button></div>
+<div style="height:20px"></div>
+</div>
+
+<!-- ══ PACKAGES ══ -->
+<div class="screen" id="spkg">
+<div class="shdr"><button class="back" onclick="goTo('sw','fi','Step Inside')">←</button><span class="shdr-t">Your Recommendation</span></div>
+<div style="padding:1rem 1.4rem 0.5rem">
+  <p class="pkg-intro-sub" id="pkg-intro-text">Based on what you've told us, here is what we recommend.</p>
+  <p style="font-size:0.72rem;color:var(--dimmer);font-style:italic;margin-top:0.3rem">All packages are quoted exactly to your event. These are starting points.</p>
+</div>
+<div class="pkglist">
+
+  <!-- ANCHOR — Full Expression shown first to anchor perception -->
+  <div class="pkg" onclick="openWA('the Full Expression package — my brief is attached')">
+    <p class="pkg-tier">Package 03 · Full Expression</p>
+    <h3 class="pkg-name">The Complete Experience</h3>
+    <p class="pkg-desc">Custom menu, full team, complete drink management. Nothing off the shelf. Built entirely around your event.</p>
+    <div class="pkg-specs">
+      <span class="pkg-spec">Any guest count</span>
+      <span class="pkg-spec">Bespoke menu</span>
+      <span class="pkg-spec">Full team + logistics</span>
+    </div>
+    <p class="pkg-price" style="font-size:0.85rem;color:var(--dimmer)">From ₦750,000 · Quoted on brief</p>
+  </div>
+
+  <!-- RECOMMENDED — sweet spot, anchor makes this feel reasonable -->
+  <div class="pkg recommended" id="pkg-rec">
+    <span class="pkg-rec-tag">Most Popular</span>
+    <p class="pkg-tier" id="pkg-rec-tier">Package 02 · Signature Experience</p>
+    <h3 class="pkg-name" id="pkg-rec-name">The Signature Experience</h3>
+    <p class="pkg-desc" id="pkg-rec-desc">A fully managed bar with bespoke cocktails and a dedicated team. From setup to last call — everything handled.</p>
+    <div class="pkg-specs" id="pkg-rec-specs">
+      <span class="pkg-spec">Up to 100 guests</span>
+      <span class="pkg-spec">3 cocktails</span>
+      <span class="pkg-spec">Bar styling included</span>
+    </div>
+    <p class="pkg-price" id="pkg-rec-price">From ₦350,000</p>
+    <div style="margin-top:1rem">
+      <button class="bg" onclick="event.stopPropagation();openWA('the Signature Experience — my event brief: occasion: ' + (intakeData.occasion||'') + ', guests: ' + (intakeData.guests||'') + ', location: ' + (intakeData.location||'') + ', date: ' + (intakeData.date||''))">Book a Consultation →</button>
+    </div>
+  </div>
+
+  <!-- ENTRY -->
+  <div class="pkg" onclick="openWA('the Essential Service package')">
+    <p class="pkg-tier">Package 01 · Essential Service</p>
+    <h3 class="pkg-name">The Welcome Service</h3>
+    <p class="pkg-desc">Welcome drinks and a styled bar for intimate gatherings. Clean, elegant, efficient.</p>
+    <div class="pkg-specs">
+      <span class="pkg-spec">Up to 50 guests</span>
+      <span class="pkg-spec">2 cocktails</span>
+      <span class="pkg-spec">1 bartender</span>
+    </div>
+    <p class="pkg-price">From ₦150,000</p>
+  </div>
+
+</div>
+<div style="padding:1.2rem 1.4rem 0">
+  <button class="bo" onclick="goTo('ss','fi','Our Services')">Explore All Services</button>
+</div>
+<div style="height:20px"></div>
+</div>
+
+<!-- ══ RX CHOICE ══ -->
+<div class="screen" id="srx">
+<div class="rxtop">
+  <div style="display:flex;align-items:center;gap:0.9rem;margin-bottom:1.8rem">
+    <button class="back" onclick="goTo('sh','fi','Home')">←</button>
+  </div>
+  <h2 class="rxttl">Order Drinks</h2>
+</div>
+<div class="rxbtns">
+  <button class="rxbtn" onclick="goTo('sm','sd','The Menu')">
+    <div class="rxl"><p class="rxlt" style="font-size:1.2rem">Know What You Want</p></div>
+    <span class="rxarr">→</span>
+  </button>
+  <button class="rxbtn" onclick="goTo('sq','su','Find My Prescription')">
+    <div class="rxl"><p class="rxlt" style="font-size:1.2rem">Prescribe something for me</p><p class="rxld">We ask three questions. You get a recommendation.</p></div>
+    <span class="rxarr">→</span>
+  </button>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ MENU ══ -->
+<div class="screen" id="sm">
+<div style="background:var(--brown)">
+  <!-- MENU HEADER — descriptor -->
+  <div style="padding:3.8rem 1.7rem 1rem;position:relative">
+    <button class="back" onclick="goTo('sh','fi','Home')" style="position:absolute;top:3rem;left:1.4rem">←</button>
+    <p style="font-size:0.56rem;letter-spacing:0.42em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;padding-left:2rem">Ready to Drink</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--cream);line-height:1.2;margin-bottom:0">Explore our<br>crafted prescriptions.</h2>
+  </div>
+<div>
+  <!-- PRESCRIPTION PINNED -->
+  <div class="rx-pin" id="rxpin">
+    <p class="rx-pin-l">Your Prescription</p>
+    <p class="rx-pin-n" id="rxpin-n">Afrobeat Sour</p>
+    <p class="rx-pin-d" id="rxpin-d">Prescribed for your mood.</p>
+    <button class="bg" id="rxpin-btn" style="font-size:0.72rem;padding:0.7rem">Add to Order →</button>
+  </div>
+
+  <!-- PRESCRIPTION CTA -->
+  <div style="padding:0.4rem 1.4rem 0.8rem;border-bottom:1px solid rgba(184,134,11,0.06);text-align:center">
+    <button onclick="goTo('sq','su','Prescribe Something')" style="background:none;border:none;font-size:0.72rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'EB Garamond',serif;padding:0.4rem 0">Not sure? Let us prescribe for you →</button>
+  </div>
+
+  <div class="mtabs">
+    <button class="mtb active" onclick="fM('sig',this)">Signature</button>
+    <button class="mtb" onclick="fM('cls',this)">Familiar Classics</button>
+    <button class="mtb" onclick="fM('zpr',this)">Mocktails</button>
+  </div>
+  <div class="dlist" id="dl">
+    <!-- SIGNATURE -->
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 001')">
+      <div class="drowl"><p class="dpx">Rx 001</p><p class="dn">Afrobeat Sour</p><span style="font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:0.1rem 0.4rem;display:inline-block;margin-top:0.3rem">Best Seller</span><p class="drx">Whiskey, Orijin, Lime. Citrus · Sour · Bold.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦5,000</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 002')">
+      <div class="drowl"><p class="dpx">Rx 002</p><p class="dn">Agbalumo Berry</p><span style="font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:0.1rem 0.4rem;display:inline-block;margin-top:0.3rem">Best Seller</span><p class="drx">Vodka, Agbalumo syrup, Citrus, Berry reduction.</p><span class="dseas">Seasonal · Dec–Apr</span><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦4,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 003')">
+      <div class="drowl"><p class="dpx">Rx 003</p><p class="dn">Lagos Ginger Mule</p><p class="drx">Vodka, Fresh ginger, Lime, Basil, Ginger beer.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦5,000</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 004')">
+      <div class="drowl"><p class="dpx">Rx 004</p><p class="dn">Negritude</p><p class="drx">Gin, Campari, Sweet Vermouth, Nigerian cocoa infusion.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦5,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 005')">
+      <div class="drowl"><p class="dpx">Rx 005</p><p class="dn">Wazobia Mix</p><p class="drx">Palm wine base, Hibiscus, Citrus, Ginger, Kola-nut infusion.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦5,000</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="sig" onclick="oDrink('Rx 006')">
+      <div class="drowl"><p class="dpx">Rx 006</p><p class="dn">Coconut Groove</p><p class="drx">White rum, Coconut cream, Orange juice. Tropical · Creamy.</p></div>
+      <div class="drowr"><p class="dpr">₦4,500</p><p class="dv">View →</p></div>
+    </div>
+    <!-- CLASSICS -->
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 007')">
+      <div class="drowl"><p class="dpx">Rx 007</p><p class="dn">Spicy Margarita</p><span style="font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:0.1rem 0.4rem;display:inline-block;margin-top:0.3rem">Best Seller</span><p class="drx">Tequila, Lime, Orange liqueur, Chili syrup. Bold · Spicy.</p></div>
+      <div class="drowr"><p class="dpr">₦5,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 008')">
+      <div class="drowl"><p class="dpx">Rx 008</p><p class="dn">Pornstar Martini</p><p class="drx">Vodka, Vanilla, Passionfruit. Sweet · Indulgent.</p></div>
+      <div class="drowr"><p class="dpr">₦5,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 009')">
+      <div class="drowl"><p class="dpx">Rx 009</p><p class="dn">Espresso Martini</p><p class="drx">Vodka, Espresso. Bold · Coffee.</p></div>
+      <div class="drowr"><p class="dpr">₦5,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 010')">
+      <div class="drowl"><p class="dpx">Rx 010</p><p class="dn">Mojito</p><p class="drx">White rum, Lime, Mint, Soda. Herbal · Refreshing.</p></div>
+      <div class="drowr"><p class="dpr">₦4,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 011')">
+      <div class="drowl"><p class="dpx">Rx 011</p><p class="dn">Clover Club</p><p class="drx">Gin, Raspberry, Lemon. Fruity.</p></div>
+      <div class="drowr"><p class="dpr">₦4,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="cls" onclick="oDrink('Rx 012')">
+      <div class="drowl"><p class="dpx">Rx 012</p><p class="dn">Passion Sour (LT Style)</p><p class="drx">Passionfruit, Citrus, Spirit base, Simple syrup.</p></div>
+      <div class="drowr"><p class="dpr">₦4,500</p><p class="dv">View →</p></div>
+    </div>
+    <!-- ZERO PROOF -->
+    <div class="drow" data-c="zpr" onclick="oDrink('Rx 013')">
+      <div class="drowl"><p class="dpx">Rx 013</p><p class="dn">Chapman</p><p class="drx">Blackcurrant, Citrus, Soda. Fruity · Refreshing.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦3,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="zpr" onclick="oDrink('Rx 014')">
+      <div class="drowl"><p class="dpx">Rx 014</p><p class="dn">Hibiscus Kiss</p><p class="drx">Hibiscus, Fresh orange, Lime. Floral · Citrus.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦3,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="zpr" onclick="oDrink('Rx 015')">
+      <div class="drowl"><p class="dpx">Rx 015</p><p class="dn">Ginger Lime Cooler</p><p class="drx">Fresh ginger, Lime, Soda. Zesty · Refreshing.</p><span class="bot-badge">🌿 Nigerian Botanicals</span></div>
+      <div class="drowr"><p class="dpr">₦3,000</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="zpr" onclick="oDrink('Rx 016')">
+      <div class="drowl"><p class="dpx">Rx 016</p><p class="dn">Virgin Colada</p><p class="drx">Coconut cream, Pineapple. Tropical · Creamy.</p></div>
+      <div class="drowr"><p class="dpr">₦3,500</p><p class="dv">View →</p></div>
+    </div>
+    <div class="drow" data-c="zpr" onclick="oDrink('Rx 017')">
+      <div class="drowl"><p class="dpx">Rx 017</p><p class="dn">Watermelon Mint Cooler</p><p class="drx">Watermelon, Mint, Lime. Fresh · Juicy.</p></div>
+      <div class="drowr"><p class="dpr">₦3,000</p><p class="dv">View →</p></div>
+    </div>
+    <!-- SPARKLING -->
+    
+    
+    
+    
+    
+    <!-- COFFEE KICKS -->
+    
+    
+    
+  </div>
+  </div>
+  <p class="mmin" style="font-size:0.72rem;color:var(--dimmer);font-style:normal;text-align:left;padding:0.8rem 1.4rem;letter-spacing:0">Standard orders: 50 pouches minimum · <span onclick="goTo('sfr','fi','Friday Drop')" style="color:var(--gold);cursor:pointer;text-decoration:underline">Friday Drop available</span></p>
+  <div class="bot-menu-link" style="border-top:none;padding-top:0"><button onclick="goTo('sbot','su','Our Botanicals')">🌿 About our ingredients →</button></div>
+  <div style="height:80px"></div>
+</div>
+</div>
+
+<!-- ══ DRINK DETAIL ══ -->
+<div class="screen" id="sdd">
+<div class="ddhero" style="padding:3.5rem 1.7rem 1.5rem">
+  <button class="back" style="position:absolute;top:3.2rem;left:1.4rem" onclick="goTo('sm','fi','The Menu')">←</button>
+  <!-- Info icon -->
+  <button onclick="toggleDrinkInfo()" style="position:absolute;top:3.2rem;right:1.4rem;background:rgba(184,134,11,0.12);border:1px solid rgba(184,134,11,0.25);color:var(--gold);width:30px;height:30px;border-radius:50%;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center">ℹ</button>
+
+  <p class="ddpx" id="ddpx">Rx 001</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;flex-wrap:wrap">
+    <h2 class="ddn" id="ddn">Afrobeat Sour</h2>
+    <span id="dd-bot-badge" style="display:none;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,134,11,0.35);padding:0.1rem 0.4rem">🌿</span>
+  </div>
+  <p class="ddrx" id="ddrx" style="font-style:italic;font-size:0.88rem"></p>
+</div>
+
+<!-- COMMERCIAL ESSENTIALS — shown always -->
+<div class="dd-essentials">
+  <!-- Taste + Spirit + Strength in one row -->
+  <div style="display:flex;gap:1px;margin-bottom:1px">
+    <div style="flex:1;background:var(--mid);padding:0.9rem 0.8rem;text-align:center">
+      <p style="font-size:0.5rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem">Taste</p>
+      <p style="font-size:0.78rem;color:var(--cream);font-style:italic" id="dd-taste">Sour · Bold</p>
+    </div>
+    <div style="flex:1;background:var(--mid);padding:0.9rem 0.8rem;text-align:center">
+      <p style="font-size:0.5rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem">Formula</p>
+      <p style="font-size:0.78rem;color:var(--cream);font-style:italic" id="dd-base">Whiskey</p>
+    </div>
+    <div style="flex:1;background:var(--mid);padding:0.9rem 0.8rem;text-align:center">
+      <p style="font-size:0.5rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem">Strength</p>
+      <p style="font-size:0.78rem;color:var(--cream)" id="dd-strength">●●○○</p>
+    </div>
+  </div>
+
+  <!-- ZERO PROOF TOGGLE -->
+  <div id="ddzp" style="display:none;background:var(--mid);padding:0.9rem 1.3rem;margin-bottom:1px">
+    <div class="uprow" style="padding:0">
+      <div><span class="upl" style="font-size:0.88rem">Zero proof version</span></div>
+      <div class="tog" id="zptog" onclick="togZP()"></div>
+    </div>
+  </div>
+
+  <!-- TOP SHELF UPGRADE -->
+  <div id="ddup" style="display:none;background:var(--mid);padding:0.9rem 1.3rem;margin-bottom:1px">
+    <div class="uprow" style="padding:0">
+      <div>
+        <span class="upl" style="font-size:0.88rem" id="upspirit">Top shelf upgrade</span>
+        <p style="font-size:0.7rem;color:var(--dimmer);margin-top:1px">+ ₦1,500 per pouch</p>
+      </div>
+      <div class="tog" id="uptog" onclick="togUp()"></div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO PANEL — hidden by default, shown on ℹ tap -->
+<div id="dd-info-panel" style="display:none">
+  <div class="ddbody" style="padding:0.8rem 1.5rem">
+    <div class="ddsec"><p class="ddl">About this drink</p><p class="ddt" id="ddab"></p></div>
+    <div class="ddsec"><p class="ddl">Botanical Origin</p><p class="ddth" id="ddor"></p></div>
+    <div class="ddsec"><p class="ddl">Therapeutic Notes</p><p class="ddth" id="ddth"></p></div>
+  </div>
+</div>
+
+<div class="ddfoot">
+  <p style="font-size:0.6rem;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:0.2rem">Select Pack Size</p>
+  <p style="font-size:0.72rem;color:var(--dimmer);font-style:italic;margin-bottom:0.5rem">Each pouch is 350ml</p>
+  <div class="pack-btns">
+    <button class="pack-btn" id="pb2" onclick="setPack(2)">
+      <span class="pack-n">2 Pack</span>
+      <span class="pack-p" id="pp2">—</span>
+    </button>
+    <button class="pack-btn" id="pb6" onclick="setPack(6)">
+      <span class="pack-n">6 Pack</span>
+      <span class="pack-p" id="pp6">—</span>
+    </button>
+    <button class="pack-btn active" id="pb50" onclick="setPack(50)">
+      <span class="pack-n">50 Pack</span>
+      <span class="pack-p" id="pp50">—</span>
+      <span class="pack-tag">Min order</span>
+    </button>
+  </div>
+
+  <div class="qtyrow" style="margin-top:0.7rem">
+    <span class="qtyl">Custom qty</span>
+    <div class="qtyc">
+      <button class="qtyb" onclick="chQ(-1)">−</button>
+      <span class="qtyn" id="qtyn">50</span>
+      <button class="qtyb" onclick="chQ(1)">+</button>
+    </div>
+  </div>
+
+  <button class="bg" id="addbtn" onclick="addToOrder()">Add to Order</button>
+  <button class="bo" style="margin-top:0.5rem" onclick="addToFriday()">Friday Drop (no minimum)</button>
+</div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div class="screen" id="sq">
+<div class="qwrap">
+  <div style="display:flex;align-items:center;gap:0.9rem;margin-bottom:1.8rem">
+    <button class="back" onclick="qBack()">←</button>
+    <span style="font-size:0.56rem;letter-spacing:0.33em;color:var(--gold);text-transform:uppercase">Your Prescription</span>
+  </div>
+  <div class="qprog"><div class="qp done" id="qp1"></div><div class="qp" id="qp2"></div><div class="qp" id="qp3"></div></div>
+  <div id="q1">
+    <p class="qq">How are you feeling right now?</p>
+    <p class="qhint">Be honest. We will not judge.</p>
+    <div class="qopts">
+      <button class="qo" onclick="quizAnswer('mood','unwind',2)"><span class="qic">🌙</span>I need to unwind</button>
+      <button class="qo" onclick="quizAnswer('mood','celebrate',2)"><span class="qic">✨</span>I am celebrating</button>
+      <button class="qo" onclick="quizAnswer('mood','explore',2)"><span class="qic">🔍</span>I want something new</button>
+      <button class="qo" onclick="quizAnswer('mood','gift',2)"><span class="qic">🎁</span>I am gifting someone</button>
+    </div>
+  </div>
+  <div id="q2" style="display:none">
+    <p class="qq">What sounds good?</p>
+    <p class="qhint">Go with your gut.</p>
+    <div class="qopts">
+      <button class="qo" onclick="quizAnswer('fl','fruity',3)"><span class="qic">🍑</span>Fruity & fresh</button>
+      <button class="qo" onclick="quizAnswer('fl','sour',3)"><span class="qic">🍋</span>Sour & complex</button>
+      <button class="qo" onclick="quizAnswer('fl','bold',3)"><span class="qic">🌶</span>Spicy & bold</button>
+      <button class="qo" onclick="quizAnswer('fl','light',3)"><span class="qic">🌿</span>Light & clean</button>
+    </div>
+  </div>
+  <div id="q3" style="display:none">
+    <p class="qq">With spirits or without?</p>
+    <p class="qhint">Both are prescriptions worth having.</p>
+    <div class="qopts">
+      <button class="qo" onclick="qFin('sp')"><span class="qic">🥃</span>With spirits</button>
+      <button class="qo" onclick="qFin('ns')"><span class="qic">🌱</span>Without spirits</button>
+      <button class="qo" onclick="qFin('sx')"><span class="qic">🎲</span>Surprise me</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div class="screen" id="srs">
+<div class="rshero">
+  <button class="back" style="position:absolute;top:3.2rem;left:1.4rem" onclick="goTo('sq','fi','Find My Prescription')">←</button>
+  <p class="rslbl">Your prescription is ready.</p>
+  <p class="rspx" id="rspx">Rx 003</p>
+  <h2 class="rsn" id="rsn">Afrobeat Sour</h2>
+  <p class="rsnote" id="rsnote"></p>
+  <p class="rsrx" id="rsrx"></p>
+</div>
+<div class="rssim"><p class="rssl">Build around this — tap to add</p><div class="simchips" id="simchips"></div></div>
+<div class="rsacts">
+  <button class="bg" id="rsadd">Add to Order</button>
+  <button class="bo" onclick="goTo('sm','fi','The Menu')">Browse Full Menu</button>
+  <button class="bgh" onclick="resetQ()">Retake Quiz</button>
+</div>
+</div>
+
+<!-- ══ REVIEW ORDER ══ -->
+<div class="screen" id="sc">
+<div class="shdr"><button class="back" onclick="goTo('sm','fi','The Menu')">←</button><span class="shdr-t">Your Selection</span></div>
+<div style="padding:0.3rem 1.4rem 0.8rem">
+</div>
+<div class="cempty" id="cempty" style="display:none"><p>Your order is empty.</p><button class="bg" onclick="goTo('sm','fi','The Menu')">Browse the Menu</button></div>
+<div class="fri-cart-note" id="fricnote">🗓 Your Friday Drop items will be delivered this Friday after 5pm. No minimum required for Friday Drop additions.</div>
+<div class="citems" id="citems"></div>
+<div class="min-prog-wrap" id="minprog" style="display:none">
+  <div class="min-prog-top"><span class="min-prog-l" id="minprogl">Adding more items...</span><span class="min-prog-r" id="minprogr">0 / 50</span></div>
+  <div class="min-prog-bar-wrap"><div class="min-prog-bar" id="minprogbar" style="width:0%"></div></div>
+</div>
+<div class="csummary" id="csummary" style="display:none">
+  <div class="csrow"><span>Items</span><span id="csitems">0</span></div>
+  <div class="csrow"><span>Upgrades</span><span id="csup">—</span></div>
+  <div class="csrow"><span>Delivery</span><span id="csdel">Calculated at next step</span></div>
+  <div class="csrow"><span>Total</span><span id="cstot">₦0</span></div>
+</div>
+<div class="csact">
+  <!-- GIFT MESSAGE — always visible -->
+  <div style="border:1px solid rgba(184,134,11,0.18);padding:1rem 1.1rem;margin-bottom:0.8rem;background:var(--mid)">
+    <p style="font-size:0.72rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem">Add a gift message</p>
+    <input id="gift-msg" type="text" placeholder="e.g. Happy birthday, Temi — enjoy every sip."
+      style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(184,134,11,0.2);color:var(--cream);font-family:'EB Garamond',serif;font-size:0.88rem;padding:0.3rem 0;outline:none"
+      oninput="updateGiftMsg(this.value)">
+  </div>
+
+  <!-- CROSS-SELL — immersive session, shown when cart >= 50 -->
+  <div id="xsell-immersive" style="display:none;border:1px solid rgba(184,134,11,0.22);padding:1rem 1.1rem;margin-bottom:0.8rem;background:var(--mid)">
+    <label style="display:flex;align-items:flex-start;gap:0.7rem;cursor:pointer">
+      <input type="checkbox" id="xsell-check" onchange="toggleXsell(this.checked)"
+        style="margin-top:3px;accent-color:var(--gold);flex-shrink:0">
+      <div>
+        <p style="font-size:0.82rem;color:var(--cream);line-height:1.5">Get 15% off an Immersive Session</p>
+        <p style="font-size:0.75rem;color:var(--dimmer);font-style:italic;margin-top:0.2rem;line-height:1.5">A guided cocktail experience for you and your people — subject to availability.</p>
+      </div>
+    </label>
+  </div>
+
+  <button class="bg" id="procbtn" onclick="proceedToDelivery()" style="margin-top:1.3rem">Proceed to Delivery Details</button>
+  <button class="bgh" onclick="goTo('sm','fi','The Menu')">Add More Drinks</button>
+</div>
+<div style="height:20px"></div>
+</div>
+
+<!-- ══ DELIVERY ══ -->
+<div class="screen" id="sdl">
+<div class="shdr"><button class="back" onclick="goTo('sc','fi','Review Order')">←</button><span class="shdr-t">Delivery Details</span></div>
+<div class="dlform">
+  <div class="fri-note" id="frinote">🗓 Friday Drop selected. We will confirm your slot and delivery time directly.</div>
+  <p style="font-size:0.68rem;color:var(--dimmer);font-style:italic;margin-bottom:0.8rem">Required details are marked with ·</p>
+  <div class="dlf"><label class="dll">Full Name ·</label><input class="dlin" id="dlname" type="text" placeholder="Your name"></div>
+  <div class="dlf"><label class="dll">Phone Number ·</label><input class="dlin" id="dlphone" type="tel" placeholder="+234..."></div>
+  <div class="dlf"><label class="dll">Delivery Address ·</label><input class="dlin" id="dladdr" type="text" placeholder="Street address, area, Lagos"></div>
+  <div class="dlf"><label class="dll">Area / Zone</label>
+    <select class="dlsel" id="dlzone" onchange="calcLogistics()">
+      <option value="">Select your area</option>
+      <option value="island" data-fee="3500">Victoria Island / Ikoyi / Lekki Phase 1</option>
+      <option value="lekki" data-fee="4500">Lekki Phase 2 / Ajah / Sangotedo</option>
+      <option value="mainland" data-fee="3000">Yaba / Surulere / Ikeja / Gbagada</option>
+      <option value="outskirts" data-fee="5500">Epe / Badagry / Ikorodu / Outside Lagos</option>
+    </select>
+  </div>
+  <div class="logistics-note" id="logfee-note" style="display:none">Logistics fee: <strong id="logfee-val">₦0</strong> — collected on delivery by our rider.</div>
+  <div class="dlf"><label class="dll">Delivery Date</label>
+    <select class="dlsel" id="dldate" onchange="checkFriday()">
+      <option value="">Select a date</option>
+      <option value="fri">This Friday — after 5pm (order by Wednesday midnight)</option>
+      <option value="sat">Saturday</option>
+      <option value="sun">Sunday</option>
+      <option value="mon">Monday</option>
+      <option value="arranged">To be arranged — contact me</option>
+    </select>
+  </div>
+  <div class="dlf"><label class="dll">Preferred Time</label>
+    <select class="dlsel" id="dltime">
+      <option value="">Select a time window</option>
+      <option value="morning">Morning (9am – 12pm)</option>
+      <option value="afternoon">Afternoon (12pm – 4pm)</option>
+      <option value="evening">Evening (4pm – 7pm)</option>
+    </select>
+  </div>
+  <div class="dlf"><label class="dll">Special Instructions (optional)</label><input class="dlin" id="dlnote" type="text" placeholder="Gate code, landmark, special request..."></div>
+  <div class="dltot">
+    <div class="dltot-rows">
+      <div class="dltot-row"><span>Order subtotal</span><span id="dlsub">₦0</span></div>
+      <div class="dltot-row"><span>Logistics fee</span><span id="dllog">Select area above</span></div>
+    </div>
+    <div class="dltot-row total"><span>Total</span><span id="dltotal">₦0</span></div>
+  </div>
+  <button class="bg" onclick="completeOrder()">Complete Order</button>
+  <div style="margin-top:0.8rem;padding:0.9rem 1.1rem;background:var(--mid);border:1px solid rgba(184,134,11,0.12)">
+    <p style="font-size:0.58rem;letter-spacing:0.28em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem">Payment Options</p>
+    <div style="display:flex;flex-direction:column;gap:0.4rem">
+      <div style="display:flex;align-items:center;gap:0.6rem"><span style="color:var(--gold);font-size:0.9rem">✓</span><p style="font-size:0.8rem;color:var(--dim)">Bank Transfer (details sent on confirmation)</p></div>
+      <div style="display:flex;align-items:center;gap:0.6rem"><span style="color:var(--gold);font-size:0.9rem">✓</span><p style="font-size:0.8rem;color:var(--dim)">Cash on Delivery — available select areas</p></div>
+      <div style="display:flex;align-items:center;gap:0.6rem"><span style="color:var(--gold);font-size:0.9rem">✓</span><p style="font-size:0.8rem;color:var(--dim)">POS on Delivery — available on request</p></div>
+    </div>
+    <p style="font-size:0.68rem;color:var(--dimmer);font-style:italic;margin-top:0.6rem">Payment confirmed before dispatch.</p>
+  </div>
+</div>
+<div style="height:20px"></div>
+</div>
+
+<!-- ══ BOTANICALS ══ -->
+<div class="screen" id="sbot">
+<div class="shdr"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Our Botanicals</span></div>
+<div style="display:none"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Our Botanicals</span></div>
+<div class="bot-intro">
+  <p>Not every ingredient has a Nigerian story. But the ones that do — we source them with intention.</p>
+  <p style="margin-top:0.6rem;opacity:0.7">Directly from Lagos markets, Nigerian farms, and the growing regions most people have never heard of. Each one has a name, a place, and a season.</p>
+</div>
+<div class="botlist">
+  <div class="boti"><p class="botor">Lagos Markets · Dec–Apr</p><h3 class="botn">Agbalumo</h3><p class="bots">Found on wheelbarrows across Surulere, Mushin, and Oshodi every December. We buy in volume, preserve carefully, and keep it in the glass year round.</p><p class="botr">Therapeutic notes: Vitamin C. The taste of a Lagos childhood.</p></div>
+  <div class="boti"><p class="botor">Kaduna State · Year Round</p><h3 class="botn">Nigerian Ginger</h3><p class="bots">Among the finest ginger in the world. Grown in Kaduna and exported globally — yet most products carry no Nigerian identity. We keep the origin in every glass.</p><p class="botr">Therapeutic notes: Anti-inflammatory. A slow burn that arrives exactly when it should.</p></div>
+  <div class="boti"><p class="botor">Kano & Sokoto · Year Round</p><h3 class="botn">Hibiscus</h3><p class="bots">Northern Nigeria produces the world's most vibrant hibiscus. We use it as a colour note and tart accent — not the headline. There is more going on underneath.</p><p class="botr">Therapeutic notes: Rich in antioxidants. Deep ruby colour.</p></div>
+  <div class="boti"><p class="botor">Oyo State · Feb–Jul</p><h3 class="botn">Ogbomosho Mango</h3><p class="bots">A different fruit to anything imported. Deeper, less sweet, more complex. Sourced from Oyo traders during peak season, frozen in batches to carry the flavour all year.</p><p class="botr">Therapeutic notes: Rich in vitamins A and C. A tropical depth no imported mango replicates.</p></div>
+  <div class="boti"><p class="botor">Ondo State · May–Sep</p><h3 class="botn">Cocoa Pulp</h3><p class="bots">We use the white fruit around the cocoa bean — usually discarded in production. From Ondo State farms. Tropical, slightly citrusy. The ingredient guests cannot identify but never forget.</p><p class="botr">Therapeutic notes: The thing that stays with them.</p></div>
+  <div class="boti"><p class="botor">Lagos Markets · Dec–Mar</p><h3 class="botn">Velvet Tamarind</h3><p class="bots">Known as Icheku. Every Lagos child grew up eating it from street vendors. Sour, complex, deeply nostalgic. The lead ingredient in what becomes The West.</p><p class="botr">Therapeutic notes: Digestive support. A flavour that carries memory.</p></div>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ GIFT ══ -->
+<div class="screen" id="sgi">
+<div class="shdr" style="background:var(--brown)"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Gift a Prescription</span></div>
+<div style="background:var(--brown)">
+<div class="giintro">
+  <h2 class="git">Some things are better<br>given than discovered alone.</h2>
+  <p class="gis">Prescriptions and experiences, gifted from you.</p>
+</div>
+
+<!-- RTD GIFT — simple, no target market labels -->
+<div style="padding:0 1.4rem 0.3rem">
+  <p style="font-size:0.58rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem">Ready to Drink · Gift a Set</p>
+  <div onclick="openWA('a gift set of RTD prescriptions — Recipient: , Occasion: , Personalised message: ')"
+       style="background:var(--mid);padding:1.2rem 1.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(184,134,11,0.18)">
+    <div>
+      <p style="font-size:1rem;color:var(--cream);font-family:'Cormorant Garamond',serif;margin-bottom:0.2rem">Gift a Prescription</p>
+      <p style="font-size:0.78rem;color:var(--dimmer);font-style:italic">Crafted cocktails and mocktails, pouched and delivered.</p>
+    </div>
+    <span style="color:var(--gold);flex-shrink:0;margin-left:1rem">→</span>
+  </div>
+</div>
+
+<!-- EXPERIENCE GIFTS -->
+<div style="padding:1.2rem 1.4rem 0.3rem">
+  <p style="font-size:0.58rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem">Gift an Experience</p>
+</div>
+<div class="gilist">
+  <div class="gi" onclick="openGift('Welcome Drink Experience','₦25,000')">
+    <p class="gitier">Tier 01</p>
+    <h3 class="gin">The Welcome Drink</h3>
+    <p class="gid">A curated arrival drink experience for their next gathering. Entirely handled by us.</p>
+    <p class="gifr">From ₦25,000</p>
+    <div class="giinc"><span>Bespoke drink selection</span><span>Branded gift card from you</span></div>
+  </div>
+  <div class="gi" onclick="openGift('Immersive Session','₦75,000')">
+    <p class="gitier">Tier 02</p>
+    <h3 class="gin">The Immersive Session</h3>
+    <p class="gid">A cocktail experience for them and their people. Intimate, guided, memorable.</p>
+    <p class="gifr">From ₦75,000</p>
+    <div class="giinc"><span>Group cocktail session</span><span>Ingredient storytelling</span><span>Branded gift card from you</span></div>
+  </div>
+  <div class="gi" onclick="openGift('Full Experience','₦150,000')">
+    <p class="gitier">Tier 03</p>
+    <h3 class="gin">The Full Experience</h3>
+    <p class="gid">The bar, the team, the story. A complete Liquid Therapy event for their occasion.</p>
+    <p class="gifr">From ₦150,000</p>
+    <div class="giinc"><span>Full mobile bar</span><span>Dedicated team</span><span>Bespoke menu</span><span>Branded gift card from you</span></div>
+  </div>
+</div>
+<div style="height:80px"></div>
+</div>
+</div>
+
+<!-- ══ FRIDAY DROP ══ -->
+<div class="screen" id="sfr">
+<div class="shdr"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">Friday Drop</span></div>
+<div class="frhero">
+  <p class="frlbl">Limited · Ready to Drink</p>
+  <h2 class="frttl">The Friday<br><em>Drop</em></h2>
+  <p class="frsub">A small batch of our crafted cocktails, pouched and delivered every Friday after 5pm. A way to bring the Liquid Therapy experience into your home — or someone else's.</p>
+  <p class="frrule">Limited slots each week · By request only</p>
+</div>
+<div class="frbody">
+  <div class="frmin">
+    <div class="frmin-row">
+      <svg class="frmin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <p class="frmin-text"><strong>Small batch. Limited weekly.</strong> The Friday Drop runs on limited capacity for now. Express interest and we will confirm your slot for the week.</p>
+    </div>
+    <div class="frmin-row">
+      <svg class="frmin-icon" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M3 11h18"/></svg>
+      <p class="frmin-text"><strong>Perfect for gifting.</strong> Order for yourself, or send a set to a friend, colleague, or team. We can include a personalised note.</p>
+    </div>
+    <div class="frmin-row">
+      <svg class="frmin-icon" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/></svg>
+      <p class="frmin-text"><strong>Bundle with an Immersive Session.</strong> Combine a Friday Drop with one of our group sessions — ideal for birthdays or team bonding events.</p>
+    </div>
+  </div>
+  <button class="bg" onclick="openWA('the Friday Drop — I\'d like to express interest for this week. My preference: ')">Express Interest This Week</button>
+  <button class="bo" onclick="openWA('a Friday Drop gift bundle — I\'d like to send a set to someone. Personalisation details: recipient name: , occasion: , message: ')">Gift a Friday Drop →</button>
+  <button class="bo" onclick="openWA('a Friday Drop + Immersive Session bundle for a small group. Details: occasion: , group size: , preferred date: ')">Bundle with Immersive Session →</button>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ TESTIMONIALS ══ -->
+<div class="screen" id="stst">
+<div class="shdr"><button class="back" onclick="goTo('sh','fi','Home')">←</button><span class="shdr-t">What Guests Say</span></div>
+<div class="tst-intro">
+  <p style="font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.8">Every event leaves a story. These are some of ours.</p>
+</div>
+<div class="tst-list">
+  <div class="tst">
+    <p class="tst-q">The bar was the most talked about part of the evening. People are still messaging me about the drinks.</p>
+    <p class="tst-attr">Temi & Wale</p>
+    <p class="tst-ev">Private wedding · Lagos</p>
+  </div>
+  <div class="tst">
+    <p class="tst-q">We have done a lot of activations but none where the bartender explained every ingredient. Our guests loved it.</p>
+    <p class="tst-attr">Corporate Events Team</p>
+    <p class="tst-ev">Standard Chartered · Year End</p>
+  </div>
+  <div class="tst">
+    <p class="tst-q">I did not know Nigerian ginger could taste like that. Liquid Therapy changed how I think about local ingredients.</p>
+    <p class="tst-attr">Khalid & Bennie</p>
+    <p class="tst-ev">Private wedding · Ikoyi</p>
+  </div>
+  <div class="tst">
+    <p class="tst-q">From setup to last call, the team was flawless. This is not a regular bar hire — it is a full experience.</p>
+    <p class="tst-attr">Private Client</p>
+    <p class="tst-ev">80th Birthday · Victoria Island</p>
+  </div>
+</div>
+<div style="padding:1.5rem 1.4rem">
+  <button class="bg" onclick="openWA('a consultation — I\'d like to discuss my event')">Book Your Experience</button>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ BUNDLES ══ -->
+<div class="screen" id="sbun">
+<div class="shdr" style="background:var(--brown)"><button class="back" onclick="goTo('sm','fi','The Menu')">←</button><span class="shdr-t">Bundles</span></div>
+<div style="background:var(--brown)">
+<div class="bun-intro">
+  <p style="font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.8">50 pouches. One decision. Every occasion covered.</p>
+</div>
+
+<!-- ALCOHOLIC -->
+<div style="padding:0 1.4rem 0.3rem">
+  <p style="font-size:0.56rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem">Alcoholic</p>
+</div>
+<div class="bunlist">
+  <div class="bun" onclick="orderBundle('The Therapist\'s Pick')">
+    <p class="bun-tag">Bundle 01 · Whiskey + Vodka + Tequila</p>
+    <h3 class="bun-n">The Therapist's Pick</h3>
+    <p class="bun-d">Our most requested mix. Signature cocktails that consistently start conversations.</p>
+    <div class="bun-inc">
+      <span>15 × Afrobeat Sour — Whiskey</span>
+      <span>15 × Agbalumo Berry — Vodka</span>
+      <span>10 × Spicy Margarita — Tequila</span>
+      <span>10 × Lagos Ginger Mule — Vodka</span>
+    </div>
+    <div class="bun-pr"><span class="bun-price">₦215,000</span><span class="bun-save">Save ₦15,000</span></div>
+  </div>
+
+  <div class="bun" onclick="orderBundle('Party Starter')">
+    <p class="bun-tag">Bundle 02 · Whiskey + Tequila + Gin</p>
+    <h3 class="bun-n">Party Starter</h3>
+    <p class="bun-d">Bold, festive, built for celebrations where the energy needs to match the drinks.</p>
+    <div class="bun-inc">
+      <span>20 × Afrobeat Sour — Whiskey</span>
+      <span>20 × Spicy Margarita — Tequila</span>
+      <span>10 × Negritude — Gin</span>
+    </div>
+    <div class="bun-pr"><span class="bun-price">₦225,000</span><span class="bun-save">Save ₦12,500</span></div>
+  </div>
+
+  <div class="bun" onclick="orderBundle('Botanicals Pack')">
+    <p class="bun-tag">Bundle 03 · Vodka + Palm Wine + Gin</p>
+    <h3 class="bun-n">The Botanicals Pack</h3>
+    <p class="bun-d">Every drink uses Nigerian-sourced ingredients. The full Lagos story in every sip.</p>
+    <div class="bun-inc">
+      <span>15 × Agbalumo Berry — Vodka</span>
+      <span>15 × Wazobia Mix — Palm Wine</span>
+      <span>10 × Negritude — Gin</span>
+      <span>10 × Afrobeat Sour — Whiskey</span>
+    </div>
+    <div class="bun-pr"><span class="bun-price">₦210,000</span><span class="bun-save">Save ₦10,000</span></div>
+  </div>
+</div>
+
+<!-- NON-ALCOHOLIC -->
+<div style="padding:0.8rem 1.4rem 0.3rem">
+  <p style="font-size:0.56rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem">Zero Proof / Non-Alcoholic</p>
+</div>
+<div class="bunlist">
+  <div class="bun" onclick="orderBundle('Zero Proof Pack')">
+    <p class="bun-tag">Bundle 04 · No alcohol</p>
+    <h3 class="bun-n">Zero Proof Pack</h3>
+    <p class="bun-d">All the craft, none of the spirits. For inclusive events, corporate settings, or the sober-curious.</p>
+    <div class="bun-inc">
+      <span>20 × Hibiscus Kiss — Zero Proof</span>
+      <span>15 × Chapman — Zero Proof</span>
+      <span>10 × Ginger Lime Cooler — Zero Proof</span>
+      <span>5 × Watermelon Mint Cooler — Zero Proof</span>
+    </div>
+    <div class="bun-pr"><span class="bun-price">₦165,000</span><span class="bun-save">Save ₦10,000</span></div>
+  </div>
+</div>
+
+<!-- BUILD YOUR OWN -->
+<div style="padding:0.8rem 1.4rem 0.3rem">
+  <p style="font-size:0.56rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem">Custom</p>
+</div>
+<div class="bunlist">
+  <div class="bun" onclick="orderBundle('Build Your Own')">
+    <p class="bun-tag">Bundle 05 · Your choice of base</p>
+    <h3 class="bun-n">Build Your Own</h3>
+    <p class="bun-d">Choose your drinks and quantities. Tell us your base preference — we confirm the mix.</p>
+    <div class="bun-inc">
+      <span>Min 10 of any single drink</span>
+      <span>50 pouches total</span>
+      <span>Alcoholic, zero proof, or mixed</span>
+    </div>
+    <div class="bun-pr"><span class="bun-price">From ₦165,000</span><span class="bun-save">Your choice</span></div>
+  </div>
+</div>
+
+<div style="height:80px"></div>
+</div>
+</div>
+
+<!-- ══ CHECKOUT TRANSITION ══ -->
+<div class="screen" id="strans">
+  <div style="height:764px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 2rem;gap:1.5rem">
+    <div style="width:44px;height:44px;border:1px solid rgba(184,134,11,0.25);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite"></div>
+    <p style="font-size:0.56rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase">One moment</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--cream);line-height:1.2">Preparing<br>your checkout.</h2>
+    <p style="font-size:0.83rem;color:var(--dimmer);font-style:italic;line-height:1.7">Your order is being confirmed.<br>You will be redirected shortly.</p>
+  </div>
+</div>
+
+<!-- ══ QR ENTRY: POUCH/MENU (id=sqr-drinks) ══ -->
+<!-- This is the screen QR codes on pouches and menus link to -->
+<!-- URL would be: liquidtherapyhq.com/#sqr-drinks -->
+<div class="screen" id="sqr-drinks">
+<div class="shdr" style="background:var(--brown)">
+  <span class="shdr-t" style="margin-left:0">The Menu</span>
+</div>
+<div style="padding:0.8rem 1.4rem 0.6rem;border-bottom:1px solid rgba(184,134,11,0.08)">
+  <p style="font-size:0.82rem;color:var(--dim);font-style:italic;line-height:1.6">Crafted cocktails and mocktails. 350ml pouches, delivered to you.</p>
+  <button onclick="goTo('sq','su','Prescribe')" style="background:none;border:none;font-size:0.72rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'EB Garamond',serif;padding:0.5rem 0 0">Not sure? Let us prescribe for you →</button>
+</div>
+
+<!-- BUNDLES CROSS-SELL -->
+<div onclick="goTo('sbun','fi','Bundles')" style="margin:0.8rem 1.4rem 0;background:var(--mid);border:1px solid rgba(184,134,11,0.22);padding:0.9rem 1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between">
+  <div>
+    <p style="font-size:0.55rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:0.2rem">Curated Packs</p>
+    <p style="font-size:0.9rem;color:var(--cream);font-family:'Cormorant Garamond',serif">Order a bundle · 50 pouches</p>
+    <p style="font-size:0.72rem;color:var(--dimmer);font-style:italic;margin-top:0.1rem">Ask us about immersive sessions too</p>
+  </div>
+  <span style="color:var(--gold);flex-shrink:0;margin-left:1rem">→</span>
+</div>
+
+<!-- MENU TABS -->
+<div style="padding:0 0 0.4rem">
+  <div class="mtabs" style="margin:0.6rem 1.4rem 0">
+    <button class="mtb active" onclick="fM('sig',this)">Signature</button>
+    <button class="mtb" onclick="fM('cls',this)">Familiar Classics</button>
+    <button class="mtb" onclick="fM('zpr',this)">Mocktails</button>
+  </div>
+  <div class="dlist" id="dl-qr">
+    <!-- Populated by JS on init — mirrors main menu -->
+  </div>
+</div>
+<div style="padding:0.5rem 1.4rem;text-align:center">
+  <p style="font-size:0.68rem;color:var(--dimmer);font-style:italic">Minimum 50 pouches per standard order</p>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ QR ENTRY: EXPERIENCES (id=sqr-exp) ══ -->
+<!-- URL would be: liquidtherapyhq.com/#sqr-exp -->
+<div class="screen" id="sqr-exp">
+<div style="min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;padding:4.5rem 1.7rem 1.8rem;position:relative;overflow:hidden;background:var(--dark)">
+  <div class="hglow" style="opacity:0.3"></div>
+  <p style="font-size:0.58rem;letter-spacing:0.45em;color:var(--gold);text-transform:uppercase;margin-bottom:0.9rem;position:relative">Step Inside</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);line-height:1.2;margin-bottom:0.6rem;position:relative">We'll bring<br>the bar to you.</h2>
+  <p style="font-size:0.85rem;color:var(--dim);font-style:italic;line-height:1.7;position:relative">Tell us about your event and we'll find the right experience.</p>
+</div>
+<div style="padding:1.2rem 1.4rem">
+  <button class="bg" onclick="openConsultation()">Book a Consultation</button>
+  <button class="bo" onclick="goTo('sw','su','Plan Your Experience')">Tell us about your event →</button>
+</div>
+<div style="height:80px"></div>
+</div>
+
+<!-- ══ ORDER CONFIRMATION ══ -->
+<div class="screen" id="sconfirm">
+  <div style="height:764px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:3rem 2.5rem;gap:1.2rem;background:var(--brown)">
+    <div style="position:absolute;inset:16px;border:1px solid rgba(184,134,11,0.12);pointer-events:none"></div>
+    <p style="font-size:0.58rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;position:relative">Prescription Sent</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);font-weight:300;position:relative">✓</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--cream);line-height:1.2;position:relative">Your order<br>is confirmed.</h2>
+    <p style="font-size:0.9rem;color:var(--dim);font-style:italic;line-height:1.8;position:relative">We will be in touch shortly<br>to confirm your delivery details.</p>
+    <div style="width:40px;height:1px;background:rgba(184,134,11,0.3);position:relative"></div>
+    <p style="font-size:0.78rem;color:var(--dimmer);font-style:italic;position:relative;line-height:1.7">If symptoms of thirst persist —<br>contact us immediately.</p>
+    <button class="bg" style="margin-top:1rem;max-width:220px" onclick="goTo('sh','fi','Home')">Return Home</button>
+  </div>
+</div>
+
+<div class="bnav">
+  <div class="ni active" id="ni-h" onclick="goTo('sh','fi','Home')">
+    <svg viewBox="0 0 24 24"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg><span>Home</span>
+  </div>
+  <div class="ni" id="ni-rx" onclick="goTo('sm','fi','The Menu')">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><span>Prescribe</span>
+  </div>
+  <div class="ni" id="ni-bun" onclick="goTo('sbun','fi','Bundles')">
+    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg><span>Bundles</span>
+  </div>
+  <div class="ni" id="ni-gi" onclick="goTo('sgi','fi','Gift')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9a1 1 0 01-1 1H6a1 1 0 01-1-1v-9"/><path d="M8.5 8A2.5 2.5 0 016 5.5C6 4 7 3 8.5 3S12 4.5 12 8M15.5 8A2.5 2.5 0 0118 5.5C18 4 17 3 15.5 3S12 4.5 12 8"/></svg><span>Gift</span>
+  </div>
+  <div class="ni" id="ni-fr" onclick="goTo('sfr','fi','Friday Drop')">
+    <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M3 11h18M16 3v4M8 3v4"/></svg><span>Friday</span>
+  </div>
+</div>
+
+</div><!-- /phone -->
+
+<script>
+// ── STATE ──
+const MIN_ORDER = 50;
+let cur = 'sh';
+let cart = [];
+let fridayCart = [];
+let cd = {};
+let qty = 1;
+let upOn = false;
+let quizData = {};
+let qPrev = 'sh';
+let rxResult = null;
+let logisticsFee = 0;
+
+// ── NAVIGATION ──
+function goTo(id, anim, label) {
+  const old = document.getElementById(cur);
+  if(old){ old.style.display = 'none'; old.className = 'screen'; }
+  const next = document.getElementById(id);
+  if(!next) return;
+  next.style.display = 'block';
+  next.className = 'screen ' + (anim || 'active');
+  next.scrollTop = 0;
+  cur = id;
+  document.getElementById('flbl').textContent = label || id;
+
+  const nm = {sh:'ni-h',sw:'ni-h',sdrinks:'ni-rx',ss:'ni-h',spkg:'ni-h',srx:'ni-rx',sm:'ni-rx',sdd:'ni-rx',sq:'ni-rx',srs:'ni-rx',sc:'ni-rx',sdl:'ni-rx',sbot:'ni-rx',sgi:'ni-gi',sfr:'ni-fr',sbun:'ni-bun',stst:'ni-h',strans:'ni-rx',sconfirm:'ni-rx','sqr-drinks':'ni-rx','sqr-exp':'ni-h'};
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+  const an = nm[id];
+  if(an) document.getElementById(an).classList.add('active');
+
+  updateFloatCart();
+  if(id === 'sc') renderCart();
+  if(id === 'sm') showRxPin();
+}
+
+// ── MENU FILTER ──
+function fM(cat, btn) {
+  document.querySelectorAll('.mtb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.drow').forEach(r => {
+    const px = r.querySelector('.dpx')?.textContent?.trim();
+    const inCat = r.dataset.c === cat;
+    const available = STOCK[px] !== false;
+    // Hide if wrong category OR not in stock
+    r.style.display = (inCat && available) ? 'flex' : 'none';
+  });
+}
+
+// ── RX PIN (prescription pinned to top of menu) ──
+function showRxPin() {
+  const pin = document.getElementById('rxpin');
+  if(rxResult) {
+    document.getElementById('rxpin-n').textContent = rxResult.n;
+    document.getElementById('rxpin-d').textContent = rxResult.note.replace(/"/g,'');
+    document.getElementById('rxpin-btn').onclick = () => {
+      const price = drinkPrices[rxResult.px] || 4500;
+      pushToCart(rxResult.px, rxResult.n, price, false, 0, 50);
+      showToast(rxResult.n + ' added to your order','ok');
+      rxResult = null;
+      pin.style.display = 'none';
+      updateFloatCart();
+    };
+    pin.style.display = 'block';
+  } else {
+    pin.style.display = 'none';
+  }
+}
+
+// ── GIFT MESSAGE + CROSS-SELL ──
+let giftMsg = '';
+let xsellWanted = false;
+
+function updateGiftMsg(val) {
+  giftMsg = val;
+}
+
+function toggleXsell(checked) {
+  xsellWanted = checked;
+}
+
+function showXsellIfEligible(n) {
+  const el = document.getElementById('xsell-immersive');
+  if(el) el.style.display = n >= 50 ? 'block' : 'none';
+}
+
+// ── STOCK AVAILABILITY ──
+// true = available in menu | false = hidden (out of stock / seasonal / not in RTD range)
+// Only showing core RTD range: 6 Signature + 5 Zero Proof
+const STOCK = {
+  // Signature
+  'Rx 001':true,'Rx 002':true,'Rx 003':true,'Rx 004':true,'Rx 005':true,'Rx 006':true,
+  // Familiar Classics
+  'Rx 007':true,'Rx 008':true,'Rx 009':true,'Rx 010':true,'Rx 011':true,'Rx 012':true,
+  // Zero Proof / Placebos
+  'Rx 013':true,'Rx 014':true,'Rx 015':true,'Rx 016':true,'Rx 017':true,
+};
+const DRINKS = {
+  'Rx 001': { formula:'Whiskey · Orijin · Lime · Simple Syrup', name:'Afrobeat Sour', rx:'Prescribed for those who like their evenings with a little tension.', about:'Whiskey, Orijin, Lime, Simple syrup. A slow burn finish that arrives when you least expect it.', origin:'Kaduna State · Year Round', therapeutic:'Anti-inflammatory. A slow burn that arrives when it should.', price:5000, upgrade:'Whisky', upgradePrice:1500, hasUpgrade:true, hasZP:true, botanical:true, seasonal:false, taste:'Citrus · Sour · Bold', base:'Whiskey', strength:3 },
+  'Rx 002': { formula:'Vodka · Agbalumo Syrup · Citrus · Berry Reduction', name:'Agbalumo Berry', rx:'Prescribed for nostalgia and slow afternoons.', about:'Vodka, Agbalumo syrup, Citrus, Berry reduction.', origin:'Lagos Markets · Dec–Apr', therapeutic:'Vitamin C. The taste of a Lagos childhood.', price:4500, upgrade:'Premium vodka', upgradePrice:1500, hasUpgrade:true, hasZP:true, botanical:true, seasonal:true, taste:'Sweet · Fruity · Tart', base:'Vodka', strength:2 },
+  'Rx 003': { formula:'Vodka · Fresh Ginger · Lime · Basil · Ginger Beer', name:'Lagos Ginger Mule', rx:'Prescribed for those who want refreshing with a bite.', about:'Vodka, Fresh ginger, Lime, Basil, Ginger beer, Alligator pepper infusion.', origin:'Kaduna State · Year Round', therapeutic:'Anti-inflammatory. Fresh and bold.', price:5000, upgrade:'Premium vodka', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:true, seasonal:false, taste:'Spiced · Refreshing', base:'Vodka', strength:2 },
+  'Rx 004': { formula:'Gin · Campari · Sweet Vermouth · Cocoa Infusion', name:'Negritude', rx:'Prescribed for those who appreciate bitterness as a philosophy.', about:'Gin, Campari, Sweet Vermouth, Nigerian cocoa infusion.', origin:'Ondo State · Year Round', therapeutic:'Complex. The ingredient guests cannot identify.', price:5500, upgrade:'Aged gin', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:true, seasonal:false, taste:'Bitter · Bold · Rich', base:'Gin', strength:3 },
+  'Rx 005': { formula:'Palm Wine · Hibiscus · Citrus · Ginger · Kola Nut', name:'Wazobia Mix', rx:'Prescribed for those who want to taste Nigeria in a single glass.', about:'Palm wine base, Hibiscus, Citrus, Ginger, Kola-nut infusion.', origin:'Multiple origins · Nigeria', therapeutic:'A conversation starter.', price:5000, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:true, botanical:true, seasonal:false, taste:'Herbal · Spiced · Complex', base:'Palm Wine', strength:1 },
+  'Rx 006': { formula:'White Rum · Coconut Cream · Orange Juice', name:'Coconut Groove', rx:'Prescribed for the tropical afternoon that never ends.', about:'White rum, Coconut cream, Orange juice.', origin:'Year Round', therapeutic:'Smooth. Transporting.', price:4500, upgrade:'Premium rum', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:false, seasonal:false, taste:'Tropical · Creamy · Sweet', base:'White Rum', strength:2 },
+  'Rx 007': { formula:'Tequila · Lime · Orange Liqueur · Chili Syrup', name:'Spicy Margarita', rx:'Prescribed for the adventurous who still want something familiar.', about:'Tequila, Lime, Orange liqueur, Chili syrup. Hajji pepper salt rim.', origin:'Year Round', therapeutic:'Bold. Spicy. Memorable.', price:5500, upgrade:'Patrón or Don Julio', upgradePrice:1500, hasUpgrade:true, hasZP:true, botanical:false, seasonal:false, taste:'Bold · Spicy · Citrus', base:'Tequila', strength:3 },
+  'Rx 008': { formula:'Vodka · Vanilla · Passionfruit', name:'Pornstar Martini', rx:'Prescribed for those who know what they want.', about:'Vodka, Vanilla, Passionfruit.', origin:'Classic · Year Round', therapeutic:'Sweet. Indulgent.', price:5500, upgrade:'Premium vodka', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:false, seasonal:false, taste:'Sweet · Tropical · Smooth', base:'Vodka', strength:2 },
+  'Rx 009': { formula:'Vodka · Espresso', name:'Espresso Martini', rx:'Prescribed for those who need to be both awake and relaxed.', about:'Vodka, Espresso.', origin:'Classic · Year Round', therapeutic:'Bold. Coffee.', price:5500, upgrade:'Premium vodka', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:false, seasonal:false, taste:'Bold · Coffee · Smooth', base:'Vodka', strength:2 },
+  'Rx 010': { formula:'White Rum · Lime · Mint · Soda', name:'Mojito', rx:'Prescribed for the purist.', about:'White rum, Lime, Mint, Soda.', origin:'Classic · Year Round', therapeutic:'Herbal. Refreshing.', price:4500, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:true, botanical:false, seasonal:false, taste:'Herbal · Fresh · Citrus', base:'White Rum', strength:2 },
+  'Rx 011': { formula:'Gin · Raspberry · Lemon', name:'Clover Club', rx:'Prescribed for those who appreciate the underrated.', about:'Gin, Raspberry, Lemon.', origin:'Classic · Year Round', therapeutic:'Fruity. Elegant.', price:4500, upgrade:'Premium gin', upgradePrice:1500, hasUpgrade:true, hasZP:false, botanical:false, seasonal:false, taste:'Fruity · Tart · Elegant', base:'Gin', strength:2 },
+  'Rx 012': { formula:'Spirit Base · Passionfruit · Citrus · Simple Syrup', name:'Passion Sour (LT Style)', rx:'Prescribed for tropical intensity.', about:'Passionfruit, Citrus, Spirit base, Simple syrup.', origin:'Year Round', therapeutic:'Tropical. Tart.', price:4500, upgrade:'Premium spirit', upgradePrice:1500, hasUpgrade:true, hasZP:true, botanical:false, seasonal:false, taste:'Tropical · Tart · Bright', base:'Spirit Base', strength:2 },
+  'Rx 013': { formula:'Fanta Orange · Fanta Lemon · Grenadine · Blackcurrant · Cucumber · Bitters', name:'Chapman', rx:'Prescribed for the Lagos purist.', about:'Fanta Orange, Fanta Lemon, Grenadine, Blackcurrant cordial, Cucumber, Lemon, Angostura bitters. Zero proof.', origin:'Lagos Classic', therapeutic:'The universal Lagos refresher.', price:3500, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:false, botanical:true, seasonal:false, taste:'Fruity · Refreshing', base:'Zero Proof', strength:0 },
+  'Rx 014': { formula:'Hibiscus · Fresh Orange · Lime', name:'Hibiscus Kiss', rx:'Prescribed for those who appreciate what others overlook.', about:'Hibiscus, Fresh orange, Lime. Zero proof.', origin:'Kano & Sokoto · Year Round', therapeutic:'Rich in antioxidants.', price:3500, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:false, botanical:true, seasonal:false, taste:'Floral · Citrus · Tart', base:'Zero Proof', strength:0 },
+  'Rx 015': { formula:'Fresh Ginger · Lime · Soda', name:'Ginger Lime Cooler', rx:'Prescribed for clarity and energy.', about:'Fresh ginger, Lime, Soda. Zero proof.', origin:'Kaduna State · Year Round', therapeutic:'Anti-inflammatory.', price:3000, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:false, botanical:true, seasonal:false, taste:'Zesty · Refreshing · Spiced', base:'Zero Proof', strength:0 },
+  'Rx 016': { formula:'Coconut Cream · Pineapple', name:'Virgin Colada', rx:'Prescribed for tropical escape without spirits.', about:'Coconut cream, Pineapple. Zero proof.', origin:'Zero Proof · Year Round', therapeutic:'Tropical. Creamy.', price:3500, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:false, botanical:false, seasonal:false, taste:'Tropical · Creamy · Sweet', base:'Zero Proof', strength:0 },
+  'Rx 017': { formula:'Watermelon · Mint · Lime', name:'Watermelon Mint Cooler', rx:'Prescribed for the summer afternoon.', about:'Watermelon, Mint, Lime. Zero proof.', origin:'Zero Proof · Year Round', therapeutic:'Fresh. Juicy.', price:3000, upgrade:null, upgradePrice:0, hasUpgrade:false, hasZP:false, botanical:false, seasonal:false, taste:'Fresh · Fruity · Light', base:'Zero Proof', strength:0 },
+};
+
+// ── DRINK DETAIL ──
+function toggleDrinkInfo() {
+  const p = document.getElementById('dd-info-panel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+
+function strengthDots(n) {
+  const on = '<span style="color:var(--gold)">' + '●'.repeat(n) + '</span>';
+  const off = '<span style="color:var(--dimmer)">' + '○'.repeat(4-n) + '</span>';
+  return on + off;
+}
+
+function oDrink(px) {
+  const d = DRINKS[px];
+  if(!d) return;
+  cd = { px, ...d };
+  qty = 50; upOn = false; zpOn = false;
+
+  document.getElementById('ddpx').textContent = px;
+  document.getElementById('ddn').textContent = d.name;
+  document.getElementById('ddrx').textContent = d.rx;
+  document.getElementById('ddab').textContent = d.about;
+  document.getElementById('ddor').textContent = d.origin;
+  document.getElementById('ddth').textContent = d.therapeutic;
+
+  // Essentials row
+  document.getElementById('dd-taste').textContent = d.taste || '—';
+  document.getElementById('dd-base').textContent = d.formula || d.about?.split('.')[0] || d.base || '—';
+  document.getElementById('dd-strength').innerHTML = strengthDots(d.strength || 0);
+
+  // Botanical badge
+  const badge = document.getElementById('dd-bot-badge');
+  badge.style.display = d.botanical ? 'inline-flex' : 'none';
+
+  // Zero proof toggle
+  document.getElementById('ddzp').style.display = d.hasZP ? 'block' : 'none';
+  document.getElementById('zptog').className = 'tog';
+
+  // Upgrade toggle
+  document.getElementById('ddup').style.display = d.hasUpgrade ? 'block' : 'none';
+  if(d.hasUpgrade && d.upgrade) document.getElementById('upspirit').textContent = 'Top shelf — ' + d.upgrade;
+  document.getElementById('uptog').className = 'tog';
+
+  // Hide info panel by default
+  document.getElementById('dd-info-panel').style.display = 'none';
+
+  setPack(50);
+  goTo('sdd','su','Drink Detail');
+}
+
+let zpOn = false;
+
+function togUp() {
+  if(zpOn) { showToast('Switch off zero proof first','err'); return; }
+  upOn = !upOn;
+  document.getElementById('uptog').className = 'tog' + (upOn ? ' on' : '');
+  updPacks();
+}
+
+function togZP() {
+  zpOn = !zpOn;
+  document.getElementById('zptog').className = 'tog' + (zpOn ? ' on' : '');
+  // Zero proof disables upgrade
+  if(zpOn && upOn) {
+    upOn = false;
+    document.getElementById('uptog').className = 'tog';
+  }
+  document.getElementById('ddup').style.opacity = zpOn ? '0.35' : '1';
+  updPacks();
+}
+
+function setPack(n) {
+  qty = n;
+  document.getElementById('qtyn').textContent = n;
+  ['2','6','50'].forEach(v => {
+    document.getElementById('pb'+v).classList.toggle('active', parseInt(v)===n);
+  });
+  updPacks();
+  // Soft prompt for Friday Drop when below minimum
+  if(n < 50) {
+    const existing = cartQty() + n;
+    if(existing < 50) {
+      showToast('Below 50 pouches — Friday Drop available, or keep adding drinks', 'info');
+    }
+  }
+}
+
+function chQ(d) {
+  qty = Math.max(1, qty + d);
+  document.getElementById('qtyn').textContent = qty;
+  // Deselect pack buttons if custom
+  ['pb2','pb6','pb50'].forEach(id => document.getElementById(id).classList.remove('active'));
+  updPacks();
+}
+
+function updPacks() {
+  const base = cd.price || 0;
+  const up = (upOn && !zpOn) ? (cd.upgradePrice || 1500) : 0;
+  const unit = base + up;
+  document.getElementById('pp2').textContent = `₦${(unit*2).toLocaleString()}`;
+  document.getElementById('pp6').textContent = `₦${(unit*6).toLocaleString()}`;
+  document.getElementById('pp50').textContent = `₦${(unit*50).toLocaleString()}`;
+  const total = unit * qty;
+  const label = zpOn ? ' (Zero Proof)' : upOn ? ' (+ Top Shelf)' : '';
+  document.getElementById('addbtn').textContent = `Add to Order — ₦${total.toLocaleString()}${label}`;
+}
+
+function updBtn() { updPacks(); }
+
+function addToOrder() {
+  const up = upOn && !zpOn;
+  const upPrice = up ? (cd.upgradePrice || 1500) : 0;
+  const label = zpOn ? cd.name + ' (Zero Proof)' : cd.name;
+  pushToCart(cd.px, label, cd.price, up, upPrice, qty);
+
+  // Micro-animation — pulse the add button
+  const btn = document.getElementById('addbtn');
+  btn.style.transform = 'scale(0.97)';
+  btn.style.background = 'var(--gold)';
+  btn.style.color = 'var(--dark)';
+  btn.textContent = 'Noted.';
+  setTimeout(() => {
+    btn.style.transform = 'scale(1)';
+    setTimeout(() => updPacks(), 400);
+  }, 180);
+
+  showToast('Noted. Added to your order.', 'ok');
+  updateFloatCart();
+  pulseCart();
+  setTimeout(() => { if(cur === 'sdd') goTo('sm','fi','The Menu'); }, 900);
+}
+
+function pulseCart() {
+  const fc = document.getElementById('fcart');
+  if(!fc) return;
+  fc.style.transition = 'transform 0.15s ease';
+  fc.style.transform = 'scale(1.03)';
+  setTimeout(() => { fc.style.transform = 'scale(1)'; }, 150);
+}
+
+function addToFriday() {
+  const up = upOn && !zpOn;
+  const upPrice = up ? (cd.upgradePrice || 1500) : 0;
+  const label = zpOn ? cd.name + ' (Zero Proof)' : cd.name;
+  fridayCart.push({px:cd.px, name:label, price:cd.price, qty, upgrade:up, upgradePrice:upPrice, unitTotal:(cd.price+upPrice)*qty});
+  showToast(label + ' added to Friday Drop 🗓', 'info');
+  setTimeout(() => { if(cur === 'sdd') goTo('sm','fi','The Menu'); }, 700);
+}
+
+function pushToCart(px, name, price, upgrade, upgradePrice, quantity) {
+  // Check if already in cart, increment qty
+  const existing = cart.find(i => i.px === px && i.upgrade === upgrade);
+  if(existing) {
+    existing.qty += quantity;
+    existing.unitTotal = (existing.price + existing.upgradePrice) * existing.qty;
+  } else {
+    cart.push({px, name, price, upgrade, upgradePrice, qty:quantity, unitTotal:(price+upgradePrice)*quantity});
+  }
+}
+
+// ── CART ──
+function cartQty() { return cart.reduce((s,i) => s+i.qty, 0); }
+function cartTotal() { return cart.reduce((s,i) => s+i.unitTotal, 0); }
+function friTotal() { return fridayCart.reduce((s,i) => s+i.unitTotal, 0); }
+
+function updateFloatCart() {
+  const fc = document.getElementById('fcart');
+  const n = cartQty();
+  const friN = fridayCart.reduce((s,i)=>s+i.qty,0);
+  const total = n + friN;
+
+  if(total > 0) {
+    fc.style.display = 'flex';
+    document.getElementById('fccnt').textContent = `${total} item${total>1?'s':''}`;
+    document.getElementById('fctot').textContent = `₦${(cartTotal()+friTotal()).toLocaleString()}`;
+
+    // Progressive disclosure — only show progress bar when they have items but not yet at minimum
+    const progWrap = document.getElementById('fcprog').parentElement;
+    const progLabel = document.getElementById('fcprogl');
+    const pct = Math.min(100, (n/MIN_ORDER)*100);
+    document.getElementById('fcprog').style.width = pct + '%';
+
+    if(n === 0) {
+      // Only friday drop items — no progress needed
+      progWrap.style.display = 'none';
+      progLabel.textContent = '';
+    } else if(n >= MIN_ORDER) {
+      // Minimum reached — show brief confirmation then hide
+      progWrap.style.display = 'block';
+      progLabel.textContent = '✓ Minimum reached';
+      setTimeout(() => { progWrap.style.display = 'none'; }, 2000);
+    } else {
+      // Building toward minimum — show progress
+      progWrap.style.display = 'block';
+      progLabel.textContent = `${MIN_ORDER - n} more pouches to unlock delivery`;
+    }
+  } else {
+    fc.style.display = 'none';
+  }
+}
+
+function renderCart() {
+  const items = document.getElementById('citems');
+  const empty = document.getElementById('cempty');
+  const summary = document.getElementById('csummary');
+  const minprog = document.getElementById('minprog');
+  const procBtn = document.getElementById('procbtn');
+  const friNote = document.getElementById('fricnote');
+
+  const n = cartQty();
+  const friN = fridayCart.reduce((s,i)=>s+i.qty,0);
+  const hasFri = fridayCart.length > 0;
+
+  friNote.className = 'fri-cart-note' + (hasFri ? ' show' : '');
+
+  if(cart.length === 0 && fridayCart.length === 0) {
+    empty.style.display = 'block';
+    items.style.display = 'none';
+    summary.style.display = 'none';
+    minprog.style.display = 'none';
+    procBtn.disabled = true;
+    procBtn.style.opacity = '0.35';
+    procBtn.textContent = 'Proceed to Delivery Details';
+    return;
+  }
+
+  empty.style.display = 'none';
+  items.style.display = 'flex';
+  items.innerHTML = '';
+
+  // Render regular cart
+  if(cart.length > 0) {
+    const hdiv = document.createElement('div');
+    hdiv.style = 'font-size:0.58rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;padding:0.7rem 0 0.4rem;';
+    hdiv.textContent = 'Standard Order';
+    items.appendChild(hdiv);
+    cart.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'ci';
+      div.innerHTML = `<div class="cil"><p class="cipx">${item.px}</p><p class="cin">${item.name} × ${item.qty}</p>${item.upgrade?'<p class="ciup">+ Top Shelf Upgrade</p>':''}</div><div class="cir"><span class="cipr">₦${item.unitTotal.toLocaleString()}</span><button class="cirm" onclick="removeItem(${idx})">✕</button></div>`;
+      items.appendChild(div);
+    });
+  }
+
+  // Render friday cart
+  if(fridayCart.length > 0) {
+    const fhdiv = document.createElement('div');
+    fhdiv.style = 'font-size:0.58rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;padding:0.9rem 0 0.4rem;';
+    fhdiv.textContent = '🗓 Friday Drop';
+    items.appendChild(fhdiv);
+    fridayCart.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'ci';
+      div.style = 'border-color:rgba(26,58,58,0.5)';
+      div.innerHTML = `<div class="cil"><p class="cipx">${item.px}</p><p class="cin">${item.name} × ${item.qty}</p></div><div class="cir"><span class="cipr">₦${item.unitTotal.toLocaleString()}</span><button class="cirm" onclick="removeFriItem(${idx})">✕</button></div>`;
+      items.appendChild(div);
+    });
+  }
+
+  // Progress bar
+  if(n > 0 && n < MIN_ORDER) {
+    minprog.style.display = 'block';
+    const pct = Math.min(100,(n/MIN_ORDER)*100);
+    document.getElementById('minprogbar').style.width = pct + '%';
+    document.getElementById('minprogl').textContent = `${MIN_ORDER-n} more pouches to unlock standard delivery`;
+    document.getElementById('minprogr').textContent = `${n} / ${MIN_ORDER}`;
+  } else {
+    minprog.style.display = 'none';
+  }
+
+  // Summary
+  const upTotal = cart.reduce((s,i) => s+(i.upgradePrice*i.qty),0);
+  summary.style.display = 'block';
+  document.getElementById('csitems').textContent = `${n+friN} item${n+friN!==1?'s':''}`;
+  document.getElementById('csup').textContent = upTotal > 0 ? `₦${upTotal.toLocaleString()}` : '—';
+  document.getElementById('cstot').textContent = `₦${(cartTotal()+friTotal()).toLocaleString()}`;
+
+  // Proceed button with specific checklist
+  const canProceed = n >= MIN_ORDER || (n === 0 && hasFri);
+  procBtn.disabled = !canProceed;
+  procBtn.style.opacity = canProceed ? '1' : '0.4';
+
+  // Build checklist / options
+  let existing = document.getElementById('checkout-checklist');
+  if(existing) existing.remove();
+
+  if(!canProceed && n > 0) {
+    const cl = document.createElement('div');
+    cl.id = 'checkout-checklist';
+    cl.style.cssText = 'margin:0 1.4rem 1rem;padding:1rem 1.2rem;background:rgba(26,58,58,0.3);border:1px solid rgba(184,134,11,0.18)';
+    cl.innerHTML = `<p style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem">You have ${n} of 50 pouches</p>
+      <div style="display:flex;gap:6px">
+        <button onclick="goTo('sm','fi','The Menu')" style="flex:1;padding:0.7rem 0.5rem;background:var(--gold);color:var(--dark);border:none;font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Add More Drinks</button>
+        <button onclick="convertToFriday()" style="flex:1;padding:0.7rem 0.5rem;background:transparent;color:var(--gold3);border:1px solid rgba(184,134,11,0.3);font-family:'EB Garamond',serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Friday Drop</button>
+      </div>
+      <p style="font-size:0.7rem;color:var(--dimmer);font-style:italic;margin-top:0.5rem">Friday Drop requires 48hrs notice. We will confirm your slot.</p>`;
+    procBtn.parentElement.insertBefore(cl, procBtn);
+    procBtn.style.display = 'none';
+  } else {
+    procBtn.style.display = 'block';
+    procBtn.textContent = n === 0 && hasFri ? 'Proceed — Friday Drop' : 'Proceed to Delivery Details';
+  }
+}
+
+function removeItem(idx) {
+  cart.splice(idx,1);
+  renderCart();
+  updateFloatCart();
+}
+
+function convertToFriday() {
+  // Move all cart items to friday cart
+  cart.forEach(item => {
+    fridayCart.push({...item});
+  });
+  cart = [];
+  renderCart();
+  updateFloatCart();
+  showToast('Moved to Friday Drop. We will confirm your slot.', 'info');
+}
+
+function removeFriItem(idx) {
+  fridayCart.splice(idx,1);
+  renderCart();
+  updateFloatCart();
+}
+
+// ── LOGISTICS ──
+const logFees = {island:3500,lekki:4500,mainland:3000,outskirts:5500};
+
+function calcLogistics() {
+  const sel = document.getElementById('dlzone');
+  const zone = sel.value;
+  logisticsFee = logFees[zone] || 0;
+  const note = document.getElementById('logfee-note');
+  const val = document.getElementById('logfee-val');
+  if(zone) {
+    note.style.display = 'block';
+    val.textContent = `₦${logisticsFee.toLocaleString()}`;
+  } else {
+    note.style.display = 'none';
+  }
+  updateDlTotal();
+}
+
+function updateDlTotal() {
+  const sub = cartTotal() + friTotal();
+  document.getElementById('dlsub').textContent = `₦${sub.toLocaleString()}`;
+  document.getElementById('dllog').textContent = logisticsFee > 0 ? `₦${logisticsFee.toLocaleString()}` : 'Select area above';
+  document.getElementById('dltotal').textContent = `₦${(sub+logisticsFee).toLocaleString()}`;
+}
+
+function checkFriday() {
+  const val = document.getElementById('dldate').value;
+  const fridayNote = document.getElementById('frinote');
+  if(val === 'fri') {
+    // Check if past Wednesday midnight
+    const now = new Date();
+    const day = now.getDay(); // 0=Sun, 3=Wed, 5=Fri
+    const pastCutoff = (day === 4 || day === 5 || day === 6 || (day === 3 && now.getHours() >= 0));
+    // Wed midnight = cutoff
+    const wedCutoff = day > 3 || (day === 3 && now.getHours() >= 0);
+    if(wedCutoff && day !== 5 && day !== 6) {
+      // Past Wednesday midnight, before Friday
+      fridayNote.style.display = 'block';
+      fridayNote.style.color = '#ff9999';
+      fridayNote.textContent = "This Friday's drop is now closed. You can increase your order to 50+ pouches for standard delivery, or select 'Next Friday' below.";
+      // Add next friday option if not already there
+      const sel = document.getElementById('dldate');
+      if(!document.getElementById('opt-nextfri')) {
+        const opt = document.createElement('option');
+        opt.id = 'opt-nextfri';
+        opt.value = 'nextfri';
+        opt.textContent = 'Next Friday — after 5pm';
+        sel.appendChild(opt);
+      }
+    } else {
+      fridayNote.style.display = 'block';
+      fridayNote.style.color = 'var(--dim)';
+      fridayNote.textContent = '🗓 Friday Drop selected. We will confirm your slot and delivery time directly.';
+    }
+  } else {
+    if(fridayNote) fridayNote.style.display = 'none';
+  }
+}
+
+function proceedToDelivery() {
+  const n = cartQty();
+  const hasFri = fridayCart.length > 0;
+  const onlyFri = hasFri && n === 0;
+  if(n < MIN_ORDER && !onlyFri) {
+    showToast(`Need ${MIN_ORDER-n} more pouches for standard delivery`, 'err');
+    return;
+  }
+  updateDlTotal();
+  goTo('sdl','su','Delivery Details');
+  // Lock delivery date if Friday Drop only order
+  setTimeout(() => {
+    const sel = document.getElementById('dldate');
+    if(sel && onlyFri) {
+      // Remove all options except Friday
+      Array.from(sel.options).forEach(opt => {
+        if(opt.value !== 'fri' && opt.value !== '') opt.remove();
+      });
+      sel.value = 'fri';
+      sel.disabled = true;
+      const note = document.getElementById('frinote');
+      if(note) { note.style.display='block'; note.style.color='var(--dim)'; note.textContent='🗓 Friday Drop order — delivery this Friday after 5pm.'; }
+      checkFriday();
+    } else if(sel) {
+      sel.disabled = false;
+    }
+  }, 100);
+}
+
+function completeOrder() {
+  const name = document.getElementById('dlname').value.trim();
+  const phone = document.getElementById('dlphone').value.trim();
+  const addr = document.getElementById('dladdr').value.trim();
+  const zone = document.getElementById('dlzone').value;
+  const date = document.getElementById('dldate').value;
+  const time = document.getElementById('dltime').value;
+
+  if(!name || !phone || !addr || !zone || !date || !time) {
+    showToast('Please fill in all delivery details', 'err');
+    return;
+  }
+
+  const allItems = [
+    ...cart.map(i => `${i.px} · ${i.name} × ${i.qty}${i.upgrade?' (+ Top Shelf)':''} — ₦${i.unitTotal.toLocaleString()}`),
+    ...fridayCart.map(i => `[FRI DROP] ${i.px} · ${i.name} × ${i.qty} — ₦${i.unitTotal.toLocaleString()}`)
+  ].join('\n');
+
+  const msg = encodeURIComponent(
+    `Hi Liquid Therapy, I'd like to complete my order.\n\n` +
+    `ORDER:\n${allItems}\n` +
+    `Subtotal: ₦${(cartTotal()+friTotal()).toLocaleString()}\n` +
+    `Logistics: ₦${logisticsFee.toLocaleString()}\n` +
+    `Total: ₦${(cartTotal()+friTotal()+logisticsFee).toLocaleString()}\n\n` +
+    `DELIVERY:\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}\nArea: ${zone}\nDate: ${date}\nTime: ${time}\n` +
+    `Notes: ${document.getElementById('dlnote').value || 'None'}` +
+    (giftMsg ? `\\nGift Message: ${giftMsg}` : '') +
+    (xsellWanted ? `\\nImmersive Session Discount: Yes — please contact me.` : '')
+  );
+
+  // Show transition screen — intentional delay before redirect
+  goTo('strans','su','Checkout');
+
+  setTimeout(() => {
+    window.open(`https://wa.me/2348123484321?text=${msg}`, '_blank');
+    // Show confirmation screen
+    setTimeout(() => {
+      cart = []; fridayCart = [];
+      updateFloatCart();
+      goTo('sconfirm','su','Order Confirmed');
+    }, 1200);
+  }, 1400);
+}
+
+// ── FRIDAY CUTOFF CHECK ──
+function checkFridayCutoff() {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun, 3=Wed, 5=Fri
+  const hour = now.getHours();
+  // Closed after Wednesday 6pm until Thursday morning
+  const closed = (day > 3 && day < 5) || (day === 3 && hour >= 18);
+  const banner = document.getElementById('fri-closed-banner');
+  if(banner) banner.classList.toggle('show', closed);
+  return closed;
+}
+
+// Run cutoff check when menu loads
+const _goToOrig = goTo;
+window.goTo = function(id, anim, label) {
+  _goToOrig(id, anim, label);
+  if(id === 'sm') checkFridayCutoff();
+  if(id === 'sw') resetIntake();
+  if(id === 'sfr') checkFridayCutoff();
+};
+
+// ── EVENT INTAKE ──
+let intakeData = { occasion:'', guests:'', priority:'', location:'', date:'' };
+let intakeStep = 1;
+
+// Reset intake on each visit to sw
+function resetIntake() {
+  intakeData = { occasion:'', guests:'', priority:'', location:'', date:'' };
+  intakeStep = 1;
+  for(let i=1;i<=4;i++) {
+    const s = document.getElementById('is'+i);
+    if(s) { s.classList.remove('active'); s.querySelectorAll('.iopt').forEach(b=>b.classList.remove('sel')); }
+    const p = document.getElementById('ip'+i);
+    if(p) p.classList.remove('done');
+  }
+  const s1 = document.getElementById('is1');
+  if(s1) s1.classList.add('active');
+  const p1 = document.getElementById('ip1');
+  if(p1) p1.classList.add('done');
+}
+
+function intakeBack() {
+  if(intakeStep <= 1) { goTo('sh','fi','Home'); return; }
+  document.getElementById('is' + intakeStep).classList.remove('active');
+  intakeStep--;
+  document.getElementById('is' + intakeStep).classList.add('active');
+  document.getElementById('ip' + (intakeStep + 1)).classList.remove('done');
+  const sw = document.getElementById('sw'); if(sw) sw.scrollTop = 0;
+}
+
+function intakeSelect(btn, key, val, nextStep) {
+  btn.closest('.intake-opts').querySelectorAll('.iopt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  intakeData[key] = val;
+  setTimeout(() => {
+    document.getElementById('is' + intakeStep).classList.remove('active');
+    intakeStep = nextStep;
+    document.getElementById('is' + intakeStep).classList.add('active');
+    document.getElementById('ip' + intakeStep).classList.add('done');
+    const sw = document.getElementById('sw'); if(sw) sw.scrollTop = 0;
+  }, 260);
+}
+
+function intakeFinish() {
+  const loc = document.getElementById('intake-location').value.trim();
+  const date = document.getElementById('intake-date').value.trim();
+  if(!loc || !date) { showToast('Please fill in both fields','err'); return; }
+  intakeData.location = loc;
+  intakeData.date = date;
+  // Open WhatsApp with full brief
+  const msg = encodeURIComponent(
+    'Hi Liquid Therapy, I\'d like to book a free consultation.\n\n' +
+    'Here is a bit about my event:\n' +
+    'Occasion: ' + (intakeData.occasion || 'Not specified') + '\n' +
+    'Guests: ' + (intakeData.guests || 'Not specified') + '\n' +
+    'Priority: ' + (intakeData.priority || 'Not specified') + '\n' +
+    'Location: ' + loc + '\n' +
+    'Date: ' + date
+  );
+  goTo('strans','su','Sending Brief');
+  setTimeout(() => { window.open('https://wa.me/2348123484321?text=' + msg, '_blank'); goTo('sh','fi','Home'); }, 1200);
+}
+
+function showPackageRecommendation() {
+  const o = intakeData.occasion || '';
+  const g = intakeData.guests || '';
+  const p = intakeData.priority || '';
+  let tier, name, desc, specs, price;
+
+  const isLarge = g === '100+' || g === '50–100';
+  const isCorporate = o.includes('Corporate');
+  const isWedding = o.includes('Wedding');
+  const isSmall = g === 'Under 20';
+  const wantsLogistics = p === 'Full logistics';
+  const wantsBespoke = p.includes('Bespoke') || p.includes('Immersive');
+
+  if(isLarge || wantsLogistics) {
+    tier = 'Package 03 · Full Expression';
+    name = 'The Complete Experience';
+    desc = 'Custom menu, full team, complete drink management. Nothing off the shelf. Built entirely around your event.';
+    specs = ['Any guest count','Bespoke menu','Full team + logistics'];
+    price = 'Quoted on brief';
+  } else if(isSmall && !wantsBespoke && !isCorporate && !isWedding) {
+    tier = 'Package 01 · Essential Service';
+    name = 'The Welcome Service';
+    desc = 'Welcome drinks and a styled bar for your intimate gathering. Clean, elegant, personal.';
+    specs = ['Up to 20 guests','2 cocktails','1 bartender'];
+    price = 'From ₦150,000';
+  } else {
+    tier = 'Package 02 · Signature Experience';
+    name = 'The Signature Experience';
+    desc = 'A fully managed bar with bespoke cocktails and a dedicated team — from setup to last call.';
+    specs = ['Up to 100 guests','3 cocktails','Full bar styling + team'];
+    price = 'From ₦350,000';
+  }
+
+  document.getElementById('pkg-rec-tier').textContent = tier;
+  document.getElementById('pkg-rec-name').textContent = name;
+  document.getElementById('pkg-rec-desc').textContent = desc;
+  document.getElementById('pkg-rec-price').textContent = price;
+  document.getElementById('pkg-rec-specs').innerHTML = specs.map(s => '<span class="pkg-spec">' + s + '</span>').join('');
+  document.getElementById('pkg-intro-text').textContent =
+    'Based on your ' + o.toLowerCase() + ' with ' + g + ' guests in ' + intakeData.location + '.';
+}
+
+function openConsultation() {
+  const o = document.createElement('div');
+  o.className = 'pop'; o.id = 'consult-pop';
+  const hasAnswers = intakeData.occasion || intakeData.guests || intakeData.priority;
+  const brief = encodeURIComponent('Hi Liquid Therapy, I\'d like to book a free consultation.' + (hasAnswers ? '\n\nHere is a bit about my event:\nOccasion: ' + (intakeData.occasion||'Not yet specified') + '\nGuests: ' + (intakeData.guests||'Not yet specified') + '\nPriority: ' + (intakeData.priority||'Not yet specified') + '\nLocation: ' + (intakeData.location||'Not yet specified') + '\nDate: ' + (intakeData.date||'Not yet specified') : ''));
+  o.innerHTML = '<div class="pop-sheet" style="position:relative"><button class="pop-x" onclick="document.getElementById(\'consult-pop\').remove()">✕</button><div class="pop-handle"></div><p style="font-size:0.58rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:0.65rem">Book a Consultation</p><h2 class="pop-title">How would you<br>like to connect?</h2><p class="pop-sub">We will get back to you within 4 hours.</p><button class="bg" onclick="window.open(\'https://wa.me/2348123484321?text=' + brief + '\',\'_blank\');document.getElementById(\'consult-pop\').remove()">Message on WhatsApp</button><button class="bo" onclick="window.open(\'https://calendar.google.com/calendar/appointments/\',\'_blank\');document.getElementById(\'consult-pop\').remove()">Schedule a Call</button><button class="bgh" onclick="document.getElementById(\'consult-pop\').remove()">Cancel</button></div>';
+  document.querySelector('.phone').appendChild(o);
+  o.addEventListener('click', e => { if(e.target===o) o.remove(); });
+}
+
+
+function qBack() { goTo(qPrev,'fi','Back'); }
+
+const rxDB = {
+  'sp-sour': {px:'Rx 003',n:'Afrobeat Sour',note:'"Prescribed for those who like their evenings with a little tension and a lot of flavour."',rx:'Therapeutic notes: Kaduna ginger. A slow burn finish.',sim:['Rx 001 · Agbalumo Berry','Rx 002 · Hibiscus Kiss']},
+  'sp-bold': {px:'Rx 005',n:'Spicy Mango Margarita',note:'"Prescribed for the adventurous who still want something familiar."',rx:'Therapeutic notes: Ogbomosho mango. Chilli rim.',sim:['Rx 003 · Afrobeat Sour','Rx 007 · Hibiscus Spritz']},
+  'sp-fruity':{px:'Rx 001',n:'Agbalumo Berry',note:'"Prescribed for nostalgia and slow afternoons."',rx:'Therapeutic notes: Lagos agbalumo. December to April.',sim:['Rx 002 · Hibiscus Kiss','Rx 007 · Hibiscus Spritz']},
+  'sp-light': {px:'Rx 007',n:'Hibiscus Spritz',note:'"Prescribed for arrivals and good news."',rx:'Therapeutic notes: Kano hibiscus. Light. Celebratory.',sim:['Rx 001 · Agbalumo Berry','Rx 006 · Green Garden Martini']},
+  'ns': {px:'Rx 006',n:'Green Garden Martini',note:'"Prescribed for the discerning guest who needs no spirits to feel something."',rx:'Therapeutic notes: Zero proof. Full flavour.',sim:['Rx 001 · Agbalumo Berry','Rx 002 · Hibiscus Kiss']},
+  'sx': {px:'Rx 002',n:'Hibiscus Kiss',note:'"Prescribed for those who appreciate what others overlook."',rx:'Therapeutic notes: Kano hibiscus. Floral, tart, quietly complex.',sim:['Rx 003 · Afrobeat Sour','Rx 007 · Hibiscus Spritz']},
+};
+const drinkPrices = {'Rx 001':5000,'Rx 002':4500,'Rx 003':5000,'Rx 004':5500,'Rx 005':5000,'Rx 006':4500,'Rx 007':5500,'Rx 008':5500,'Rx 009':5500,'Rx 010':4500,'Rx 011':4500,'Rx 012':4500,'Rx 013':3500,'Rx 014':3500,'Rx 015':3000,'Rx 016':3500,'Rx 017':3000};
+
+function quizAnswer(key, val, next) {
+  quizData[key] = val;
+  document.getElementById(`q${next-1}`).style.display = 'none';
+  document.getElementById(`q${next}`).style.display = 'block';
+  document.getElementById(`qp${next}`).classList.add('done');
+  qPrev = cur;
+}
+
+function qFin(spirits) {
+  const key = (spirits==='ns'||spirits==='sx') ? spirits : `sp-${quizData.fl||'sour'}`;
+  const r = rxDB[key] || rxDB['sx'];
+  rxResult = r;
+
+  document.getElementById('rspx').textContent = r.px;
+  document.getElementById('rsn').textContent = r.n;
+  document.getElementById('rsnote').textContent = r.note;
+  document.getElementById('rsrx').textContent = r.rx;
+
+  const chips = document.getElementById('simchips');
+  chips.innerHTML = r.sim.map(s => {
+    const px = s.split(' · ')[0];
+    const nm = s.split(' · ')[1];
+    const pr = drinkPrices[px] || 4500;
+    return `<span class="schi" onclick="pushToCart('${px}','${nm}',${pr},false,0,50);updateFloatCart();pulseCart();showToast('${nm} added — building your order','ok')">+ ${s}</span>`;
+  }).join('');
+
+  const price = drinkPrices[r.px] || 4500;
+  document.getElementById('rsadd').onclick = () => {
+    pushToCart(r.px, r.n, price, false, 0, 50);
+    updateFloatCart();
+    showToast(r.n + ' (50 pack) added','ok');
+    rxResult = null;
+    setTimeout(() => goTo('sm','fi','The Menu'), 700);
+  };
+
+  goTo('srs','su','Your Prescription');
+}
+
+function resetQ() {
+  quizData = {};
+  ['q1','q2','q3'].forEach((q,i)=>{document.getElementById(q).style.display=i===0?'block':'none'});
+  ['qp1','qp2','qp3'].forEach((p,i)=>{document.getElementById(p).classList.toggle('done',i===0)});
+  goTo('sq','fi','Find My Prescription');
+}
+
+// ── BUNDLES ──
+function orderBundle(name) {
+  const msgs = {
+    "The Therapist's Pick": "Hi Liquid Therapy, I'd like to order the Therapist's Pick bundle (50 pouches — 15× Afrobeat Sour, 15× Agbalumo Berry, 10× Spicy Mango Margarita, 10× Chapman Remix).\n\nDelivery details to follow.",
+    "Zero Proof Pack": "Hi Liquid Therapy, I'd like to order the Zero Proof Pack bundle (50 pouches — 20× Green Garden Martini, 20× Hibiscus Kiss zero proof, 10× Hibiscus Spritz).\n\nDelivery details to follow.",
+    "Party Starter": "Hi Liquid Therapy, I'd like to order the Party Starter bundle (50 pouches — 20× Afrobeat Sour, 20× Spicy Mango Margarita, 10× Hibiscus Spritz).\n\nDelivery details to follow.",
+    "Botanicals Only": "Hi Liquid Therapy, I'd like to order the Botanicals Only bundle (50 pouches — 15× Agbalumo Berry, 15× Hibiscus Kiss, 10× Afrobeat Sour, 10× Hibiscus Spritz).\n\nDelivery details to follow.",
+    "Build Your Own": "Hi Liquid Therapy, I'd like to build my own bundle (50 pouches total, minimum 10 per drink).\n\nMy mix:\n- Rx 001 Agbalumo Berry × \n- Rx 002 Hibiscus Kiss × \n- Rx 003 Afrobeat Sour × \n- Rx 004 Chapman Remix × \n- Rx 005 Spicy Mango Margarita × \n- Rx 006 Green Garden Martini × \n- Rx 007 Hibiscus Spritz × \n\nTotal: 50\n\nDelivery details to follow.",
+  };
+  const msg = encodeURIComponent(msgs[name] || `Hi Liquid Therapy, I'd like to order the ${name} bundle.`);
+  window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank');
+}
+
+
+function openGift(tier, price) {
+  const msg = encodeURIComponent(`Hi Liquid Therapy, I'd like to gift an experience.\nTier: ${tier} (from ${price})\nCourtesy of: \nRecipient: \nOccasion: \nPersonal message for gift card: `);
+  window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank');
+}
+
+// ── WHATSAPP ──
+function openWA(service) {
+  const msg = encodeURIComponent(`Hi Liquid Therapy, I'd like to enquire about ${service}`);
+  window.open(`https://wa.me/2348123484321?text=${msg}`,'_blank');
+}
+
+// ── TOAST ──
+let toastTimer;
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{t.className='toast';},2600);
+}
+
+// ── POPUP ──
+setTimeout(()=>{
+  const o = document.createElement('div');
+  o.className = 'pop';
+  o.id = 'popov';
+  o.innerHTML = `<div class="pop-sheet"><button class="pop-x" onclick="closePop()">✕</button><div class="pop-handle"></div><p style="font-size:0.58rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:0.65rem">Join the Community</p><h2 class="pop-title">Be the first<br>to know.</h2><p class="pop-sub">Seasonal drops, new prescriptions, and Lagos stories — delivered quietly. No noise.</p><input class="pop-in" type="email" placeholder="Your email address"><button class="bg" onclick="closePop()">Join the Community</button><button class="bgh" onclick="closePop()">I'll explore first</button></div>`;
+  document.querySelector('.phone').appendChild(o);
+  o.addEventListener('click', e => { if(e.target===o) closePop(); });
+},2800);
+
+function closePop() {
+  const p = document.getElementById('popov');
+  if(p){p.style.opacity='0';p.style.transition='opacity 0.28s';setTimeout(()=>p.remove(),300);}
+}
+</script>
+</body>
+</html>
